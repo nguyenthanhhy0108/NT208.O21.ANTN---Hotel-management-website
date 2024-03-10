@@ -1,2 +1,2 @@
-# Hotel-Miranda
-Hotel Miranda home page
+# Hotel
+Hotel home page
