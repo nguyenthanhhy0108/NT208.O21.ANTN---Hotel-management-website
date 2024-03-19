@@ -17,7 +17,7 @@ public class DatasourceConfig {
     public DataSource dataSource(){
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSourceBuilder.url("jdbc:sqlserver://localhost:1433;databaseName=SE;trustServerCertificate=true;");
+        dataSourceBuilder.url("jdbc:sqlserver://localhost:1433;databaseName=NT;trustServerCertificate=true;");
         dataSourceBuilder.username("sa");
         dataSourceBuilder.password("123");
         return dataSourceBuilder.build();
