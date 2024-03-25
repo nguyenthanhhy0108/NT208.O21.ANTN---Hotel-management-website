@@ -6,5 +6,22 @@
   - 22521392 - Nguyễn Trần Duy Thiên
 - Mã nguồn: https://github.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website
 
-1. Tổng quan
-2. Các chức năng
+## 1. Tổng quan
+- 
+## 2. Các chức năng
+- Register
+- Login
+- Logout
+- Hotel register
+- Search and filter
+- View hotel description
+- Reserve room
+- Cancel reservation
+- View and update profile
+- Rating
+- Chat with hotel
+- Find hotel
+- Add hotel
+- Delete hotel
+- Update hotel information
+- Room status management
