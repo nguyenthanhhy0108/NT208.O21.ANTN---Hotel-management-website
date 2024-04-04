@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class testController {
-    @GetMapping("/test")
-    public String test(){
+public class RegisterController {
+    @GetMapping("/register")
+    String RegisterPage(){
         return "sign_up";
     }
 }

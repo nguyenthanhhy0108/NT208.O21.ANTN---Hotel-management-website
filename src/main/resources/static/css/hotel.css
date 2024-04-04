@@ -1,6 +1,6 @@
 *{margin: 0;padding: 0;box-sizing: border-box;}
 .navbar{
-    background-image: url('assets/hotel/hero.jpg')!important;
+    background-image: url('static/images/hero.jpg')!important;
 }
 
 .customer{
@@ -47,8 +47,10 @@ border-radius: 5px;
            margin-bottom: 20px;
           }
     #room h1{font-size: 2.5rem;}
-    .our-Rooms .card{ overflow: hidden!important;border:2px solid;
-         transition: all 0.3 ease;}
+    .our-Rooms .card{
+        overflow: hidden!important;
+        border: 1px solid rgba(0, 0, 0, 0.2);;
+        transition: all 0.3s ease;}
     .our-Rooms .col-md-4{
         transition: all 0.3s ease;
     }     

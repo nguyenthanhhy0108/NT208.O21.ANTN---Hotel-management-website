@@ -115,5 +115,20 @@ input{
     border-bottom: 2px solid #d3d3d3;
     width:90%;
 }
-} 
+}
 
+.msg{
+    /*margin-left: 5%;*/
+    color: red;
+    font-size: large;
+    font-weight: bolder;
+    transition: ease-in-out 0.3s;
+}
+
+.logout-message{
+    /*margin-left: 5%;*/
+    font-size: large;
+    color: deepskyblue;
+    font-weight: bolder;
+    transition: ease-in-out 0.3s;
+}

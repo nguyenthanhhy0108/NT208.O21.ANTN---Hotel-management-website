@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 public class DatasourceConfig {
     //Connect SQL server database with this project
     //Port: 1433
-    //Database: SE
+    //Database: NT
     //SQL server username: sa
     //SQL server password: 123
     @Bean

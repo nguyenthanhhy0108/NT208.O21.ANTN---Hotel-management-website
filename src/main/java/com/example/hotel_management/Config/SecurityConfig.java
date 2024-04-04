@@ -1,15 +1,12 @@
 package com.example.hotel_management.Config;
 
 //import com.example.hotel_management.failureHandler.CustomAuthenticationFailureHandler;
+import com.example.hotel_management.FailureHandler.CustomAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -23,11 +20,11 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
     @Autowired
-//    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     //Create bean passwordEncoder used for whole project
     @Bean
-    public static final PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -41,6 +38,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
+
+
         //Custom login form
         //Redirect login form to home page
         //Config customAuthenticationFailureHandler
@@ -49,8 +48,8 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginProcessingUrl("/authenticateTheUser")
                         .successForwardUrl("/home")
-                        .defaultSuccessUrl("/home")
-//                        .failureHandler(customAuthenticationFailureHandler)
+                        .defaultSuccessUrl("/first-page", true)
+                        .failureHandler(customAuthenticationFailureHandler)
                         .loginPage("/login").permitAll());
 
         //Config default directory for Front-end
@@ -67,9 +66,10 @@ public class SecurityConfig {
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/password").permitAll()
-                        .requestMatchers("/test").permitAll()
+                        .requestMatchers("/home").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/booknow").permitAll()
+                        .requestMatchers("first-page").permitAll()
                         .requestMatchers("/login").anonymous()
                         .anyRequest()
                         .authenticated());
@@ -77,6 +77,7 @@ public class SecurityConfig {
         //Config logout API and delete cookies
         httpSecurity
                 .logout(logout -> logout
+                        .logoutUrl("/logout")
                         .deleteCookies("remember-me")
                         .permitAll());
 

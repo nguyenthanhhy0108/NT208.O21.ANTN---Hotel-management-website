@@ -1,4 +1,4 @@
-#19/3/2024
+# 4/4/2024
 create database NT;
 
 use NT;
@@ -16,18 +16,17 @@ create table AUTHORITIES(
                             Foreign key (Username) references USERS(Username)
 );
 
-insert into USERS(Username, Password, Enabled) values ('0941609091', '$2a$10$baoxjTClM2adP1Mdc9hDiexesFoY5miTDSAloR82FDtOH4l98XoJC', 1);
+insert into USERS(Username, Password, Enabled) values ('22520593@gm.uit.edu.vn', '$2a$10$baoxjTClM2adP1Mdc9hDiexesFoY5miTDSAloR82FDtOH4l98XoJC', 1);
 
-insert into AUTHORITIES(Username, Authority) values ('0941609091', 'ROLE_ADMIN');
-insert into AUTHORITIES(Username, Authority) values ('0941609091', 'ROLE_USER');
+insert into AUTHORITIES(Username, Authority) values ('22520593@gm.uit.edu.vn', 'ROLE_ADMIN');
+insert into AUTHORITIES(Username, Authority) values ('22520593@gm.uit.edu.vn', 'ROLE_USER');
 
 create table USERDETAILS(
                             Username varchar(50) not null,
-                            Email varchar(100) not null,
                             Name varchar(100),
                             Nationality varchar(50),
                             primary key (Username),
                             foreign key (Username) references USERS(Username)
 );
 
-insert into USERDETAILS(Username, Email, Name, Nationality) values ('0941609091', '22520593@gm.uit.edu.vn', 'Nguyen Thanh Hy','Viet Nam');
+insert into USERDETAILS(Username, Name, Nationality) values ('22520593@gm.uit.edu.vn', 'Nguyen Thanh Hy','Viet Nam');

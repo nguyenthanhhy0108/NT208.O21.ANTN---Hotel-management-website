@@ -10,10 +10,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
     <title>Document</title>
 </head><br>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <body class="box" >
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="first_page.html">HOTEL BOOKING</a>
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
         <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -24,7 +27,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="hotel.html">HOTEL</a>
+                    <a class="nav-link" href="/home">HOTEL</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -54,35 +57,58 @@
 
 </nav>
 <!--    <div class="container mb-5 " data-aos="zoom-in">-->
-    <div class="container mb-5 ">
-        <div class="row form mx-auto  py-2 shadow mt-5" style="filter: drop-shadow(0px 0px 4px black);border-radius: 10px;">
+    <div class="container mb-5 d-flex justify-content-center">
+        <div class="row form mx-auto  py-2 shadow mt-5 " style="filter: drop-shadow(0px 0px 4px black);border-radius: 10px;">
             <div class="col-md-7 col-sm-11  p-3 ">
-                <form class="p-5">
-                   <center>
-                        <div class="form-group">
-                        <h2 class="mb-5" style="font-weight: bold;">Sign In</h2>
-                      <label class="text-secondary" for="exampleInputEmail1" style="margin-right: 115px;"><i class="fa fa-envelope"></i>
-                         Email address</label>
-                      <input  type="email"  id="exampleInputEmail1" aria-describedby="emailHelp" >
-                     
-                    </div>
-                    <div class="form-group">
-                      <label class="text-secondary"  for="exampleInputPassword1" style="margin-right: 150px;">
-                        <i class="fa fa-lock"></i> Password</label>
-                      <input  type="password" id="exampleInputPassword1">
-                    </div>
-                    <p class="forget-pass">Forget password ?</p>
-                
-                    <button type="submit" class="btn ">Submit</button>
-                </center>
+                <form class="p-5" method="POST" autocomplete="off" th:action="@{/authenticateTheUser}">
+                        <div class="form-group"  style="margin-right: -200px;">
+                            <h2 class="mb-5" style="font-weight: bold;">Sign In</h2>
 
-              <center> <div class="Social-icon  d-flex justify-content-between mt-3 " style="height: auto;width:50%;">
+                                <div th:if="${session.username_not_exist}" class="msg">
+                                    Email does not exist.
+                                </div>
+
+                                <div id="password-error" th:if="${session.password_wrong}" class="msg">
+                                    Wrong password.
+                                </div>
+
+                                <div id="log-out" th:if="${param.logout}" class="logout-message">
+                                    You have been logged out.
+                                </div>
+
+                                <div id="password-successMessage" style="display: none" class="msg-ok">
+                                    Change password successfully
+                                </div>
+
+                                <div id="register-successMessage" th:if="${session.create_account_successfully}" class="msg-ok">
+                                    Creating account successfully
+                                </div>
+
+                             <label class="text-secondary" for="exampleInputEmail1" >
+                                 <i class="fa fa-envelope"></i> Email address
+                             </label>
+                            <input  type="email" name="username" th:value="${session.username}" required id="exampleInputEmail1" aria-describedby="emailHelp" >
+
+                            <label class="text-secondary"  for="exampleInputPassword1">
+                                <i class="fa fa-lock"></i> Password
+                            </label>
+                            <input  type="password" name="password" id="exampleInputPassword1" >
+
+                            <a href="/register" class="forget-pass">Forget password ?</a>
+
+                        </div>
+
+                <div class="d-flex justify-content-center" >
+                    <button type="submit" class="btn btn-primary" >Submit</button>
+                </div>
+
+                <div class="Social-icon  d-flex justify-content-between mt-6 " style="height: auto;width:50%; margin-left: 100px;">
                     <a href=""><img src="/images/facebook.png"></a>
                     <a href=""><img src="/images/twitter.png"></a>
                     <a href=""><img src="/images/linkedin-logo.png"></a>
                     <a href=""><img src="/images/instagram.png"></a>
                     
-                </div></center>
+                </div>
                   </form>
             </div>
             <div class="col-md-5 col-sm-11 box_2 " style="border:none;border-left:1px solid #d3d3d3;">
