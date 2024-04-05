@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/booknow").permitAll()
                         .requestMatchers("first-page").permitAll()
+                        .requestMatchers("forget-password").permitAll()
                         .requestMatchers("/login").anonymous()
                         .anyRequest()
                         .authenticated());

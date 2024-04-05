@@ -51,7 +51,6 @@ public class RegisterController {
             return "sign_up";
         }
         else{
-            System.out.println("abc2");
             Users newUsers = userServices.save(new Users(username, encoder.encode(password), 1));
             Authorities authorities = authoritiesServices.save(new Authorities(username, "ROLE_USER"));
             UserDetails userDetails = userDetailsServices.save(new UserDetails(username, name, "", "", ""));

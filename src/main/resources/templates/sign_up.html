@@ -74,26 +74,26 @@
                         <label class="text-secondary "  for="exampleInputPassword1" style="margin-right: 190px;">
                           <i class="fa fa-users"></i> Name
                         </label>
-                        <input name="name" type="text" id="exampleInputName">
+                        <input name="name" type="text" id="exampleInputName" required>
                       </div>
                         <div th:if="${email_in_used}" class="msg form-bt">Your email is already used</div>
                       <label class="text-secondary" for="exampleInputEmail1" style="margin-right: 190px;"><i class="fa fa-envelope"></i> Email</label>
-                      <input  type="email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input  type="email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                      
                     </div>
                    <div class="msg form-bt" id="passwordMatchMessage" style="display: none"></div>
                     <div class="form-group">
                       <label class="text-secondary"  for="exampleInputPassword1" style="margin-right: 170px;">
                         <i class="fa fa-lock"></i> Password</label>
-                      <input  type="password" name="password" id="exampleInputPassword1" oninput="checkPasswordMatch()">
+                      <input  type="password" name="password" id="exampleInputPassword1" oninput="checkPasswordMatch()" required>
                     </div>
 
                     <div class="form-group">
                        <label class="text-secondary"  for="exampleInputPassword1" style="margin-right: 118px;">
                            <i class="fa fa-lock"></i> Retype Password</label>
-                       <input  type="password" name="re-password" id="exampleInputPassword2" oninput="checkPasswordMatch()">
+                       <input  type="password" name="re-password" id="exampleInputPassword2" oninput="checkPasswordMatch()" required>
                     </div>
-                    <p class="forget-pass"> <i class="fa fa-lock"></i> Forget password ?</p>
+                    <a href="forget-password" class="forget-pass"> <i class="fa fa-lock"></i> Forget password ?</a>
 
                     
                 

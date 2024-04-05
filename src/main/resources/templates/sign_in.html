@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/sign_in.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -59,7 +60,7 @@
             <div class="col-md-7 col-sm-11  p-3 ">
                 <form class="p-5" method="POST" autocomplete="off" th:action="@{/authenticateTheUser}">
                         <div class="form-group"  style="margin-right: -200px;">
-                            <h2 class="mb-5" style="font-weight: bold;">Sign In</h2>
+                            <h2 class="mb-5" style="font-weight: bold; margin-right: 40%">Sign In</h2>
 
                                 <div th:if="${session.username_not_exist}" class="msg">
                                     Email does not exist.
@@ -89,9 +90,9 @@
                             <label class="text-secondary"  for="exampleInputPassword1">
                                 <i class="fa fa-lock"></i> Password
                             </label>
-                            <input  type="password" name="password" id="exampleInputPassword1" >
+                            <input  type="password" name="password" id="exampleInputPassword1"  required>
 
-                            <a href="/register" class="forget-pass">Forget password ?</a>
+                            <a href="/forget-password" class="forget-pass">Forget password ?</a>
 
                         </div>
 
