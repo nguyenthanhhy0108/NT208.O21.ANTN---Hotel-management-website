@@ -36,12 +36,9 @@
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item ">
-            <a class="nav-link" href="/first_page">Home</a>
-          </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/home">Hotel</a>
+            <a class="nav-link" href="/home">Home</a>
           </li>
 
           <li class="nav-item dropdown">
@@ -65,9 +62,9 @@
           </li>
 
           <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-            <a type="button" class="btn btn-primary px-3 btncmn"  href="/login">Sign In</a><br>
+            <a type="button" class="btn btn-primary px-4 btncmn"  href="/login">Sign In</a><br>
 
-            <a type="button" class="btn signup btn-success px-3 btncmn " href="/register">Sign Up</a>
+            <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
           </div>
 
           <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
@@ -250,8 +247,6 @@
 <!--      </div>-->
 <!--    </div>-->
 
-
-    <!-- ............why use tourzilla....... -->
 
     <div class="container whyt ">
       <section class="text-gray-700 body-font py-3">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class UserDetailsServicesImpl implements UserDetailsServices {
+
     private final UserDetailsRepository UserDetailsRepository;
     @Autowired
     public UserDetailsServicesImpl(UserDetailsRepository userDetailsRepository) {
@@ -18,5 +19,10 @@ public class UserDetailsServicesImpl implements UserDetailsServices {
     @Override
     public List<UserDetails> findByUsername(String Username) {
         return UserDetailsRepository.findByUsername(Username);
+    }
+
+    @Override
+    public UserDetails save(UserDetails userDetails) {
+        return UserDetailsRepository.save(userDetails);
     }
 }

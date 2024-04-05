@@ -29,7 +29,7 @@ public class Authorities {
     }
 
     public Authorities(String username, String authority) {
-        username = username;
-        authority = authority;
+        this.username = username;
+        this.authority = authority;
     }
 }

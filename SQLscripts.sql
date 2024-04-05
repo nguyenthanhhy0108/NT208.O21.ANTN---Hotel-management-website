@@ -25,8 +25,11 @@ create table USERDETAILS(
                             Username varchar(50) not null,
                             Name varchar(100),
                             Nationality varchar(50),
+                            Address varchar(500),
+                            PhoneNumber varchar(15),
+
                             primary key (Username),
                             foreign key (Username) references USERS(Username)
 );
 
-insert into USERDETAILS(Username, Name, Nationality) values ('22520593@gm.uit.edu.vn', 'Nguyen Thanh Hy','Viet Nam');
+insert into USERDETAILS(Username, Name, Nationality, Address, PhoneNumber) values ('22520593@gm.uit.edu.vn', 'Nguyen Thanh Hy','Viet Nam', 'Chau Thanh Ben Tre', '0941609091');

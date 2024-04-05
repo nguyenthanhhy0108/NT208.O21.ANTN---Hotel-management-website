@@ -4,6 +4,7 @@ import com.example.hotel_management.Model.Users;
 
 import java.util.List;
 
-public interface UsersServices {
+public interface UserServices {
     List<Users> findByUsername(String Username);
+    Users save(Users Users);
 }

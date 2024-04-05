@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserDetailsServices {
     List<UserDetails> findByUsername(String Username);
+    UserDetails save(UserDetails userDetails);
 }

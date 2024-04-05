@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AuthoritiesServices {
     List<Authorities> findByUsername(String Username);
+    Authorities save(Authorities authorities);
 }

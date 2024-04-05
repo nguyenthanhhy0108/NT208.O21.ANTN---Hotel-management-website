@@ -22,12 +22,9 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="first_page.html">HOME</a>
-                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/home">HOTEL</a>
+                    <a class="nav-link" href="/home">HOME</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -80,8 +77,8 @@
                                     Change password successfully
                                 </div>
 
-                                <div id="register-successMessage" th:if="${session.create_account_successfully}" class="msg-ok">
-                                    Creating account successfully
+                                <div id="register-successMessage" th:if="${create_account_successfully}" class="msg-ok">
+                                    Create account successfully
                                 </div>
 
                              <label class="text-secondary" for="exampleInputEmail1" >
@@ -109,11 +106,12 @@
                     <a href=""><img src="/images/instagram.png"></a>
                     
                 </div>
-                  </form>
+                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+              </form>
             </div>
             <div class="col-md-5 col-sm-11 box_2 " style="border:none;border-left:1px solid #d3d3d3;">
                 <img class=" img-fluid p-3 mr-5" src="/images/sign_new.jpg">
-                <a class="account1" href="sign_up.html">Not have an account</a>
+                <a class="account1 " href="/register">Not have an account</a>
             </div>
             
         </div>

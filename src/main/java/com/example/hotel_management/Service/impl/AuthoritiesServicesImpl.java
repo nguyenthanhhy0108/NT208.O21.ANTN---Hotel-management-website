@@ -21,4 +21,9 @@ public class AuthoritiesServicesImpl implements AuthoritiesServices {
     public List<Authorities> findByUsername(String Username) {
         return AuthoritiesRepository.findByUsername(Username);
     }
+
+    @Override
+    public Authorities save(Authorities authorities) {
+        return AuthoritiesRepository.save(authorities);
+    }
 }

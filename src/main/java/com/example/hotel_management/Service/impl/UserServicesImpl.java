@@ -2,24 +2,30 @@ package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.Users;
 import com.example.hotel_management.Repository.AuthoritiesRepository;
-import com.example.hotel_management.Repository.UsersRepository;
-import com.example.hotel_management.Service.UsersServices;
+import com.example.hotel_management.Repository.UserRepository;
+import com.example.hotel_management.Service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class UsersServicesImpl implements UsersServices {
-    private final UsersRepository UsersRepository;
+public class UserServicesImpl implements UserServices {
+
+    private final UserRepository UserRepository;
     private final AuthoritiesRepository AuthoritiesRepository;
     @Autowired
-    public UsersServicesImpl(UsersRepository usersRepository, AuthoritiesRepository authoritiesRepository) {
-        UsersRepository = usersRepository;
+    public UserServicesImpl(UserRepository userRepository, AuthoritiesRepository authoritiesRepository) {
+        UserRepository = userRepository;
         AuthoritiesRepository = authoritiesRepository;
     }
 
     @Override
     public List<Users> findByUsername(String Username) {
-        return UsersRepository.findByUsername(Username);
+        return UserRepository.findByUsername(Username);
+    }
+
+    @Override
+    public Users save(Users users) {
+        return UserRepository.save(users);
     }
 }

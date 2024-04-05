@@ -1,7 +1,7 @@
-package com.example.hotel_management.FailureHandler;
+package com.example.hotel_management.Security;
 import com.example.hotel_management.Config.SecurityConfig;
 import com.example.hotel_management.Model.Users;
-import com.example.hotel_management.Service.UsersServices;
+import com.example.hotel_management.Service.UserServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import java.util.List;
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     //Identify internal attribute
     @Autowired
-    private UsersServices UsersServices;
+    private UserServices UserServices;
     //Global PasswordEncoder from SecurityConfig
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
 
@@ -38,7 +38,9 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         session.setAttribute("username_not_exist", false);
         session.setAttribute("password_wrong", false);
 
-        List<Users> accounts = UsersServices.findByUsername(username);
+        System.out.println("abc");
+
+        List<Users> accounts = UserServices.findByUsername(username);
         if(accounts.isEmpty()){
             session.setAttribute("username_not_exist", true);
             session.removeAttribute("password_wrong");
@@ -48,10 +50,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             if(!encoder.matches(request.getParameter("password"), UserPassword)){
                 session.setAttribute("password_wrong", true);
                 session.removeAttribute("username_not_exist");
-            }
-            else{
-                System.out.println("ABC");
-                response.sendRedirect(request.getContextPath() + "/home");
             }
         }
     }

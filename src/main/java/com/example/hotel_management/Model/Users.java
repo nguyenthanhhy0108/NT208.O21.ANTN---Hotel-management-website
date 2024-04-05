@@ -12,8 +12,10 @@ public class Users {
     @Id
     @Column(name = "Username")
     private String username;
+
     @Column(name = "Password")
     private String password;
+
     @Column(name = "Enabled")
     private int enabled;
 
@@ -37,8 +39,8 @@ public class Users {
     }
 
     public Users(String username, String password, int enabled) {
-        username = username;
-        password = password;
-        enabled = enabled;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
     }
 }

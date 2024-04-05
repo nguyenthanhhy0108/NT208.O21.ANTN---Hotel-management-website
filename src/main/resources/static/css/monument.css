@@ -17,7 +17,9 @@ a:hover{text-decoration: none; color:white;}
 .bar a{text-decoration: none;}
 .box li {list-style: none;margin-left: 90px;margin-top: 16px;}
 .box li span{color:#343a40;}
-.box{box-shadow: 2px 2px 2px solid black ,-2px -2px 2px solid blue !important; }
+.box {
+    box-shadow: 2px 2px 2px black, -2px -2px 2px blue !important;
+}
 .Aboutindia{font-size: 115%;}
 
 .button {

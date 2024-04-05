@@ -1,7 +1,7 @@
 package com.example.hotel_management.Config;
 
 //import com.example.hotel_management.failureHandler.CustomAuthenticationFailureHandler;
-import com.example.hotel_management.FailureHandler.CustomAuthenticationFailureHandler;
+import com.example.hotel_management.Security.CustomAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
