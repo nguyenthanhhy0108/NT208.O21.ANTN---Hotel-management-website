@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-
+//This class is match with USERS table in database
+//Fields: UserDetails, Authorities are defined for 2 join column root
+//  Authorities Cascade: DETACH, MERGE, PERSIST, REFRESH
+//  UserDetails Cascade: DETACH, MERGE, PERSIST, REFRESH, REMOVE
 @Entity
 @Data
 @Table(name = "USERS")

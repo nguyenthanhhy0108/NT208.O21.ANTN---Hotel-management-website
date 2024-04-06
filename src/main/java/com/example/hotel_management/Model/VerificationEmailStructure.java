@@ -3,7 +3,8 @@ package com.example.hotel_management.Model;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-
+//This class define an email structure which will be sent for user when they need
+//A function for replacing ****** code in HTML with a real code
 @Data
 public class VerificationEmailStructure {
     private String subject;
@@ -31,7 +32,7 @@ public class VerificationEmailStructure {
                 + "© 2024 <span style=\"font-weight: bold;\">NT208 Application</span>, Inc. All rights reserved.</p></div>"
                 + "</body></html>";
     }
-
+    //This function is used for replacing ****** code in HTML with a real code
     public void replaceCode(){
         this.message = this.message.replace("******", this.verificationCode);
     }

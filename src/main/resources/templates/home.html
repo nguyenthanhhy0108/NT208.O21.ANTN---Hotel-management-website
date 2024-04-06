@@ -86,7 +86,7 @@
           <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              <span style="color: lawngreen" th:text="${#authentication.getName()}"></span>
+              <span id="username" style="color: lawngreen" th:text="${session.name}"></span>
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="">Information</a>

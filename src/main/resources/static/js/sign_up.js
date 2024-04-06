@@ -1,3 +1,4 @@
+//Check password match with retyped password
 function checkPasswordMatch() {
     let password = document.getElementById("exampleInputPassword1").value;
     let confirmPassword = document.getElementById("exampleInputPassword2").value;

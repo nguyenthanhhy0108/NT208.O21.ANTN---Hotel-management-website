@@ -1,4 +1,4 @@
-//hàm pop up thông báo
+//This function is used to pop up notify
 function popupDialog(title, content){
     var dialog = document.getElementById('dialog');
     var titleElement = document.getElementById('dialogTitle');

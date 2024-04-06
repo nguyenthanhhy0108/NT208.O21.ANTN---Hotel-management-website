@@ -1,6 +1,5 @@
 package com.example.hotel_management.Config;
 
-//import com.example.hotel_management.failureHandler.CustomAuthenticationFailureHandler;
 import com.example.hotel_management.Security.CustomAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,6 +43,7 @@ public class SecurityConfig {
         //Redirect login form to home page
         //Config customAuthenticationFailureHandler
         //Point that /login API can be access without inhibition
+        //Point that /first-page is default url when login successfully
         httpSecurity
                 .formLogin(form -> form
                         .loginProcessingUrl("/authenticateTheUser")

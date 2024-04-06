@@ -255,3 +255,19 @@ dialog p{
     font-size: large;
     font-weight: bold;
 }
+
+.remember-me-container {
+    display: flex;
+    align-items: baseline;
+    margin-top: 10px;
+}
+
+.remember-me-checkbox {
+    overflow: visible;
+    outline-offset: 0;
+    width: 10%;
+}
+
+.remember-me-label {
+    display: inline-block;
+}

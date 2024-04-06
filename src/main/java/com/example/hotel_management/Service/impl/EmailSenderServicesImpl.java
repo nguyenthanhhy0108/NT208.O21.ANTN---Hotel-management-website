@@ -11,16 +11,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Random;
-
+//Implement defined interface
 @Service
 public class EmailSenderServicesImpl implements EmailSenderServices {
+    //Define some attribute
     private final JavaMailSender sender;
-
+    //Dependency Injection
     @Autowired
     public EmailSenderServicesImpl(JavaMailSender sender) {
         this.sender = sender;
     }
 
+    //Send email
+    //Embed image into this email
+    //If error -> out
     @Override
     public void sendEmail(String toEmail, VerificationEmailStructure verificationEmailStructure) {
         MimeMessage message = sender.createMimeMessage();
@@ -40,6 +44,7 @@ public class EmailSenderServicesImpl implements EmailSenderServices {
         }
     }
 
+    //Random verify code (6 letters)
     @Override
     public String randomVerificationCode() {
         int length = 4;

@@ -20,21 +20,26 @@ import java.util.List;
 
 @Controller
 public class RegisterController {
+    //Define and initialize some attribute
     private final UserServices userServices;
     private final UserDetailsServices userDetailsServices;
     private final AuthoritiesServices authoritiesServices;
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
+    //Dependency Injection
     @Autowired
     public RegisterController(UserServices userServices, UserDetailsServices userDetailsServices, AuthoritiesServices authoritiesServices) {
         this.userServices = userServices;
         this.userDetailsServices = userDetailsServices;
         this.authoritiesServices = authoritiesServices;
     }
-
+    //Return register page which is sign_up.html
     @GetMapping("/register")
     String RegisterPage(){
         return "sign_up";
     }
+    //Process when user create a new account
+    //Return some error if exist
+    //If create successfully redirect forward login page which is sign_in.html
     @PostMapping("/register")
     public String Register(Model model, HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -46,10 +51,12 @@ public class RegisterController {
         model.addAttribute("name", name);
         model.addAttribute("email", username);
 
+        //Check used email
         if(!usersList.isEmpty()){
             model.addAttribute("email_in_used", true);
             return "sign_up";
         }
+        //Otherwise -> save -> return login page
         else{
             Users newUsers = userServices.save(new Users(username, encoder.encode(password), 1));
             Authorities authorities = authoritiesServices.save(new Authorities(username, "ROLE_USER"));

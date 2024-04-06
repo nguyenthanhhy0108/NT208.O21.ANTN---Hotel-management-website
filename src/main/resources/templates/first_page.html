@@ -67,10 +67,10 @@
             <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
           </div>
 
-          <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
+          <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              <span style="color: lawngreen" th:text="${#authentication.getName()}"></span>
+              <span style="color: lawngreen" th:text="${session.name}"></span>
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="">Information</a>

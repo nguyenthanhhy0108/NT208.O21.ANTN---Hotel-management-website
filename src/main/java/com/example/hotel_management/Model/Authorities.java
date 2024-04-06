@@ -4,6 +4,10 @@ import com.example.hotel_management.Model.ID.AuthoritiesID;
 import jakarta.persistence.*;
 import lombok.Data;
 
+//This class is match with AUTHORITIES table in database
+//This table ID is AuthoritiesID class
+//Join column Username, ManyToOne with USERS table
+//  Cascade: DETACH, MERGE, PERSIST, REFRESH
 @Data
 @Entity
 @Table(name = "AUTHORITIES")

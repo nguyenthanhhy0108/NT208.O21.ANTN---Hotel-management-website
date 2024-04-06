@@ -2,7 +2,8 @@ package com.example.hotel_management.Model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+//This class is match with USERDETAILS table in database
+//Join column Username, OneToOne with USERS table
 @Data
 @Entity
 @Table(name = "USERDETAILS")

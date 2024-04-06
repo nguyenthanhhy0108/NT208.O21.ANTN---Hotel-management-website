@@ -72,7 +72,6 @@ function checkPasswordMatch() {
 
 
 //Receive response from server and display them!
-//Đã đem hàm sendcode qua đây
 //hàm sendCode: click button => tiến hành gửi mail có mã code (4 số) qua mail user đã nhập => xuất ra cửa sổ thông báo đã gửi mail
 // => chuyển display của class "mail_box" thành none và chuyển display của "veri_box" thành flex
 $(document).ready(() => {
