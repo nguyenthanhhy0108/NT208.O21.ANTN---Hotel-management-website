@@ -74,11 +74,11 @@
                         <label class="text-secondary "  for="exampleInputPassword1" style="margin-right: 190px;">
                           <i class="fa fa-users"></i> Name
                         </label>
-                        <input name="name" type="text" id="exampleInputName" required>
+                        <input name="name" type="text" id="exampleInputName" th:value="${name}" required>
                       </div>
                         <div th:if="${email_in_used}" class="msg form-bt">Your email is already used</div>
                       <label class="text-secondary" for="exampleInputEmail1" style="margin-right: 190px;"><i class="fa fa-envelope"></i> Email</label>
-                      <input  type="email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                      <input  type="email" name="email" id="exampleInputEmail1" th:value="${email}" aria-describedby="emailHelp" required>
                      
                     </div>
                    <div class="msg form-bt" id="passwordMatchMessage" style="display: none"></div>
