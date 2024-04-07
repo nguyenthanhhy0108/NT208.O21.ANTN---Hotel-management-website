@@ -52,7 +52,7 @@ public class RegisterController {
         model.addAttribute("email", username);
 
         //Check used email
-        if(!usersList.isEmpty()){
+        if(userServices.checkUserExistByUsername(username)){
             model.addAttribute("email_in_used", true);
             return "sign_up";
         }

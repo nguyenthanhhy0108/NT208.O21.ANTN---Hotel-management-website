@@ -70,7 +70,7 @@ public class ForgetPasswordController {
         //Form 1
         if ("form1".equals(formId)){
             typedEmail = request.getParameter("email");
-            if(userServices.findByUsername(typedEmail).isEmpty()){
+            if(userServices.checkUserExistByUsername(typedEmail)){
 
                 resposeMap.put("Fail", true);
                 resposeMap.put("notExist", true);
@@ -81,9 +81,7 @@ public class ForgetPasswordController {
                 resposeMap.put("Fail", false);
                 resposeMap.put("notExist", false);
 
-                this.verificationEmailStructure.setVerificationCode(emailSenderServices.randomVerificationCode());
-                this.verificationEmailStructure.replaceCode();
-                this.verificationEmailStructure.setSentTime(LocalDateTime.now());
+                emailSenderServices.prepareEmail(this.verificationEmailStructure);
                 emailSenderServices.sendEmail(typedEmail, this.verificationEmailStructure);
             }
             HttpSession session = request.getSession();
@@ -102,16 +100,15 @@ public class ForgetPasswordController {
                     + request.getParameter("char3")
                     + request.getParameter("char4");
 
-            LocalDateTime now = LocalDateTime.now();
             //Check expired code and response
-            if(now.isAfter(this.verificationEmailStructure.getSentTime().plusMinutes(30))){
+            if(emailSenderServices.checkExpiredVerificationCode(this.verificationEmailStructure)){
                 resposeMap.put("expiredCode", true);
                 resposeMap.put("Fail", true);
                 return new ResponseEntity<>(resposeMap, HttpStatus.OK);
             }
             else{
                 //Check code (true, false)
-                if(!providedCode.equals(this.verificationEmailStructure.getVerificationCode())){
+                if(!emailSenderServices.checkVerificationCode(this.verificationEmailStructure, providedCode)){
                     resposeMap.put("wrongCode", true);
                     resposeMap.put("Fail", true);
                     return new ResponseEntity<>(resposeMap, HttpStatus.OK);

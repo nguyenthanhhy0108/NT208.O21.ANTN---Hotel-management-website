@@ -9,11 +9,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Random;
 //Implement defined interface
 @Service
 public class EmailSenderServicesImpl implements EmailSenderServices {
+
     //Define some attribute
     private final JavaMailSender sender;
     //Dependency Injection
@@ -58,5 +60,29 @@ public class EmailSenderServicesImpl implements EmailSenderServices {
             code.append(randomChar);
         }
         return code.toString();
+    }
+
+    @Override
+    public boolean checkVerificationCode(VerificationEmailStructure verificationEmailStructure, String rawCode) {
+        if(verificationEmailStructure.getVerificationCode().equals(rawCode)) return true;
+        else return false;
+    }
+
+    //Check verification code expire
+    //Get current time and plus 30 minutes, compare to sent time
+    @Override
+    public boolean checkExpiredVerificationCode(VerificationEmailStructure verificationEmailStructure) {
+        LocalDateTime now = LocalDateTime.now();
+        if(now.isAfter(verificationEmailStructure.getSentTime().plusMinutes(30))){
+            return true;
+        }
+        return false;
+    }
+    //Initialize email attributes
+    @Override
+    public void prepareEmail(VerificationEmailStructure verificationEmailStructure) {
+        verificationEmailStructure.setVerificationCode(this.randomVerificationCode());
+        verificationEmailStructure.replaceCode();
+        verificationEmailStructure.setSentTime(LocalDateTime.now());
     }
 }

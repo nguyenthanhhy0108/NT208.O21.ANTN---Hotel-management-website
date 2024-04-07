@@ -11,6 +11,11 @@ public interface UserServices {
      */
     List<Users> findByUsername(String Username);
     /*
+    Input: String Username
+    Output: Boolean
+     */
+    boolean checkUserExistByUsername(String Username);
+    /*
     Input: Users object which you want to save
     Output: This object after saving process
      */

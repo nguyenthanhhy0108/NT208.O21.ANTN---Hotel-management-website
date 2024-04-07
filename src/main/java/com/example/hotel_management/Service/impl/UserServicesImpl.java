@@ -13,6 +13,7 @@ import java.util.List;
 //Implement defined interface
 @Service
 public class UserServicesImpl implements UserServices {
+
     //Define some attribute
     private final UserRepository UserRepository;
     private final AuthoritiesRepository AuthoritiesRepository;
@@ -61,5 +62,11 @@ public class UserServicesImpl implements UserServices {
 
         return false;
     }
-
+    //Check user exist
+    @Override
+    public boolean checkUserExistByUsername(String Username) {
+        List<Users> usersList = this.findByUsername(Username);
+        if(usersList.isEmpty()) return false;
+        else return true;
+    }
 }

@@ -12,4 +12,10 @@ public interface EmailSenderServices {
     void sendEmail(String toEmail, VerificationEmailStructure verificationEmailStructure);
     //Create a random code
     String randomVerificationCode();
+    //Check verification code
+    boolean checkVerificationCode(VerificationEmailStructure verificationEmailStructure, String rawCode);
+    //Check verification code expire
+    boolean checkExpiredVerificationCode(VerificationEmailStructure verificationEmailStructure);
+    //Prepare email
+    void prepareEmail(VerificationEmailStructure verificationEmailStructure);
 }
