@@ -26,13 +26,16 @@ public class Authorities {
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
-    @JoinColumn(name = "Username", insertable = false, updatable = false)
+    @JoinColumn(name = "Username",
+            insertable = false,
+            updatable = false)
     private Users users;
 
     public Authorities() {
     }
 
-    public Authorities(String username, String authority) {
+    public Authorities(String username,
+                       String authority) {
         this.username = username;
         this.authority = authority;
     }

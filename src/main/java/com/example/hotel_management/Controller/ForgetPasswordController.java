@@ -29,7 +29,8 @@ public class ForgetPasswordController {
     private String typedEmail;
     //Dependency injection
     @Autowired
-    public ForgetPasswordController(UserServices userServices, EmailSenderServices emailSenderServices) {
+    public ForgetPasswordController(UserServices userServices,
+                                    EmailSenderServices emailSenderServices) {
         this.userServices = userServices;
         this.emailSenderServices = emailSenderServices;
     }
@@ -64,14 +65,16 @@ public class ForgetPasswordController {
             ResponseEntity: String - Object
      */
     @PostMapping("/forget-password")
-    public ResponseEntity<Map<String, Object>> process(@RequestParam("formId") String formId, HttpServletRequest request, HttpServletResponse response, Model model){
+    public ResponseEntity<Map<String, Object>> process(@RequestParam("formId") String formId,
+                                                       HttpServletRequest request,
+                                                       HttpServletResponse response,
+                                                       Model model){
 
         Map<String, Object> resposeMap = new HashMap<>();
         //Form 1
         if ("form1".equals(formId)){
             typedEmail = request.getParameter("email");
-            if(userServices.checkUserExistByUsername(typedEmail)){
-
+            if(!userServices.checkUserExistByUsername(typedEmail)){
                 resposeMap.put("Fail", true);
                 resposeMap.put("notExist", true);
             }

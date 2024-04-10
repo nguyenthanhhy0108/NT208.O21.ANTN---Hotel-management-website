@@ -28,7 +28,9 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     //Set username into login form to help end user
     //Check username and password in database and set error message if it existed
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException, ServletException {
         super.onAuthenticationFailure(request, response, exception);
 
         String username = request.getParameter("username");
@@ -37,8 +39,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
         session.setAttribute("username_not_exist", false);
         session.setAttribute("password_wrong", false);
-
-        System.out.println("abc");
 
         List<Users> accounts = UserServices.findByUsername(username);
         if(accounts.isEmpty()){

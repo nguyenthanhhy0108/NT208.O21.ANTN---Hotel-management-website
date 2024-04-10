@@ -12,7 +12,8 @@ public class AuthoritiesID implements Serializable {
     public AuthoritiesID() {
     }
 
-    public AuthoritiesID(String username, String authority) {
+    public AuthoritiesID(String username,
+                         String authority) {
         this.username = username;
         this.authority = authority;
     }

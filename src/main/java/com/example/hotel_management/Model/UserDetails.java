@@ -21,13 +21,19 @@ public class UserDetails {
     private String phoneNumber;
 
     @OneToOne
-    @JoinColumn(name = "Username", insertable = false, updatable = false)
+    @JoinColumn(name = "Username",
+            insertable = false,
+            updatable = false)
     private Users users;
 
     public UserDetails() {
     }
 
-    public UserDetails(String username, String name, String nationality, String address, String phoneNumber) {
+    public UserDetails(String username,
+                       String name,
+                       String nationality,
+                       String address,
+                       String phoneNumber) {
         this.username = username;
         this.name = name;
         this.nationality = nationality;

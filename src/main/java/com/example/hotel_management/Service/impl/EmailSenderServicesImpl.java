@@ -28,7 +28,8 @@ public class EmailSenderServicesImpl implements EmailSenderServices {
     //Embed image into this email
     //If error -> out
     @Override
-    public void sendEmail(String toEmail, VerificationEmailStructure verificationEmailStructure) {
+    public void sendEmail(String toEmail,
+                          VerificationEmailStructure verificationEmailStructure) {
         MimeMessage message = sender.createMimeMessage();
 
         try{
@@ -63,9 +64,14 @@ public class EmailSenderServicesImpl implements EmailSenderServices {
     }
 
     @Override
-    public boolean checkVerificationCode(VerificationEmailStructure verificationEmailStructure, String rawCode) {
-        if(verificationEmailStructure.getVerificationCode().equals(rawCode)) return true;
-        else return false;
+    public boolean checkVerificationCode(VerificationEmailStructure verificationEmailStructure,
+                                         String rawCode) {
+        if(verificationEmailStructure
+                .getVerificationCode()
+                .equals(rawCode))
+            return true;
+        else
+            return false;
     }
 
     //Check verification code expire

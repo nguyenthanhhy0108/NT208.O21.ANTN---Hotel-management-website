@@ -27,7 +27,9 @@ public class RegisterController {
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
     //Dependency Injection
     @Autowired
-    public RegisterController(UserServices userServices, UserDetailsServices userDetailsServices, AuthoritiesServices authoritiesServices) {
+    public RegisterController(UserServices userServices,
+                              UserDetailsServices userDetailsServices,
+                              AuthoritiesServices authoritiesServices) {
         this.userServices = userServices;
         this.userDetailsServices = userDetailsServices;
         this.authoritiesServices = authoritiesServices;
@@ -41,7 +43,8 @@ public class RegisterController {
     //Return some error if exist
     //If create successfully redirect forward login page which is sign_in.html
     @PostMapping("/register")
-    public String Register(Model model, HttpServletRequest request) {
+    public String Register(Model model,
+                           HttpServletRequest request) {
         String name = request.getParameter("name");
         String username = request.getParameter("email");
         String password = request.getParameter("password");

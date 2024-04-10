@@ -22,7 +22,8 @@ public class Users {
     @Column(name = "Enabled")
     private int enabled;
 
-    @OneToOne(mappedBy = "users", cascade = {
+    @OneToOne(mappedBy = "users",
+            cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
@@ -31,7 +32,8 @@ public class Users {
     })
     private UserDetails UserDetails;
 
-    @OneToMany(mappedBy = "users", cascade = {
+    @OneToMany(mappedBy = "users",
+            cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
@@ -41,7 +43,9 @@ public class Users {
     public Users() {
     }
 
-    public Users(String username, String password, int enabled) {
+    public Users(String username,
+                 String password,
+                 int enabled) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;

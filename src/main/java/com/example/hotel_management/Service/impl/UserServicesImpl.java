@@ -20,7 +20,8 @@ public class UserServicesImpl implements UserServices {
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
     //Dependency Injection
     @Autowired
-    public UserServicesImpl(UserRepository userRepository, AuthoritiesRepository authoritiesRepository) {
+    public UserServicesImpl(UserRepository userRepository,
+                            AuthoritiesRepository authoritiesRepository) {
         UserRepository = userRepository;
         AuthoritiesRepository = authoritiesRepository;
     }
@@ -39,7 +40,8 @@ public class UserServicesImpl implements UserServices {
     //Encode newPassword
     //Save it into database
     @Override
-    public void updatePasswordByUsername(String username, String newPassword) {
+    public void updatePasswordByUsername(String username,
+                                         String newPassword) {
         Users users = this.findByUsername(username).get(0);
         String encodedPassword = encoder.encode(newPassword);
         int enabled = users.getEnabled();
@@ -52,7 +54,8 @@ public class UserServicesImpl implements UserServices {
     //Encode rawPassword
     //Compare it with true password in database
     @Override
-    public boolean comparePasswordByUsername(String username, String rawPassword) {
+    public boolean comparePasswordByUsername(String username,
+                                             String rawPassword) {
         Users users = this.findByUsername(username).get(0);
         String encodedPassword = encoder.encode(rawPassword);
 
