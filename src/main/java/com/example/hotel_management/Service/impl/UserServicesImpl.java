@@ -18,30 +18,59 @@ public class UserServicesImpl implements UserServices {
     private final UserRepository UserRepository;
     private final AuthoritiesRepository AuthoritiesRepository;
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
-    //Dependency Injection
+
+    /**
+     * Dependency Injection
+     * @param userRepository: UserRepository object
+     * @param authoritiesRepository: AuthoritiesRepository object
+     */
     @Autowired
     public UserServicesImpl(UserRepository userRepository,
                             AuthoritiesRepository authoritiesRepository) {
         UserRepository = userRepository;
         AuthoritiesRepository = authoritiesRepository;
     }
-    //Call Repository layer and return  an Users list
+
+    /**
+     * Implement UserServices Interface
+     * @param Username: The username which you want to find Users object
+     * @return
+     * A Users list
+     */
     @Override
     public List<Users> findByUsername(String Username) {
+        /*
+        Call Repository layer and return a Users list
+         */
         return UserRepository.findByUsername(Username);
     }
 
-    //Call Repository layer and return  an users object
+    /**
+     * Implement UserServices Interface
+     * @param users: The Users object, which need to save
+     * @return
+     * Users object
+     */
     @Override
     public Users save(Users users) {
+        /*
+        Call Repository layer and return users object
+         */
         return UserRepository.save(users);
     }
 
-    //Encode newPassword
-    //Save it into database
+    /**
+     * Implement UserServices Interface
+     * @param username: The username, which need to change password
+     * @param newPassword: Raw password (For instance: abc12345@!)
+     */
     @Override
     public void updatePasswordByUsername(String username,
                                          String newPassword) {
+        /*
+        Encode newPassword
+        Save it into database
+         */
         Users users = this.findByUsername(username).get(0);
         String encodedPassword = encoder.encode(newPassword);
         int enabled = users.getEnabled();
@@ -51,11 +80,20 @@ public class UserServicesImpl implements UserServices {
         }
     }
 
-    //Encode rawPassword
-    //Compare it with true password in database
+    /**
+     * Implement UserServices Interface
+     * @param username: The username, which need to compare password
+     * @param rawPassword: Raw password (For instance: abc12345@!)
+     * @return
+     * A boolean
+     */
     @Override
     public boolean comparePasswordByUsername(String username,
                                              String rawPassword) {
+        /*
+        Encode rawPassword
+        Compare it with true password in database
+         */
         Users users = this.findByUsername(username).get(0);
         String encodedPassword = encoder.encode(rawPassword);
 
@@ -65,9 +103,18 @@ public class UserServicesImpl implements UserServices {
 
         return false;
     }
-    //Check user exist
+
+    /**
+     * Implement UserServices Interface
+     * @param Username: The username which you want to check
+     * @return
+     * A boolean
+     */
     @Override
     public boolean checkUserExistByUsername(String Username) {
+        /*
+        Check user exist
+         */
         List<Users> usersList = this.findByUsername(Username);
         if(usersList.isEmpty()) return false;
         else return true;

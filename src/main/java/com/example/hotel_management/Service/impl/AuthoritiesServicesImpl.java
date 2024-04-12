@@ -12,20 +12,41 @@ import java.util.List;
 public class AuthoritiesServicesImpl implements AuthoritiesServices {
     //Define some attribute
     private final AuthoritiesRepository AuthoritiesRepository;
-    //Dependency Injection
+
+    /**
+     * Dependency Injection
+     * @param authoritiesRepository: AuthoritiesRepository object
+     */
     @Autowired
     public AuthoritiesServicesImpl(AuthoritiesRepository authoritiesRepository) {
         AuthoritiesRepository = authoritiesRepository;
     }
 
-    //Call Repository layer and return  an authorities list
+    /**
+     * Implement AuthoritiesServices Interface
+     * @param Username: The username
+     * @return
+     * An authorities list
+     */
     @Override
     public List<Authorities> findByUsername(String Username) {
+        /*
+        Call Repository layer and return  an authorities list
+         */
         return AuthoritiesRepository.findByUsername(Username);
     }
-    //Call Repository layer and return  an authorities object
+
+    /**
+     * Implement AuthoritiesServices Interface
+     * @param authorities: The authorities
+     * @return
+     * An authorities which is saved
+     */
     @Override
     public Authorities save(Authorities authorities) {
+        /*
+        Call Repository layer and return  an authorities object
+         */
         return AuthoritiesRepository.save(authorities);
     }
 }

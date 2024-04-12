@@ -5,14 +5,20 @@ import com.example.hotel_management.Model.Authorities;
 import java.util.List;
 //Define services for Controller layer action easily
 public interface AuthoritiesServices {
-    /*
-    Input: String Username
-    Output: List Authorities which contains full role of this user
+
+    /**
+     * This service is used to get a list authorities with provided username
+     * @param Username: The Username
+     * @return
+     * List Authorities which contains full role of this user
      */
     List<Authorities> findByUsername(String Username);
-    /*
-    Input: A new Authorities object
-    Output: A Authorities object which saved in database
+
+    /**
+     * This service is used to save an authorities object to database
+     * @param authorities: The authorities
+     * @return
+     * The authorities which is saved
      */
     Authorities save(Authorities authorities);
 }

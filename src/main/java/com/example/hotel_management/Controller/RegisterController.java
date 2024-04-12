@@ -25,7 +25,13 @@ public class RegisterController {
     private final UserDetailsServices userDetailsServices;
     private final AuthoritiesServices authoritiesServices;
     private final PasswordEncoder encoder = SecurityConfig.passwordEncoder();
-    //Dependency Injection
+
+    /**
+     * Dependency Injection
+     * @param userServices: UserServices object
+     * @param userDetailsServices: UserDetailsServices object
+     * @param authoritiesServices: AuthoritiesServices object
+     */
     @Autowired
     public RegisterController(UserServices userServices,
                               UserDetailsServices userDetailsServices,
@@ -34,17 +40,29 @@ public class RegisterController {
         this.userDetailsServices = userDetailsServices;
         this.authoritiesServices = authoritiesServices;
     }
-    //Return register page which is sign_up.html
+
+    /**
+     * Get sign up page
+     * @return
+     * Redirect sign_up.html
+     */
     @GetMapping("/register")
     String RegisterPage(){
         return "sign_up";
     }
-    //Process when user create a new account
-    //Return some error if exist
-    //If create successfully redirect forward login page which is sign_in.html
+
+    /**
+     * Process when user create a new account
+     * @param model: Model UI object
+     * @param request: HttpServletRequest object
+     * @return
+     * Some html page
+     */
     @PostMapping("/register")
     public String Register(Model model,
                            HttpServletRequest request) {
+        //Return some error if exist
+        //If create successfully redirect forward login page which is sign_in.html
         String name = request.getParameter("name");
         String username = request.getParameter("email");
         String password = request.getParameter("password");

@@ -12,6 +12,11 @@ public class AuthoritiesID implements Serializable {
     public AuthoritiesID() {
     }
 
+    /**
+     * Constructor
+     * @param username: The username
+     * @param authority: The authority
+     */
     public AuthoritiesID(String username,
                          String authority) {
         this.username = username;

@@ -5,7 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-    //Return login page, which is sign_in.html
+
+    /**
+     * Get login page
+     * @return
+     * Redirect sign_in.html
+     */
     @GetMapping("/login")
     public String loginPage(){
         return "sign_in";

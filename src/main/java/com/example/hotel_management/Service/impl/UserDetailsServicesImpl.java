@@ -12,19 +12,41 @@ import java.util.List;
 public class UserDetailsServicesImpl implements UserDetailsServices {
     //Define some attribute
     private final UserDetailsRepository UserDetailsRepository;
-    //Dependency Injection
+
+    /**
+     * Dependency Injection
+     * @param userDetailsRepository: UserDetailsRepository object
+     */
     @Autowired
     public UserDetailsServicesImpl(UserDetailsRepository userDetailsRepository) {
         UserDetailsRepository = userDetailsRepository;
     }
-    //Call Repository layer and return  an UserDetails list
+
+    /**
+     * Implement UserDetailsServices Interface
+     * @param Username: The username
+     * @return
+     * An UserDetails list
+     */
     @Override
     public List<UserDetails> findByUsername(String Username) {
+        /*
+        Call Repository layer and return  an UserDetails list
+         */
         return UserDetailsRepository.findByUsername(Username);
     }
-    //Call Repository layer and return  an UserDetails object
+
+    /**
+     * Implement UserDetailsServices Interface
+     * @param userDetails: UserDetails object
+     * @return
+     * UserDetails object which is saved
+     */
     @Override
     public UserDetails save(UserDetails userDetails) {
+        /*
+        Call Repository layer and return  an UserDetails object
+         */
         return UserDetailsRepository.save(userDetails);
     }
 }

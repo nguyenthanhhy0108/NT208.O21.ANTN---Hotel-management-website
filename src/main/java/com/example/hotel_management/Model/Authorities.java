@@ -34,6 +34,11 @@ public class Authorities {
     public Authorities() {
     }
 
+    /**
+     * Constructor
+     * @param username: The username
+     * @param authority: The authority
+     */
     public Authorities(String username,
                        String authority) {
         this.username = username;

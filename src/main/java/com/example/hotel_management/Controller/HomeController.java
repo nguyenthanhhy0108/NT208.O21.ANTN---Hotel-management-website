@@ -14,13 +14,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     //Define some services
     private final UserServices userServices;
-    //Dependency Injection
+
+    /**
+     * Dependency Injection
+     * @param userServices: UserServices object
+     */
     @Autowired
     public HomeController(UserServices userServices) {
         this.userServices = userServices;
     }
-    //Return first-page.html
-    //Set attribute name in session
+
+    /**
+     * Get first page
+     * @param request: HttpServletRequest object to get request parameter
+     * @return
+     * Redirect first_page.html
+     */
     @GetMapping("/first-page")
     String FirstPage(HttpServletRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -28,6 +37,7 @@ public class HomeController {
             return "first_page";
         }
         else{
+            //Set attribute name in session
             HttpSession session = request.getSession();
             session.setAttribute("name", userServices.findByUsername(authentication.getName())
                     .get(0)
@@ -36,7 +46,12 @@ public class HomeController {
         }
         return "first_page";
     }
-    //Return home.html
+
+    /**
+     * Get home page
+     * @return
+     * Redirect home.html
+     */
     @GetMapping("/home")
     public String HomePage(){
         return "home";

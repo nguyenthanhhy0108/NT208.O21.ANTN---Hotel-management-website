@@ -9,15 +9,21 @@ import java.util.Properties;
 
 @Configuration
 public class EmailConfig {
+    /**
+     * Define gmail and NT application password for mail sender
+     * @return
+     * mailSender Object
+     */
     @Bean
     public JavaMailSender getJavaMailSender() {
-        //Protocol: SMTP
-        //Port: 587
+        /*
+         Protocol: SMTP
+         Port: 587
+         */
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        //Define gmail and SE application password for mail sender
         mailSender.setUsername("noreply.nt208@gmail.com");
         mailSender.setPassword("zrxm jlyi gxhy emjt");
 

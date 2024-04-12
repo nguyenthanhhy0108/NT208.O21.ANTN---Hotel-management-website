@@ -29,6 +29,14 @@ public class UserDetails {
     public UserDetails() {
     }
 
+    /**
+     * Constructor
+     * @param username: The username
+     * @param name: The name
+     * @param nationality: The nationality
+     * @param address: The address
+     * @param phoneNumber: The phone number
+     */
     public UserDetails(String username,
                        String name,
                        String nationality,

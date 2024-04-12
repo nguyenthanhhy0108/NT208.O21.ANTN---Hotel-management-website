@@ -5,35 +5,50 @@ import com.example.hotel_management.Model.Users;
 import java.util.List;
 //Define services for Controller layer action easily
 public interface UserServices {
-    /*
-    Input: String Username
-    Output: List Users
+
+    /**
+     * This Service is used to find a list of Users object in database
+     * @param Username: The username which you want to find Users object
+     * @return
+     * A List of Users object, can empty
      */
     List<Users> findByUsername(String Username);
-    /*
-    Input: String Username
-    Output: Boolean
+
+    /**
+     * This Service is used to check a user exist in database
+     * @param Username: The username which you want to check
+     * @return
+     * A boolean.
+     * True if username exist in database.
+     * False for the remaining case
      */
     boolean checkUserExistByUsername(String Username);
-    /*
-    Input: Users object which you want to save
-    Output: This object after saving process
+
+    /**
+     * This Service is used to save a user to database
+     * @param Users: The Users object, which need to save
+     * @return
+     * A Users object, which has used in database
      */
     Users save(Users Users);
-    /*
-    Input:
-        - String username
-        - String a raw password (For instance: abc12345@!)
-    Output:
-        - True if raw password match with password retrieved by provided username
-        - On the other hand this function will return false
+
+    /**
+     * This Service is used to compare a raw string with true password in database
+     * @param username: The username, which need to compare password
+     * @param rawPassword: Raw password (For instance: abc12345@!)
+     * @return
+     * A boolean.
+     * True if raw password match with password retrieved by provided username.
+     * On the other hand this function will return false
      */
-    boolean comparePasswordByUsername(String username, String rawPassword);
-    /*
-    This function is used to save a new password to database by the provided username
-    Input:
-        - String username
-        - String a new password (For instance: abc12345@!)
+    boolean comparePasswordByUsername(String username,
+                                      String rawPassword);
+
+    /**
+     * This Service is used to save a new password to database with the provided username
+     * @param username: The username, which need to change password
+     * @param newPassword: Raw password (For instance: abc12345@!)
      */
-    void updatePasswordByUsername(String username, String newPassword);
+    void updatePasswordByUsername(String username,
+                                  String newPassword);
 }

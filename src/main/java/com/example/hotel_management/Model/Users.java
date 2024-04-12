@@ -43,6 +43,12 @@ public class Users {
     public Users() {
     }
 
+    /**
+     * Constructor
+     * @param username: The username
+     * @param password: The password
+     * @param enabled: The enabled
+     */
     public Users(String username,
                  String password,
                  int enabled) {

@@ -8,9 +8,12 @@ import java.util.List;
 //This interface is used for interact with USERS table in database
 @Repository
 public interface UserRepository extends JpaRepository<Users, String> {
-    /*
-    Input: String Username
-    Output: List Users
+
+    /**
+     * Get a list user
+     * @param Username: The username
+     * @return
+     * List Users
      */
     List<Users> findByUsername(String Username);
 }

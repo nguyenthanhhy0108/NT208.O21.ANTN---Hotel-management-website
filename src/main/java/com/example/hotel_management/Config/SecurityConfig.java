@@ -18,32 +18,52 @@ import javax.sql.DataSource;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
     CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
-    //Create bean passwordEncoder used for whole project
+    /**
+     * Constructor for dependency injection process
+     * @param customAuthenticationFailureHandler: A class for custom failure handler when login
+     */
+    @Autowired
+    public SecurityConfig(CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+    }
+
+    /**
+     * Create bean passwordEncoder used for whole project
+     * @return
+     * BCryptPasswordEncoder object
+     */
     @Bean
     public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    //Point that authentication will use own database
+    /**
+     * Point that authentication will use own database
+     * @param dataSource: Defined datasource (SQL server)
+     * @return
+     * JdbcUserDetailsManager object
+     */
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         return new JdbcUserDetailsManager(dataSource);
     }
 
-    //Config Spring Security filter
+    /**
+     * Config Spring Security filter
+     * @param httpSecurity: HttpSecurity object which is provided by Spring
+     * @return
+     * HttpSecurity object which is built
+     * @throws Exception
+     * Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
-
-
         //Custom login form
         //Redirect login form to home page
         //Config customAuthenticationFailureHandler
-        //Point that /login API can be access without inhibition
-        //Point that /first-page is default url when login successfully
         httpSecurity
                 .formLogin(form -> form
                         .loginProcessingUrl("/authenticateTheUser")
@@ -52,13 +72,15 @@ public class SecurityConfig {
                         .failureHandler(customAuthenticationFailureHandler)
                         .loginPage("/login").permitAll());
 
-        //Config default directory for Front-end
         String[] staticResources = {
                 "/css/**",
                 "/images/**",
                 "/fonts/**",
                 "/js/**",};
 
+        //Point that /login API can be access without inhibition
+        //Point that /first-page is default url when login successfully
+        //Config default directory for Front-end
         //Config some API request
         httpSecurity
                 .authorizeHttpRequests(auth->auth
@@ -75,13 +97,13 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated());
 
-        //Config logout API and delete cookies
         httpSecurity
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .deleteCookies("remember-me")
                         .permitAll());
 
+        //Config logout API and delete cookies
         //Config rememberMe feature
         httpSecurity
                 .rememberMe(rememberMe -> rememberMe

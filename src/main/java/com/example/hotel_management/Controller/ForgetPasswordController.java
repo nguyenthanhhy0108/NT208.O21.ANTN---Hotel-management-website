@@ -27,7 +27,12 @@ public class ForgetPasswordController {
     private final EmailSenderServices emailSenderServices;
 
     private String typedEmail;
-    //Dependency injection
+
+    /**
+     * Constructor for dependency injection
+     * @param userServices: UserServices class service
+     * @param emailSenderServices: EmailSenderServices class service
+     */
     @Autowired
     public ForgetPasswordController(UserServices userServices,
                                     EmailSenderServices emailSenderServices) {
@@ -35,34 +40,24 @@ public class ForgetPasswordController {
         this.emailSenderServices = emailSenderServices;
     }
 
-    //Add method to get forget_password.html
+    /**
+     * Redirect to Forget password page
+     * @return
+     * Get forget_password.html
+     */
     @GetMapping("/forget-password")
     public String forgetPasswordPage(){
         return "forget_password";
     }
 
-    /*
-    Add method to process when users forgot their password
-    - Method: POST
-    - Action /forget-password
-
-    - 3 form
-        + Form 1: Controlling when user provide their email
-            - Check exist email
-            - Initialize email structure
-        + Form 2: Checking when user provide verify code
-            - Check code (expired, match)
-        + Form 3: Reset password
-            - Check password overlap
-            - If not -> save -> return login page
-    - Return some error notify parallelly.
-     */
-    /*
-        Input:
-            RequestParam: formId to know which form is received
-            ...
-        Output:
-            ResponseEntity: String - Object
+    /**
+     * Process when users forgot their password
+     * @param formId: Pointing which form is sent
+     * @param request: Class to get request from user
+     * @param response: Class to response
+     * @param model: Class to embed parameter into html
+     * @return
+     * ResponseEntity to client
      */
     @PostMapping("/forget-password")
     public ResponseEntity<Map<String, Object>> process(@RequestParam("formId") String formId,
@@ -71,7 +66,13 @@ public class ForgetPasswordController {
                                                        Model model){
 
         Map<String, Object> resposeMap = new HashMap<>();
-        //Form 1
+        //Method: POST
+        //Action /forget-password
+        //Return some error notify parallelly.
+
+        //Form 1: Controlling when user provide their email
+        //Check exist email
+        //Initialize email structure
         if ("form1".equals(formId)){
             typedEmail = request.getParameter("email");
             if(!userServices.checkUserExistByUsername(typedEmail)){
@@ -96,7 +97,8 @@ public class ForgetPasswordController {
 
             return new ResponseEntity<>(resposeMap, HttpStatus.OK);
         }
-        //Form2
+        //Form 2: Checking when user provide verify code
+        //Check code (expired, match)
         if ("form2".equals(formId)){
             String providedCode = request.getParameter("char1")
                     + request.getParameter("char2")
@@ -122,7 +124,9 @@ public class ForgetPasswordController {
                 }
             }
         }
-        //Form3
+        //Form 3: Reset password
+        //Check password overlap
+        //If not -> save -> return login page
         if ("form3".equals(formId)){
             String typedPassword = request.getParameter("password");
             if(userServices.comparePasswordByUsername(this.typedEmail, typedPassword)){
