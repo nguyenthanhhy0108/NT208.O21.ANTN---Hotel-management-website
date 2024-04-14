@@ -99,15 +99,17 @@
         <div class="carousel-caption d-md-block">
           <h5>Find hotel at your destination</h5>
 
-          <div class="input-group mb-3" style="border-radius:50px!important;">
-            <input type="text" class="form-control p-4" placeholder="Where do you want to go?"
+          <form autocomplete="off">
+          <div class="input-group mb-3 autocomplete" style="border-radius:50px!important;">
+            <input type="text" id="searchInput" class="form-control p-4" placeholder="Where do you want to go?"
               aria-label="Recipient's username" aria-describedby="basic-addon2"
               style="border-radius: 50px 0px 0px 50px;">
             <div class="input-group-append">
-              <span class="input-group-text bg-success px-5 text-white font-weight-bold" id="basic-addon2"
-                style="border-radius: 0px 50px 50px 0px;">Find</span>
+              <input type="submit" class="input-group-text bg-success px-5 text-white font-weight-bold" style="border-radius: 0px 50px 50px 0px;" value="Find">
             </div>
           </div>
+
+          </form>
 
         </div>
 
@@ -407,6 +409,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script type="text/javascript" th:src="@{/js/all.js}" defer></script>
     <script>
       $(window).scroll(function () {
         $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
