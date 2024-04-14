@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/sign_in.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <title>Document</title>
+</head><br>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<body class="box" >
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">HOME</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        SERVICES
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="first_page.html#cont">CONTACT</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+<!--    <div class="container mb-5 " data-aos="zoom-in">-->
+    <div class="container mb-5 d-flex justify-content-center">
+        <div class="row form mx-auto  py-2 shadow mt-5 " style="filter: drop-shadow(0px 0px 4px black);border-radius: 10px;">
+            <div class="col-md-7 col-sm-11  p-3 ">
+                <form class="p-5" method="POST" autocomplete="off" th:action="@{/authenticateTheUser}">
+                        <div class="form-group"  style="margin-right: -200px;">
+                            <h2 class="mb-5" style="font-weight: bold; margin-right: 40%">Sign In</h2>
+
+                                <div th:if="${session.username_not_exist}" class="msg">
+                                    Email does not exist.
+                                </div>
+
+                                <div id="password-error" th:if="${session.password_wrong}" class="msg">
+                                    Wrong password.
+                                </div>
+
+                                <div id="log-out" th:if="${param.logout}" class="logout-message">
+                                    You have been logged out.
+                                </div>
+
+                                <div id="password-successMessage" style="display: none" class="msg-ok">
+                                    Change password successfully
+                                </div>
+
+                                <div id="register-successMessage" th:if="${create_account_successfully}" class="msg-ok">
+                                    Create account successfully
+                                </div>
+
+                             <label class="text-secondary" for="exampleInputEmail1" >
+                                 <i class="fa fa-envelope"></i> Email address
+                             </label>
+                            <input  type="email" name="username" th:value="${session.username}" required id="exampleInputEmail1" aria-describedby="emailHelp" >
+
+                            <label class="text-secondary"  for="exampleInputPassword1">
+                                <i class="fa fa-lock"></i> Password
+                            </label>
+                            <input  type="password" name="password" id="exampleInputPassword1"  required>
+
+                            <div class="remember-me-container" style="margin-left: -47%">
+                                <input type="checkbox" name="remember-me" class="remember-me-checkbox" />
+                                <label style="margin-left:-31%">Remember Me</label>
+                                <a style="margin-left: 15%" href="/forget-password" class="forget-pass">Forgot password ?</a>
+                            </div>
+
+
+
+                        </div>
+
+                <div class="d-flex justify-content-center" >
+                    <button type="submit" class="btn btn-primary" >Submit</button>
+                </div>
+
+                <div class="Social-icon  d-flex justify-content-between mt-6 " style="height: auto;width:50%; margin-left: 100px;">
+                    <a href=""><img src="/images/facebook.png"></a>
+                    <a href=""><img src="/images/twitter.png"></a>
+                    <a href=""><img src="/images/linkedin-logo.png"></a>
+                    <a href=""><img src="/images/instagram.png"></a>
+                    
+                </div>
+                <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+              </form>
+            </div>
+            <div class="col-md-5 col-sm-11 box_2 " style="border:none;border-left:1px solid #d3d3d3;">
+                <img class=" img-fluid p-3 mr-5" src="/images/sign_new.jpg">
+                <a class="account1 " href="/register">Not have an account</a>
+            </div>
+            
+        </div>
+    </div>
+      <!-- js files -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script>
+        AOS.init({
+           offset: 300, // offset (in px) from the original trigger point
+           
+           duration: 2000,
+         });
+     </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{background-image: url('../images/back.jpg');}
+   
+
+
+.box{
+    width:100%;
+    
+    justify-content: center;
+}
+     .form-group input{
+        border:none;
+        outline:none;
+        background: none;
+        border-bottom: 2px solid #d3d3d3;
+        width:65%;
+    }
+    .form-group::placeholder{
+        border:none !important;
+        outline:none !important;
+        background: none !important;
+        border-bottom: 2px solid #d3d3d3 !important;
+        width:60% !important;
+        margin-right: 30px;
+    } 
+.form{
+    background-color: white;
+    width: 80%;
+    height: 50%;
+    
+    
+}
+input{
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 16px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(109,93,93,0.4);
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+}
+.form p:hover{color:red;}
+.box_2 img{
+    width: 100%;
+    height: 100%;
+}
+.btn{
+    display: block;
+    margin:0 auto;
+    width:200px;
+    height: 36px;
+    border-radius: 30px;
+    color:#fff;
+    font-size: 15px;
+    cursor: pointer; 
+    background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+}
+.btn:hover{color:white;}
+.Social-icon img:hover {
+ transform: scale(1.3,1.3);
+} 
+.account{
+    position: absolute;
+    top:450px;
+    /*left:35%;*/
+    font-weight: bold;
+    font-size: 25px;
+}  
+.account1{
+    position: absolute;
+    top:450px;
+    left:30%;
+    font-weight: bold;
+}  
+
+/* label{
+    text-transform: uppercase;
+    
+} */
+.Social-icon{margin: 10px;}
+.Social-icon img{ height: 30px;width: 30px;margin-left:3px;transition:all 0.3s ease;}
+
+
+@media only screen and (max-width: 600px) {
+    .btn{
+        display: block;
+        margin:0 auto;
+        width:200px;
+        height: 36px;
+        border-radius: 30px;
+        color:#fff;
+        font-size: 15px;
+        cursor: pointer; 
+        background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+        
+}
+.Social-icon img{ height: 30px;width: 30px; margin:4px;transition:all 0.3s ease;}
+.Social-icon{margin-right:45px;}
+.box_2 img{
+    width: 100%;
+    height: 100%;
+    margin-top: -20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+   
+}
+.form-group input{
+    border:none;
+    outline:none;
+    background: none;
+    border-bottom: 2px solid #d3d3d3;
+    width:90%;
+}
+}
+
+.msg{
+    /*margin-left: 5%;*/
+    color: red;
+    font-size: large;
+    font-weight: bolder;
+    transition: ease-in-out 0.3s;
+}
+
+.logout-message{
+    /*margin-left: 5%;*/
+    font-size: large;
+    color: deepskyblue;
+    font-weight: bolder;
+    transition: ease-in-out 0.3s;
+}
+
+.msg-ok{
+    /*margin-left: 5%;*/
+    color: limegreen;
+    font-size: large;
+    font-weight: bolder;
+    transition: ease-in-out 0.3s;
+}
+
+
+/*Loading*/
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 9999;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+dialog{
+    position: fixed  ;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0;
+    width: 35%;
+    left: 35%;
+    top: 35%;
+}
+dialog[open]{
+    animation: show-dialog 1s ease normal;
+    -webkit-animation: show-dialog 1s ease normal;
+}
+dialog.hide {
+    animation: show-dialog 1s ease normal;
+    -webkit-animation: hide-dialog 1s ease normal;
+}
+dialog::backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-animation: none;
+}
+dialog[open]::backdrop {
+    -webkit-animation: show-backdrop 0.5s ease 0.2s normal;
+}
+dialog.hide::backdrop {
+    -webkit-animation: hide-backdrop 0.5s ease 0.2s normal;
+}
+@-webkit-keyframes show-dialog {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+@-webkit-keyframes hide-dialog{
+    to {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+@-webkit-keyframes show-backdrop {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes hide-backdrop{
+    to {
+        opacity: 0;
+    }
+}
+:where(h2, p){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+dialog h2{
+    border-bottom: 1px solid #707070;
+    justify-content: center;
+    margin: 0;
+    padding: 1%;
+    color: #fff;
+    font-weight: bold;
+}
+dialog p{
+    padding: 1rem;
+    font-size: large;
+    font-weight: bold;
+}
+
+.remember-me-container {
+    display: flex;
+    align-items: baseline;
+    margin-top: 10px;
+}
+
+.remember-me-checkbox {
+    overflow: visible;
+    outline-offset: 0;
+    width: 10%;
+}
+
+.remember-me-label {
+    display: inline-block;
+}
