@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Hotel Booking</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="css/imagehover.min.css">
+  <link rel="stylesheet" href="css/hotel.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <style>
+    .scrolled {
+      background-color: rgba(0, 0, 0, 0.4) !important;
+
+    }
+
+    nav {
+      transition: 0.45s ease-in all !important;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">HOTEL BOOKING</a>
+      <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="hotel.html">Hotel</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Services
+            </a>
+            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="">Restaurant</a>
+              <a class="dropdown-item" href="">Taxi</a>
+<!--              <a class="dropdown-item" href=""></a>-->
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">NEWS</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#cont">Contact</a>
+          </li>
+          <a type="button" class="btn btn-primary px-3 btncmn"  href="sign_in.html">Sign In</a><br>
+          <a type="button" class="btn signup  btn-success px-3 btncmn " href="sign_up.html">Sign Up</a>
+        </ul>
+
+      </div>
+    </div>
+
+
+  </nav>
+
+  <!-- start carausel -->
+  <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel" data-interval=5000>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="img/n01.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-md-block">
+          <h5>Find hotel at your destination</h5>
+
+          <div class="input-group mb-3" style="border-radius:50px!important;">
+            <input type="text" class="form-control p-4" placeholder="Where do you want to go?"
+              aria-label="Recipient's username" aria-describedby="basic-addon2"
+              style="border-radius: 50px 0px 0px 50px;">
+            <div class="input-group-append">
+              <span class="input-group-text bg-success px-5 text-white font-weight-bold" id="basic-addon2"
+                style="border-radius: 0px 50px 50px 0px;">Find</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ...............our Services.................. -->
+
+    <section class="text-gray-700 body-font py-3">
+      <h1 class="mt-5 text-center headings">Our Services</h1>
+      <hr style="width:150px; background-color:red; height: 4px; margin: 4px auto;"><br>
+
+      <div class="container-fluid  px-5  mx-auto mb-5">
+
+        <div class="row ">
+          <div  class="col-md-4  mb-5  " style="height: 400px!important;">
+            <!-- Card -->
+            <div class="card booking-card card-ser">
+
+              <!-- Card image -->
+              <div class="view overlay">
+                <div class="inner">
+                  <img class="card-img-top" src="img/n02.png" alt="Card image cap">
+                </div>
+                <a href="#!">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+
+              <!-- Card content -->
+              <div class="card-body">
+
+                <!-- Title -->
+                <h4 class="card-title font-weight-bold"><a>Room reservation</a></h4>
+
+
+                <p class="card-text"><i class="fa fa-quote-left text-primary" aria-hidden="true"></i>
+                  Find and get a room just by a click on your phone<i class="fa fa-quote-right text-primary" aria-hidden="true"></i></p>
+              </div>
+            </div>
+            <!-- Card -->
+          </div>
+          <div class="col-md-4 mb-4 ">
+            <!-- Card -->
+            <div class="card booking-card card-ser">
+
+              <!-- Card image -->
+              <div class="view overlay">
+                <div class="inner">
+                  <img class="card-img-top" src="img/n03.png" alt="Card image cap">
+                </div>
+                <a href="#!">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+
+              <!-- Card content -->
+              <div class="card-body">
+
+                <!-- Title -->
+                <h4 class="card-title font-weight-bold"><a>Get in touch with hotels</a></h4>
+
+
+                <p class="card-text"><i class="fa fa-quote-left text-primary" aria-hidden="true"></i>
+                  Chat with hotels for detail<i class="fa fa-quote-right text-primary" aria-hidden="true"></i></p>
+
+
+              </div>
+
+            </div>
+            <!-- Card -->
+          </div>
+          <div  class="col-md-4 mb-5 ">
+            <!-- Card -->
+            <div class="card booking-card card-ser">
+
+              <!-- Card image -->
+              <div class="view overlay">
+                <div class="inner">
+                  <img class="card-img-top" src="img/n04.jpg" alt="Card image cap">
+                </div>
+                <a href="#!">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+
+              <!-- Card content -->
+              <div class="card-body">
+
+                <!-- Title -->
+                <h4 class="card-title font-weight-bold"><a>Register your hotel</a></h4>
+
+
+                <p class="card-text"><i class="fa fa-quote-left text-primary" aria-hidden="true"></i>
+                  If you are hotel's owner, join us to get connect to more customers<i class="fa fa-quote-right text-primary" aria-hidden="true"></i></p>
+
+
+              </div>
+
+            </div>
+            <!-- Card -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ...........hotel Facilities........... -->
+<!--    <div class="container hotel py-3">-->
+<!--      <h1 class="mt-5 text-center headings  ">Hotel Facilities</h1>-->
+<!--      <hr style="width:150px; background-color:red; height: 4px; margin: 4px auto;"><br>-->
+
+<!--      <div class="row">-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/restaurant.svg" style="filter:grayscale(1);">-->
+<!--          <h6>Restaurant</h6>-->
+<!--        </div>-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/cup.svg">-->
+<!--          <h6>Bars</h6>-->
+<!--        </div>-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/car.svg">-->
+<!--          <h6>Parking</h6>-->
+<!--        </div>-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/swimming.svg">-->
+<!--          <h6>Swimming</h6>-->
+<!--        </div>-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/msg.svg">-->
+<!--          <h6>Spa</h6>-->
+<!--        </div>-->
+<!--        <div  data-aos="zoom-in" class="col-md-2 col-sm-11 pb-3 ">-->
+<!--          <img src="img/icons/bicycle.svg">-->
+<!--          <h6>Gym</h6>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+    <!-- ............why use tourzilla....... -->
+
+    <div class="container whyt ">
+      <section class="text-gray-700 body-font py-3">
+        <h1 class="mt-5 text-center headings  ">Why join us?</h1>
+        <hr style="width:150px; background-color:red; height: 4px; margin: 4px auto;"><br>
+        <div class="container mt-2">
+
+          <div class="row">
+            <div  class="col-md-3 col-sm-11 mx-auto item ">
+              <div class="card item-card card-block p-3">
+
+                <img src="img/icons/SaveMoney.svg" alt="Photo of sunset">
+                <strong>
+                  <h5 class="item-card-title  why_card mt-3 mb-3 animate__flipInX">Save Money</h5>
+                </strong>
+                <p class="card-text">A free platform helps you find your favorite hotel.</p>
+              </div>
+            </div>
+            <div  class="col-md-3 col-sm-11 mx-auto item ">
+              <div class="card item-card card-block p-3">
+
+                <img src="img/icons/Convenience.svg" alt="Photo of sunset">
+                <strong>
+                  <h5 class="card-title  why_card  mt-3 mb-3">Convenience</h5>
+                </strong>
+                <p class="card-text">A website consist of thousands of hotels. You do not need to look at anywhere else.</p>
+              </div>
+            </div>
+            <div  class="col-md-3 col-sm-11 mx-auto item">
+              <div class="card item-card card-block p-3">
+
+                <img src="img/icons/travelAdvisor.svg" alt="Photo of sunset">
+                <strong>
+                  <h5 class="card-title  why_card  mt-3 mb-3">Personal Attention</h5>
+                </strong>
+                <p class="card-text">We always listen to serve you.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+    <!-- .................monuments........... -->
+    <div class="container-fluid ">
+      <h1 class="mt-5 text-center headings  ">Trending destination</h1>
+      <hr style="width:150px; background-color:red; height: 4px; margin: 4px auto;"><br>
+      <section class="text-gray-700 body-font ">
+        <div class="container px-5  mx-auto flex flex-wrap justify-content-center">
+
+
+          <div class="flex flex-wrap md:-m-2 -m-1 col-sm-11">
+            <div class="flex flex-wrap w-1/2">
+              <div class="md:p-2 p-1 w-1/2 places">
+                <img alt="gallery" class="w-full object-cover h-full object-center block" src="img/rajsthan.jpg">
+              </div>
+              <div class="md:p-2 p-1 w-1/2 places">
+                <img alt="glery" class="w-full object-cover h-full object-center block" src="img/taj.cms">
+              </div>
+              <div class="md:p-2 p-1 w-full places">
+                <img alt="gallery" class="w-full h-full object-cover object-center block" src="img/blog-2.jpg">
+              </div>
+            </div>
+            <div class="flex flex-wrap w-1/2">
+              <div class="md:p-2 p-1 w-full places">
+                <img alt="gallery" class="w-full h-full object-cover object-center block" src="img/001.jpg">
+              </div>
+              <div class="md:p-2 p-1 w-1/2 places">
+                <img alt="gallery" class="w-full object-cover h-full object-center block" src="img/kerala.jpg">
+              </div>
+              <div class="md:p-2 p-1 w-1/2 places">
+                <img alt="gallery" class="w-full object-cover h-full object-center block" src="img/001.cms">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- .................team end........... -->
+    <!-- .................Contact ........... -->
+
+
+    <div class="container-fluid border-dark contact mb-5" id="cont">
+      <h1 class="mt- text-center headings  ">Contact</h1>
+      <hr class=""
+        style="width:150px; background-color:red; height: 4px; margin: 4px auto;"><br>
+      <div class="row  mx-auto " style="width: 75%;box-shadow: 2px 2px 2px black,-3px -3px 2px black; ">
+<!--        <div  class="col-md-5 col-sm-12 center_img  ">-->
+<!--          <img src="" style="height:500px; width:500px; margin-top: 40px; ">-->
+
+
+<!--        </div>-->
+        <div  class="col-md-6 col-sm-11 mx-auto py-3  ">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Name</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Email">
+<!--              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputPassword1">Mobile</label>
+              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Telephone">
+            </div>
+            <div class="form-group purple-border">
+              <label for="exampleFormControlTextarea4">Message</label>
+              <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+            </div>
+
+
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-warning btn-block">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- .................Contact end........... -->
+
+
+    <footer class="footer text-white mt-2 p-1 pt-3">
+      <center>
+        <p><a href="https://www.facebook.com" target="_blank"><i
+              class="fa fa-facebook text-primary fa-2x ml-3"></i></a>
+          <a href="https://www.instagram.com" target="_blank"><i
+              class="fa fa-instagram text-danger fa-2x ml-3"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter text-info fa-2x ml-3"></i></a>
+          <a href="https://in.linkedin.com" target="_blank"><i class="fa fa-linkedin text-primary fa-2x ml-3"></i></a>
+        </p>
+<!--        <h5 class="text-center">Copyright © 2020, Designed by <a href="/mytourzilla"-->
+<!--            class="tourcolor font-weight-bolder text-decoration-none text-link footfontsize" rel="noopener noreferrer"-->
+<!--            target="_blank" class="text-center text-warning">Tour<span class="zillacolor">Zilla</span></a> Team — <a-->
+<!--            href="http://www.drinkingcode.tech"-->
+<!--            class="zillacolor font-weight-bolder text-decoration-none text-link footfontsize" rel="noopener noreferrer"-->
+<!--            target="_blank" class="text-center text-warning">@drinkingcode.tech</a>-->
+<!--        </h5>-->
+      </center>
+
+    </footer>
+  </div>
+
+
+
+
+    <!-- js files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      $(window).scroll(function () {
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
+      });
+      
+    </script>
+    
+    <script>
+  window.watsonAssistantChatOptions = {
+      integrationID: "88156f20-f453-43fd-91dc-8a91650fbcd2", // The ID of this integration.
+      region: "eu-gb", // The region your integration is hosted in.
+      serviceInstanceID: "5e83558b-598e-4edf-a3ec-cbe71e8b8cd1", // The ID of your service instance.
+      onLoad: function(instance) { instance.render(); }
+    };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+    document.head.appendChild(t);
+  });
+</script>
+</body>
+
+</html>
