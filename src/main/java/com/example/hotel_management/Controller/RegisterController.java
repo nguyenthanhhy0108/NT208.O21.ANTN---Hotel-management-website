@@ -48,7 +48,7 @@ public class RegisterController {
      */
     @GetMapping("/register")
     String RegisterPage(){
-        return "sign_up";
+        return "sign_up_user";
     }
 
     /**
@@ -88,6 +88,6 @@ public class RegisterController {
         model.addAttribute("create_account_successfully", true);
         session.removeAttribute("password_wrong");
         session.removeAttribute("username_not_exist");
-        return "sign_in";
+        return "sign_in_user";
     }
 }

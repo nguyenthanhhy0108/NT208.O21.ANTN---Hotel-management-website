@@ -13,6 +13,6 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String loginPage(){
-        return "sign_in";
+        return "sign_in_user";
     }
 }
