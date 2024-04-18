@@ -61,6 +61,4 @@ If you would like to contribute to the project, please create a pull request or 
 
 The Hotel Booking application is developed by Team 9.
 
-## License
-
-The application is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+  
