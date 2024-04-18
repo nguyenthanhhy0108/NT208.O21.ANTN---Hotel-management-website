@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BookingController {
 
-    private final UserRepository userRepository;
     private final HotelDetailServices hotelDetailServices;
 
     @Autowired
-    public BookingController(UserRepository userRepository, HotelDetailServices hotelDetailServices) {
-        this.userRepository = userRepository;
+    public BookingController(HotelDetailServices hotelDetailServices) {
         this.hotelDetailServices = hotelDetailServices;
     }
 
