@@ -5,6 +5,7 @@ import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Repository.HotelDetailRepository;
 import com.example.hotel_management.Repository.UserRepository;
 import com.example.hotel_management.Service.HotelDetailServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class BookingController {
     private final UserRepository userRepository;
     private final HotelDetailServices hotelDetailServices;
 
+    @Autowired
     public BookingController(UserRepository userRepository, HotelDetailServices hotelDetailServices) {
         this.userRepository = userRepository;
         this.hotelDetailServices = hotelDetailServices;
