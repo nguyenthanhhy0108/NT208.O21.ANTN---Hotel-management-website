@@ -1,7 +1,7 @@
 package com.example.hotel_management.Controller;
 
-import com.example.hotel_management.Model.Hotel_detail;
-import com.example.hotel_management.Service.HotelDetailServices;
+import com.example.hotel_management.Model.HotelDetails;
+import com.example.hotel_management.Service.HotelDetailsServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HotelDetailController {
-    private HotelDetailServices hotelDetailServices;
-    @GetMapping("hotelDetail")
+
+    private HotelDetailsServices hotelDetailsServices;
+
+    @GetMapping("/hotel-detail")
     public String showHotelDetail(@RequestParam("id") String id, Model model) {
-        Hotel_detail hotel_detail = hotelDetailServices.findById(id);
-        model.addAttribute("hotel_detail", hotel_detail);
+        HotelDetails hotelDetails = hotelDetailsServices.findById(id);
+        model.addAttribute("hotel_detail", hotelDetails);
         return "hotel-details";
     }
 }

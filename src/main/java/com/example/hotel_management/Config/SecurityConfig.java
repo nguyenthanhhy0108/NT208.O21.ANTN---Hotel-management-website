@@ -84,13 +84,13 @@ public class SecurityConfig {
         //Config some API request
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-//                                .anyRequest().permitAll()); //For testing
+//                        .requestMatchers("/test").permitAll() // For testing
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/password").permitAll()
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/booknow").permitAll()
+                        .requestMatchers("/book-now").permitAll()
                         .requestMatchers("first-page").permitAll()
                         .requestMatchers("forget-password").permitAll()
                         .requestMatchers("/login").anonymous()

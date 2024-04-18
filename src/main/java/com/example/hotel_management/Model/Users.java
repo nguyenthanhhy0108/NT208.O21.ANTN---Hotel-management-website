@@ -40,6 +40,16 @@ public class Users {
             CascadeType.REFRESH
     })
     private List<Authorities> Authorities;
+
+    @OneToMany(mappedBy = "users",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            })
+    private List<Hotel> Hotel;
+
     public Users() {
     }
 
