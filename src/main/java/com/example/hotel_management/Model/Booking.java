@@ -33,4 +33,31 @@ public class Booking {
 
     @Column(name = "total_price")
     private double totalPrice;
+
+    /**
+     * Constructor
+     * @param bookingId booking id (Integer)
+     * @param checkInDate check in date (Date)
+     * @param checkOutDate check out date (Date)
+     * @param customer username of customer (String)
+     * @param hotelId id of booking hotel (String)
+     * @param roomId id of booking room (String)
+     * @param totalPrice total price (double)
+     */
+    public Booking(Integer bookingId,
+                   Date checkInDate,
+                   Date checkOutDate,
+                   String customer,
+                   String hotelId,
+                   String roomId,
+                   double totalPrice) {
+        this.bookingId = bookingId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.customer = customer;
+        this.hotelId = hotelId;
+        this.roomId = roomId;
+        this.totalPrice = totalPrice;
+    }
+    public Booking() {}
 }

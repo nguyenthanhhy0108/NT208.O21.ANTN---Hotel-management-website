@@ -43,6 +43,19 @@ public class HotelDetails {
             updatable = false)
     private Hotel hotel;
 
+    /**
+     * Constructor
+     * @param hotelID hotel id (String)
+     * @param intro introduction (String)
+     * @param name hotel name (String)
+     * @param country country (String)
+     * @param province province (String)
+     * @param city city (String)
+     * @param street street (String)
+     * @param houseNumber house number (String)
+     * @param phoneNumber phone number (String)
+     * @param area area (float)
+     */
     public HotelDetails(String hotelID,
                         String intro,
                         String name,
