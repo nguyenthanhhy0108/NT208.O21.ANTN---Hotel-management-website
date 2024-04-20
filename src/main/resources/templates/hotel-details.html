@@ -99,7 +99,7 @@
   <header class="container-fluid ">
     <div class="headtext">
       <h1 class="text-white heading" th:text="${hotel_detail.name}"></h1>
-      <p class="text-center" th:text="${hotel_detail.getAdress()}">Address: </p>
+      <p class="text-center" th:text="${hotel_detail.getAddress()}">Address: </p>
 
     </div>
 
@@ -123,11 +123,11 @@
         <div class="col">
 
           <h5 class="ms-2"> Hotel Amenities:</h5>
-          <div class="row" th:each="amenities_item : ${hotel_detail.amenities}">
-            <div class="col p-2 fw-lighter">
-              <i class="fa-solid ms-3" th:text="${amenities_item}"></i>
-            </div>
-          </div>
+<!--          <div class="row" th:each="amenities_item : ${hotel_detail.amenities}">-->
+<!--            <div class="col p-2 fw-lighter">-->
+<!--              <i class="fa-solid ms-3" th:text="${amenities_item}"></i>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="row p-3 align-items-start">
             <div class="col">
               <div class="accordion" id="accordionPanel">
@@ -160,13 +160,13 @@
                   </h2>
                   <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
                        aria-labelledby="panelsStayOpen-headingTwo">
-                    <div class="accordion-body" th:each="room:${hotel_details.rooms}">
-                      <li class="list-group">
-                        <ul><i class="fa-regular me-1" th:text="${room.room_name}"></i>
-                          <p class="fw-lighter" th:text="${room.room_description}"></p>
-                        </ul>
-                      </li>
-                    </div>
+<!--                    <div class="accordion-body" th:each="room:${hotel_details.rooms}">-->
+<!--                      <li class="list-group">-->
+<!--                        <ul><i class="fa-regular me-1" th:text="${room.room_name}"></i>-->
+<!--                          <p class="fw-lighter" th:text="${room.room_description}"></p>-->
+<!--                        </ul>-->
+<!--                      </li>-->
+<!--                    </div>-->
                   </div>
                 </div>
                 <div class="accordion-item">
@@ -180,9 +180,9 @@
                   <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
                        aria-labelledby="panelsStayOpen-headingThree">
                     <div class="accordion-body">
-                      <li class="list-group" th:each="security:${hotel_detail.security}">
-                        <ul th:text="${security}"></ul>
-                      </li>
+<!--                      <li class="list-group" th:each="security:${hotel_detail.security}">-->
+<!--                        <ul th:text="${security}"></ul>-->
+<!--                      </li>-->
                     </div>
                   </div>
                 </div>
@@ -192,8 +192,8 @@
 
           <br>
           <center>
-            <button th:href="@{/booking}"
-                    class="btn btn-info btn-sm">Book now</button>
+            <a th:href="@{/booking(hotel_id=${hotel_detail.hotelID})}"
+                    class="btn btn-info btn-sm">Book now</a>
           </center>
         </div>
       </div>
