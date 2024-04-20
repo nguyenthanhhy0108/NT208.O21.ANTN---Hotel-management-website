@@ -30,4 +30,11 @@ public interface HotelDetailsServices {
      * @param id id of hotel detail (String)
      */
     void delete(String id);
+
+    /**
+     * Find all hotel name in database
+     * @return
+     * A list of hotel name
+     */
+    List<String> findAllHotelName();
 }

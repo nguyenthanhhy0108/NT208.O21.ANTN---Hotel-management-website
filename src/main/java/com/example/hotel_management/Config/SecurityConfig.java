@@ -73,6 +73,7 @@ public class SecurityConfig {
                         .loginPage("/login").permitAll());
 
         String[] staticResources = {
+                "/static/**",
                 "/css/**",
                 "/images/**",
                 "/fonts/**",
@@ -84,7 +85,8 @@ public class SecurityConfig {
         //Config some API request
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-//                        .requestMatchers("/test").permitAll() // For testing
+                        .requestMatchers("/test").permitAll() // For testing
+                        .requestMatchers("/suggest").permitAll() // For testing
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/password").permitAll()

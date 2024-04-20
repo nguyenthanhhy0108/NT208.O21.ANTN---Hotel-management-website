@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Search</title>
+    <style>
+        #searchInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #searchSuggestions {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 5px;
+        }
+        #searchSuggestions li {
+            padding: 5px;
+            cursor: pointer;
+        }
+        #searchSuggestions li:hover {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
-<h1>Hello</h1>
+<h1>Hotel Search</h1>
+<input type="text" id="searchInput" placeholder="Enter hotel name...">
+<ul id="searchSuggestions"></ul>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/test.js}"></script>
 </body>
 </html>

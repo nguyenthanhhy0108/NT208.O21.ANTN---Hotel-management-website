@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,5 +47,15 @@ public class HotelServicesImpl implements HotelServices {
         Hotel deletedHotel = listHotel.get(0);
 
         this.hotelRepository.delete(deletedHotel);
+    }
+
+    /**
+     * Implement findAllHotels
+     * @return
+     * A list of Hotel object
+     */
+    @Override
+    public List<Hotel> findAllHotels() {
+        return hotelRepository.findAll();
     }
 }

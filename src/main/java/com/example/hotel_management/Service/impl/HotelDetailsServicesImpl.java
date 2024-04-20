@@ -6,6 +6,7 @@ import com.example.hotel_management.Service.HotelDetailsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,5 +73,20 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
     @Override
     public void delete(String id) {
         hotelDetailsRepository.deleteById(id);
+    }
+
+    /**
+     * Implement find all hotel name
+     * @return
+     * A list of hotel name
+     */
+    @Override
+    public List<String> findAllHotelName() {
+        List<HotelDetails> allHotelDetails = this.hotelDetailsRepository.findAll();
+        List<String> hotelName = new ArrayList<>();
+        for(HotelDetails hotelDetails : allHotelDetails){
+            hotelName.add(hotelDetails.getName());
+        }
+        return hotelName;
     }
 }

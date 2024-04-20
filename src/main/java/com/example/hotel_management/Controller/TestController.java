@@ -1,30 +1,33 @@
-//package com.example.hotel_management.Controller;
-//
-//import com.example.hotel_management.Model.Hotel;
-//import com.example.hotel_management.Model.HotelDetails;
-//import com.example.hotel_management.Service.HotelDetailsServices;
-//import com.example.hotel_management.Service.HotelServices;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//@Controller
-//public class TestController {
-//
-//    private final HotelServices hotelServices;
-//    private final HotelDetailsServices hotelDetailsServices;
-//
-//    @Autowired
-//    public TestController(HotelServices hotelServices, HotelDetailsServices hotelDetailsServices) {
-//        this.hotelServices = hotelServices;
-//        this.hotelDetailsServices = hotelDetailsServices;
-//    }
-//
-//    @GetMapping("/test")
+package com.example.hotel_management.Controller;
+
+import com.example.hotel_management.Model.Hotel;
+import com.example.hotel_management.Model.HotelDetails;
+import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.HotelServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+public class TestController {
+
+    private final HotelServices hotelServices;
+    private final HotelDetailsServices hotelDetailsServices;
+
+    @Autowired
+    public TestController(HotelServices hotelServices, HotelDetailsServices hotelDetailsServices) {
+        this.hotelServices = hotelServices;
+        this.hotelDetailsServices = hotelDetailsServices;
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 //    public ResponseEntity<Map<String, Object>> test(){
 //        Map<String, Object> map = new HashMap<>();
 //
@@ -44,4 +47,4 @@
 //        map.put("Done", true);
 //        return ResponseEntity.ok(map);
 //    }
-//}
+}
