@@ -8,7 +8,8 @@ $(document).ready(function() {
         method: 'GET',
         dataType: 'json',
         success: function(data) {
-            names = data
+            // alert(names)
+            names = data.allName;
             autocomplete(document.getElementById("searchInput"), countries, names);
         },
         error: function(xhr, status, error) {

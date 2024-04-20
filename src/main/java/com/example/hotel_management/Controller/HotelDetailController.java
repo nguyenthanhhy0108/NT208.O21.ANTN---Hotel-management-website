@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HotelDetailController {
 
-    private HotelDetailsServices hotelDetailsServices;
+    private final HotelDetailsServices hotelDetailsServices;
 
     @Autowired
     HotelDetailController(HotelDetailsServices hotelDetailsServices) {
@@ -19,7 +19,7 @@ public class HotelDetailController {
     }
 
     @GetMapping("/hotel-detail")
-    public String showHotelDetail(@RequestParam("id") String id, Model model) {
+    public String showHotelDetail(@RequestParam("hotel_id") String id, Model model) {
         HotelDetails hotelDetails = hotelDetailsServices.findById(id);
         model.addAttribute("hotel_detail", hotelDetails);
         return "/hotel-details";

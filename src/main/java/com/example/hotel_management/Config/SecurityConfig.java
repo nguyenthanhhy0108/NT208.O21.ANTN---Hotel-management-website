@@ -68,7 +68,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginProcessingUrl("/authenticateTheUser")
                         .successForwardUrl("/home")
-                        .defaultSuccessUrl("/first-page", true)
+                        .defaultSuccessUrl("/", true)
                         .failureHandler(customAuthenticationFailureHandler)
                         .loginPage("/login").permitAll());
 
@@ -86,14 +86,18 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/test").permitAll() // For testing
-                        .requestMatchers("/suggest").permitAll() // For testing
+                        .requestMatchers("/hotel-detail/**").permitAll()
+                        .requestMatchers("/suggest").permitAll()
+                        .requestMatchers("/search").permitAll()
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/password").permitAll()
                         .requestMatchers("/home").permitAll()
+                        .requestMatchers("/home/**").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/book-now").permitAll()
                         .requestMatchers("first-page").permitAll()
+                        .requestMatchers("/first-page/**").permitAll()
                         .requestMatchers("forget-password").permitAll()
                         .requestMatchers("/login").anonymous()
                         .anyRequest()

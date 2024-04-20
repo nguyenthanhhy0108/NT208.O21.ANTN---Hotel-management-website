@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 @Service
 public class HotelServicesImpl implements HotelServices {
@@ -52,10 +52,11 @@ public class HotelServicesImpl implements HotelServices {
     /**
      * Implement findAllHotels
      * @return
-     * A list of Hotel object
+     * A list of Hotel objects
      */
     @Override
     public List<Hotel> findAllHotels() {
         return hotelRepository.findAll();
     }
+
 }

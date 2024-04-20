@@ -5,7 +5,7 @@
   <title>Hotel Booking</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/js/home.js"></script>
+  <script src="/js/first_page.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -99,9 +99,9 @@
         <div class="carousel-caption d-md-block">
           <h5>Find hotel at your destination</h5>
 
-          <form autocomplete="off">
+          <form autocomplete="off" th:action="@{/search}" th:method="GET">
           <div class="input-group mb-3 autocomplete" style="border-radius:50px!important;">
-            <input type="text" id="searchInput" class="form-control p-4" placeholder="Where do you want to go?"
+            <input type="text" id="searchInput" name = "name" class="form-control p-4" placeholder="Where do you want to go?"
               aria-label="Recipient's username" aria-describedby="basic-addon2"
               style="border-radius: 50px 0px 0px 50px;">
             <div class="input-group-append">
