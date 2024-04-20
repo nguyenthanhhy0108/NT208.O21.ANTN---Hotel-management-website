@@ -15,11 +15,21 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
 
     private final HotelDetailsRepository hotelDetailsRepository;
 
+    /**
+     * Dependency Injection
+     * @param hotelDetailsRepository: HotelDetailsRepository object
+     */
     @Autowired
     public HotelDetailsServicesImpl(HotelDetailsRepository hotelDetailsRepository) {
         this.hotelDetailsRepository = hotelDetailsRepository;
     }
 
+    /**
+     * Implement find by ID
+     * @param id id of hotel detail (String)
+     * @return
+     * HotelDetails object
+     */
     @Override
     public HotelDetails findById(String id){
         Optional<HotelDetails> result =  hotelDetailsRepository.findById(id);
@@ -34,16 +44,31 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
         return hotelDetail;
     }
 
+    /**
+     * Implement findAll
+     * @return
+     * A list of HotelDetails object
+     */
     @Override
     public List<HotelDetails> findAll(){
         return hotelDetailsRepository.findAll();
     }
 
+    /**
+     * Implement save
+     * @param hotelDetails (Hotel detail)
+     * @return
+     * HotelDetails object which was saved
+     */
     @Override
     public HotelDetails save(HotelDetails hotelDetails) {
         return hotelDetailsRepository.save(hotelDetails);
     }
 
+    /**
+     * Implement delete
+     * @param id id of hotel detail (String)
+     */
     @Override
     public void delete(String id) {
         hotelDetailsRepository.deleteById(id);

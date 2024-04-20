@@ -14,16 +14,30 @@ public class HotelServicesImpl implements HotelServices {
 
     private final HotelRepository hotelRepository;
 
+    /**
+     * Dependency Injection
+     * @param hotelRepository: HotelRepository object
+     */
     @Autowired
     public HotelServicesImpl(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
 
+    /**
+     * Implement save hotel
+     * @param hotel: Hotel object
+     * @return
+     * Hotel object which was saved
+     */
     @Override
     public Hotel saveHotel(Hotel hotel) {
         return this.hotelRepository.save(hotel);
     }
 
+    /**
+     * Implement delete hotel
+     * @param hotelId: HotelID which will be eliminated
+     */
     @Transactional
     @Override
     public void deleteByHotelId(String hotelId) {

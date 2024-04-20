@@ -3,6 +3,7 @@ package com.example.hotel_management.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+//This class is match with HOTEL table in database
 @Data
 @Entity(name = "HOTEL")
 public class Hotel {
@@ -33,6 +34,11 @@ public class Hotel {
             updatable = false)
     private Users users;
 
+    /**
+     * Constructor
+     * @param hotelID: String
+     * @param ownerUsername: String
+     */
     public Hotel(String hotelID, String ownerUsername) {
         this.hotelID = hotelID;
         this.ownerUsername = ownerUsername;

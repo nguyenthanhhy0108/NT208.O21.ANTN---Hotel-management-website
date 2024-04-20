@@ -13,6 +13,10 @@ public class BookingController {
 
     private final HotelDetailsServices hotelDetailsServices;
 
+    /**
+     * Dependency Injection
+     * @param hotelDetailsServices: HotelDetailsServices object
+     */
     @Autowired
     public BookingController(HotelDetailsServices hotelDetailsServices) {
         this.hotelDetailsServices = hotelDetailsServices;
