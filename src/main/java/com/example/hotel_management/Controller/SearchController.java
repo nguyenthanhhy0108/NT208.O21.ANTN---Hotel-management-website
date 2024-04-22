@@ -50,7 +50,7 @@ public class SearchController {
             return "redirect:/hotel-detail?hotel_id=" + id;
         }
 
-        List<String> countries = Arrays.asList(
+        List<String> countries = Arrays.asList( "abc",
                 "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina",
                 "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
                 "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
@@ -92,21 +92,16 @@ public class SearchController {
         return "redirect:/home?country=" + typedName;
     }
 
-    @GetMapping("/get-6-hotels-details")
+    @GetMapping("/get-sorted-hotels-details")
     @ResponseBody
-    public ResponseEntity<Map<String, List<HotelDetails>>> getSixHotelDetails(@RequestParam String country) {
-        HashMap<String, List<HotelDetails>> map = new HashMap<>();
+    public ResponseEntity<Map<String, List<Object>>> getSixHotelDetails(@RequestParam String country) {
+        HashMap<String, List<Object>> map = new HashMap<>();
 
-        List<HotelDetails> sixHotel = new ArrayList<>();
+        List<Object> allHotelDetailsName = new ArrayList<>();
 
-        if(country == null){
-            sixHotel = hotelDetailsServices.getSixHighestBookingCount();
-        }
-        else {
-            sixHotel = hotelDetailsServices.getSixHighestBookingCount(country);
-        }
+        allHotelDetailsName = hotelDetailsServices.getHotelNameSortedByBookingCount(country);
 
-        map.put("result", sixHotel);
+        map.put("names", allHotelDetailsName);
 
         return ResponseEntity.ok(map);
     }

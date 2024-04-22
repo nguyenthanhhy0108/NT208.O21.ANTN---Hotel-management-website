@@ -159,16 +159,15 @@ border-radius: 5px;
 .autocomplete-items div {
     padding: 10px;
     cursor: pointer;
-    background-color: #fff;
-    opacity: 0.6;
-    border-bottom: 1px solid #d4d4d4;
+    background-color: white;
+    border-bottom: 1px solid darkgray;
     color: black;
     max-width: 94%;
     margin-left: 3%;
 }
 .autocomplete-items div:hover {
     /*when hovering an item:*/
-    background: #e9e9e9 !important;
+    background: DodgerBlue !important;
 }
 .autocomplete-active {
     /*when navigating through the items using the arrow keys:*/

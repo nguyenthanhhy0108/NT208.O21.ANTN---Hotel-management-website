@@ -55,16 +55,9 @@ public interface HotelDetailsServices {
     List<HotelDetails> findByName(String hotelName);
 
     /**
-     * Get 6 highest booking count hotel
+     * Get highest to lowest booking count hotel details name in a specific country
      * @return
-     * A hotel list
+     * A list object
      */
-    List<HotelDetails> getSixHighestBookingCount();
-
-    /**
-     * Get 6 highest booking count hotel in a specific country
-     * @return
-     * A hotel list
-     */
-    List<HotelDetails> getSixHighestBookingCount(String country);
+    List<Object> getHotelNameSortedByBookingCount(String country);
 }

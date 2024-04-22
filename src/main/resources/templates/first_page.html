@@ -99,17 +99,54 @@
         <div class="carousel-caption d-md-block">
           <h5>Find hotel at your destination</h5>
 
-          <form autocomplete="off" th:action="@{/search}" th:method="GET">
-          <div class="input-group mb-3 autocomplete" style="border-radius:50px!important;">
-            <input type="text" id="searchInput" name = "name" class="form-control p-4" placeholder="Where do you want to go?"
-              aria-label="Recipient's username" aria-describedby="basic-addon2"
-              style="border-radius: 50px 0px 0px 50px;">
-            <div class="input-group-append">
-              <input type="submit" class="input-group-text bg-success px-5 text-white font-weight-bold" style="border-radius: 0px 50px 50px 0px;" value="Find">
-            </div>
-          </div>
+          <br>
 
+          <form autocomplete="off" th:action="@{/search}" th:method="GET">
+            <div class="form-row justify-content-center" style="background-color: #f8f9fa; border-radius: 50px; max-width: 100%">
+              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+                <h3 class="text-secondary text-center pb-2">Check In Date:</h3>
+                <input type="date" class="form-control rounded-pill text-center" placeholder="City" required>
+              </div>
+              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+                <h3 class="text-secondary text-center pb-2">Check Out Date:</h3>
+                <input type="date" class="form-control rounded-pill text-center" placeholder="City" required>
+              </div>
+              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+                <h3 class="text-secondary text-center pb-2">Adults:</h3>
+                <select class="form-control rounded-pill text-center">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+                <h3 class="text-secondary text-center pb-2">Children:</h3>
+                <select class="form-control rounded-pill text-center">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+                <h3 class="text-secondary text-center pb-2">Rooms:</h3>
+                <select class="form-control rounded-pill text-center">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="input-group mb-3 autocomplete" style="border-radius: 50px;">
+                <input type="text" id="searchInput" name="name" class="form-control rounded-pill py-4" placeholder="Where do you want to go?" aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-top-right-radius: 0; border-bottom-right-radius: 0; max-width: 80%; margin-left: 3%" required>
+                <div class="input-group-append">
+                  <input type="submit" class="input-group-text bg-success text-white font-weight-bold rounded-pill px-5" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" value="Find">
+                </div>
+              </div>
+            </div>
           </form>
+
 
         </div>
 
@@ -381,24 +418,14 @@
 
 
     <footer class="footer text-white mt-2 p-1 pt-3">
-      <center>
-        <p><a href="https://www.facebook.com" target="_blank"><i
-              class="fa fa-facebook text-primary fa-2x ml-3"></i></a>
-          <a href="https://www.instagram.com" target="_blank"><i
-              class="fa fa-instagram text-danger fa-2x ml-3"></i></a>
-          <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter text-info fa-2x ml-3"></i></a>
-          <a href="https://in.linkedin.com" target="_blank"><i class="fa fa-linkedin text-primary fa-2x ml-3"></i></a>
-        </p>
-<!--        <h5 class="text-center">Copyright © 2020, Designed by <a href="/mytourzilla"-->
-<!--            class="tourcolor font-weight-bolder text-decoration-none text-link footfontsize" rel="noopener noreferrer"-->
-<!--            target="_blank" class="text-center text-warning">Tour<span class="zillacolor">Zilla</span></a> Team — <a-->
-<!--            href="http://www.drinkingcode.tech"-->
-<!--            class="zillacolor font-weight-bolder text-decoration-none text-link footfontsize" rel="noopener noreferrer"-->
-<!--            target="_blank" class="text-center text-warning">@drinkingcode.tech</a>-->
-<!--        </h5>-->
-      </center>
-
+      <div style="display: flex; justify-content: center;">
+        <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fa fa-facebook text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fa fa-instagram text-danger fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fa fa-twitter text-info fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://in.linkedin.com" target="_blank" class="social-icon"><i class="fa fa-linkedin text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+      </div>
     </footer>
+
   </div>
 
 

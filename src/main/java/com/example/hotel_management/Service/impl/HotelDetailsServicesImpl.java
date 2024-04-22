@@ -118,32 +118,23 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
     }
 
     /**
-     * Implement get six highest booking count
+     * Implement get hotel name sorted by booking count in a specific country
      * @return
-     * A list of Hotel objects
+     * A list of objects
      */
     @Override
-    public List<HotelDetails> getSixHighestBookingCount() {
-
-        List<HotelDetails> allHotelDetails = this.hotelDetailsRepository.findAll();
-
-        allHotelDetails.sort(Comparator.comparing(HotelDetails::getBookingCount).reversed());
-
-        return allHotelDetails.subList(0, Math.min(6, allHotelDetails.size()));
-    }
-
-    /**
-     * Implement get six highest booking count in a specific country
-     * @return
-     * A list of Hotel objects
-     */
-    @Override
-    public List<HotelDetails> getSixHighestBookingCount(String country) {
+    public List<Object> getHotelNameSortedByBookingCount(String country) {
 
         List<HotelDetails> allHotelDetails = this.hotelDetailsRepository.findByCountry(country);
 
         allHotelDetails.sort(Comparator.comparing(HotelDetails::getBookingCount).reversed());
 
-        return allHotelDetails.subList(0, Math.min(6, allHotelDetails.size()));
+        List<Object> result = new ArrayList<>();
+
+        for(HotelDetails hotelDetails : allHotelDetails){
+            result.add(hotelDetails.getName());
+        }
+
+        return result;
     }
 }

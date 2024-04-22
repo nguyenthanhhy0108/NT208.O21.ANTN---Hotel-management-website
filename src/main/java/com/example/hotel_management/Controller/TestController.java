@@ -26,6 +26,7 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
+//        System.out.println(hotelDetailsServices.getHotelSortedByBookingCount().get(0).getBookingCount());
         return "test";
     }
 //    public ResponseEntity<Map<String, Object>> test(){
