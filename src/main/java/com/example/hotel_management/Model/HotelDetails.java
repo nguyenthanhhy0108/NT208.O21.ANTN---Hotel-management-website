@@ -43,6 +43,9 @@ public class HotelDetails {
     @Column(name = "total_capacity")
     private long totalCapacity;
 
+    @Column(name = "price_per_person")
+    private long pricePerPerson;
+
     @OneToOne
     @JoinColumn(name = "hotel_id",
             insertable = false,
@@ -63,6 +66,7 @@ public class HotelDetails {
      * @param area area (Float)
      * @param bookingCount booking count (Integer)
      * @param totalCapacity total capacity (long)
+     * @param pricePerPerson price per person (long)
      */
     public HotelDetails(String hotelID,
                         String intro,
@@ -75,7 +79,8 @@ public class HotelDetails {
                         String phoneNumber,
                         float area,
                         int bookingCount,
-                        long totalCapacity) {
+                        long totalCapacity,
+                        long pricePerPerson) {
         this.hotelID = hotelID;
         this.intro = intro;
         this.name = name;
@@ -88,6 +93,7 @@ public class HotelDetails {
         this.area = area;
         this.bookingCount = bookingCount;
         this.totalCapacity = totalCapacity;
+        this.pricePerPerson = pricePerPerson;
     }
 
     /**
