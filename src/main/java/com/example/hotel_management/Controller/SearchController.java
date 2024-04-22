@@ -89,7 +89,7 @@ public class SearchController {
             return "redirect:/first-page?not_exist=true";
         }
 
-        return "redirect:/home?country=" + typedName;
+        return "redirect:/home?country=" + typedName + "&page=1";
     }
 
     @GetMapping("/get-sorted-hotels-details")
