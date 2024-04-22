@@ -119,3 +119,6 @@ SET total_capacity = @new_capacity,
 WHERE hotel_id = (SELECT hotel_id FROM deleted);
 
 END;
+
+ALTER TABLE HOTEL_CAPACITY_BOOKED
+ADD CONSTRAINT p_key PRIMARY KEY (hotel_id);

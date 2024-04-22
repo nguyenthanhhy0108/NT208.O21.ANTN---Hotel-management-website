@@ -103,45 +103,23 @@
 
           <form autocomplete="off" th:action="@{/search}" th:method="GET">
             <div class="form-row justify-content-center" style="background-color: #f8f9fa; border-radius: 50px; max-width: 100%">
-              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+              <div class="col-md-3 col-11 mb-2" style="margin-top: 1%; padding-right: 3%">
                 <h3 class="text-secondary text-center pb-2">Check In Date:</h3>
-                <input type="date" class="form-control rounded-pill text-center" placeholder="City" required>
+                <input id="checkinDate" type="date" name="check_in_date" class="form-control rounded-pill text-center" required>
               </div>
-              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
+              <div class="col-md-3 col-11 mb-2" style="margin-top: 1%; padding-right: 3%">
                 <h3 class="text-secondary text-center pb-2">Check Out Date:</h3>
-                <input type="date" class="form-control rounded-pill text-center" placeholder="City" required>
+                <input id="checkoutDate" type="date" name="check_out_date" class="form-control rounded-pill text-center" required>
               </div>
-              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
-                <h3 class="text-secondary text-center pb-2">Adults:</h3>
-                <select class="form-control rounded-pill text-center">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
+              <div class="col-md-3 col-11 mb-2" style="margin-top: 1%;" >
+                <h3 class="text-secondary text-center pb-2">People:</h3>
+                <input type="number" id="num_people" name="people" class="form-control rounded-pill text-center" placeholder="Number of people" required>
               </div>
-              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
-                <h3 class="text-secondary text-center pb-2">Children:</h3>
-                <select class="form-control rounded-pill text-center">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-              </div>
-              <div class="col-md-2 col-11 mb-2" style="margin-top: 1%">
-                <h3 class="text-secondary text-center pb-2">Rooms:</h3>
-                <select class="form-control rounded-pill text-center">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-              </div>
+
               <div class="input-group mb-3 autocomplete" style="border-radius: 50px;">
                 <input type="text" id="searchInput" name="name" class="form-control rounded-pill py-4" placeholder="Where do you want to go?" aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-top-right-radius: 0; border-bottom-right-radius: 0; max-width: 80%; margin-left: 3%" required>
                 <div class="input-group-append">
-                  <input type="submit" class="input-group-text bg-success text-white font-weight-bold rounded-pill px-5" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" value="Find">
+                  <input type="submit" class="input-group-text bg-success text-white font-weight-bold rounded-pill px-5" style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 10%" value="Find">
                 </div>
               </div>
             </div>

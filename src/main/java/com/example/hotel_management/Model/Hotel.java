@@ -23,6 +23,16 @@ public class Hotel {
             })
     private HotelDetails hotelDetails;
 
+    @OneToOne(mappedBy = "hotelBookedCapacity",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            })
+    private BookedCapacity bookedCapacity;
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

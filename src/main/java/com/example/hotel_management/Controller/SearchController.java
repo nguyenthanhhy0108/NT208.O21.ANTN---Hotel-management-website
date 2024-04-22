@@ -1,7 +1,6 @@
 package com.example.hotel_management.Controller;
 
-import com.example.hotel_management.Model.Hotel;
-import com.example.hotel_management.Model.HotelDetails;
+import com.example.hotel_management.Service.BookedCapacityServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
 import com.example.hotel_management.Service.HotelServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Controller
 public class SearchController {
 
     private final HotelDetailsServices hotelDetailsServices;
-    private final HotelServices hotelServices;
+    private final BookedCapacityServices bookedCapacityServices;
+
+    private long checkInIndex;
+    private long checkOutIndex;
+    private int numberOfPeople;
 
     @Autowired
     public SearchController(HotelDetailsServices hotelDetailsServices,
-                            HotelServices hotelServices) {
+                            HotelServices hotelServices,
+                            BookedCapacityServices bookedCapacityServices) {
         this.hotelDetailsServices = hotelDetailsServices;
-        this.hotelServices = hotelServices;
+        this.bookedCapacityServices = bookedCapacityServices;
     }
 
     @GetMapping("/suggest")
@@ -42,7 +49,22 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String searchHotel(@RequestParam("name") String typedName) {
+    public String searchHotel(@RequestParam("name") String typedName,
+                              @RequestParam("people") int people,
+                              @RequestParam("check_in_date") String checkInDate,
+                              @RequestParam("check_out_date") String checkOutDate) {
+
+        this.numberOfPeople = people;
+
+        checkInDate = checkInDate + "T00:00:00";
+        checkOutDate = checkOutDate + "T00:00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime checkIn = LocalDateTime.parse(checkInDate, formatter);
+        LocalDateTime checkOut = LocalDateTime.parse(checkOutDate, formatter);
+
+        LocalDateTime today = LocalDateTime.now();
+        checkInIndex = ChronoUnit.DAYS.between(today, checkIn);
+        checkOutIndex = ChronoUnit.DAYS.between(today, checkOut);
 
         List<String> allName = hotelDetailsServices.findAllHotelName();
         if (allName.contains(typedName)) {
@@ -94,14 +116,18 @@ public class SearchController {
 
     @GetMapping("/get-sorted-hotels-details")
     @ResponseBody
-    public ResponseEntity<Map<String, List<Object>>> getSixHotelDetails(@RequestParam String country) {
+    public ResponseEntity<Map<String, List<Object>>> getHotelDetails(@RequestParam String country) {
         HashMap<String, List<Object>> map = new HashMap<>();
 
-        List<Object> allHotelDetailsName = new ArrayList<>();
+        int intCheckInIndex = (int)this.checkInIndex;
+        int intCheckOutIndex = (int)this.checkOutIndex;
 
-        allHotelDetailsName = hotelDetailsServices.getHotelNameSortedByBookingCount(country);
+        List<Object> names = this.bookedCapacityServices.getSatisfiedHotelNames(intCheckInIndex,
+                intCheckOutIndex,
+                this.numberOfPeople,
+                country);
 
-        map.put("names", allHotelDetailsName);
+        map.put("names", names);
 
         return ResponseEntity.ok(map);
     }

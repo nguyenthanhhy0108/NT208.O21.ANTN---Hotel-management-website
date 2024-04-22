@@ -149,6 +149,73 @@ function autocomplete(inp, countries, names) {
     document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
+
+    document.getElementById("num_people").addEventListener("input", function() {
+        var people = this.value;
+        if(people == 0){
+            let inp = document.querySelector("#searchInput");
+            inp.placeholder = "Number of people must be greater than 0 !!!";
+            var out = document.getElementById("checkoutDate");
+            out.value = "";
+        }
+    });
+
+    // Kiểm tra ngày check-out phải lớn hơn ngày check-in
+    document.getElementById("checkoutDate").addEventListener("change", function() {
+        var checkinDate = new Date(document.getElementById("checkinDate").value);
+        var checkoutDate = new Date(this.value);
+
+        var currentDate = new Date();
+
+        var twoMonthsLater = new Date();
+        twoMonthsLater.setMonth(currentDate.getMonth() + 1);
+
+        if (checkoutDate <= checkinDate) {
+            let inp = document.querySelector("#searchInput");
+            inp.placeholder = "Check out date must be greater than check in date !!!";
+            var out = document.getElementById("checkoutDate");
+            out.value = "";
+
+            // location.reload();
+        }
+
+        if(checkinDate < currentDate || checkoutDate < currentDate){
+            let inp = document.querySelector("#searchInput");
+            inp.placeholder = "Check in and check out day must greater than current date !!!";
+            var inDate = document.getElementById("checkinDate");
+            var outDate = document.getElementById("checkoutDate");
+            outDate.value = "";
+            inDate.value = "";
+
+            // location.reload();
+        }
+
+        if (checkinDate < twoMonthsLater && checkoutDate < twoMonthsLater) {
+            return;
+        } else {
+            let inp = document.querySelector("#searchInput");
+            inp.placeholder = "Check in and check out day must around one months next !!!";
+            var inDate = document.getElementById("checkinDate");
+            var outDate = document.getElementById("checkoutDate");
+            outDate.value = "";
+            inDate.value = "";
+
+            // location.reload();
+        }
+    });
+
+    // Giới hạn số lượng ký tự của năm là 4 số
+    document.getElementById("checkinDate").addEventListener("input", function() {
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+
+    document.getElementById("checkoutDate").addEventListener("input", function() {
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
 }
 
 

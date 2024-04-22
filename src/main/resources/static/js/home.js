@@ -84,6 +84,7 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
     for (var i = 1; i <= totalPages; i++) {
         var button = document.createElement("button");
         button.textContent = i;
+        button.style.padding = "0.5%";
         button.onclick = function() {
             // alert(this.textContent);
             var url = 'http://localhost:8080/home?country=abc';
