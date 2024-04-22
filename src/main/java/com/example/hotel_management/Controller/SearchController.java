@@ -25,6 +25,12 @@ public class SearchController {
     private long checkOutIndex;
     private int numberOfPeople;
 
+    /**
+     * Dependency Injection
+     * @param hotelDetailsServices: HotelDetailsServices object
+     * @param hotelServices: HotelServices object
+     * @param bookedCapacityServices: BookedCapacityServices object
+     */
     @Autowired
     public SearchController(HotelDetailsServices hotelDetailsServices,
                             HotelServices hotelServices,
@@ -33,6 +39,11 @@ public class SearchController {
         this.bookedCapacityServices = bookedCapacityServices;
     }
 
+    /**
+     * Suggest for search bar
+     * @return
+     * Suggested list
+     */
     @GetMapping("/suggest")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> suggestNames() {
@@ -48,6 +59,15 @@ public class SearchController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Process when user do search action
+     * @param typedName: String
+     * @param people: int
+     * @param checkInDate: String
+     * @param checkOutDate: String
+     * @return
+     * Redirect to some html
+     */
     @GetMapping("/search")
     public String searchHotel(@RequestParam("name") String typedName,
                               @RequestParam("people") int people,
@@ -114,6 +134,12 @@ public class SearchController {
         return "redirect:/home?country=" + typedName + "&page=1";
     }
 
+    /**
+     * Get search result
+     * @param country: String
+     * @return
+     * Json for front end
+     */
     @GetMapping("/get-sorted-hotels-details")
     @ResponseBody
     public ResponseEntity<Map<String, List<Object>>> getHotelDetails(@RequestParam String country) {
