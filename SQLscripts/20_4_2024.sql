@@ -1,14 +1,8 @@
 ALTER TABLE HOTEL_DETAIL
 ADD booking_count bigint;
 
-update HOTEL_DETAIL
-set booking_count = 1;
-
 ALTER TABLE HOTEL_DETAIL
-ADD current_capacity bigint;
-
-update HOTEL_DETAIL
-set current_capacity = 0;
+ADD total_capacity bigint;
 
 ALTER TABLE ROOM
 ADD CONSTRAINT FK_Hotel_ID
@@ -51,7 +45,7 @@ create table HOTEL_CAPACITY_BOOKED(
 
 
 ALTER TABLE ROOM
-DROP CONSTRAINT DF__ROOM__is_booked__6477ECF3;
+DROP CONSTRAINT DF__ROOM__is_booked__571DF1D5; --change that
 
 alter table ROOM
 drop column is_booked
@@ -65,59 +59,54 @@ CREATE TRIGGER after_room_insert
     AFTER INSERT
 AS
 BEGIN
-
     DECLARE @hotel_capacity INT;
     DECLARE @new_capacity INT;
-	DECLARE @total_price BIGINT;
-	DECLARE @new_room_price BIGINT;
+    DECLARE @new_price BIGINT;
 
-SELECT @hotel_capacity = total_capacity, @total_price = total_capacity * price_per_person
+SELECT @hotel_capacity = total_capacity
 FROM hotel_detail
 WHERE hotel_id = (SELECT hotel_id FROM inserted);
 
 SET @new_capacity = @hotel_capacity + (SELECT num_people FROM inserted);
-SET @new_room_price = (SELECT price FROM inserted);
+SET @new_price = (SELECT MIN(price / num_people) FROM ROOM WHERE hotel_id = (SELECT hotel_id FROM inserted));
 
 UPDATE hotel_detail
 SET total_capacity = @new_capacity,
-    price_per_person = (@total_price + @new_room_price) / @new_capacity
+    price_per_person = @new_price
 WHERE hotel_id = (SELECT hotel_id FROM inserted);
-
 END;
 
 
 alter table ROOM
-drop constraint DF__ROOM__booked_gue__656C112C;
+drop constraint DF__ROOM__booked_gue__5812160E -- change that if you need
 
 
 alter table ROOM
 drop column booked_guests
 
 
+
 --TRIGGER DELETE ROOM
-CREATE TRIGGER after_room_delete
+CREATE TRIGGER after_room_deleted
     ON room
     AFTER DELETE
 AS
 BEGIN
-
     DECLARE @hotel_capacity INT;
     DECLARE @new_capacity INT;
-	DECLARE @total_price BIGINT;
-	DECLARE @old_room_price BIGINT;
+    DECLARE @new_price BIGINT;
 
-SELECT @hotel_capacity = total_capacity, @total_price = total_capacity * price_per_person
+SELECT @hotel_capacity = total_capacity
 FROM hotel_detail
 WHERE hotel_id = (SELECT hotel_id FROM deleted);
 
 SET @new_capacity = @hotel_capacity - (SELECT num_people FROM deleted);
-SET @old_room_price = (SELECT price FROM deleted);
+SET @new_price = (SELECT MIN(price / num_people) FROM ROOM WHERE hotel_id = (SELECT hotel_id FROM deleted));
 
 UPDATE hotel_detail
 SET total_capacity = @new_capacity,
-    price_per_person = (@total_price - @old_room_price) / @new_capacity
+    price_per_person = @new_price
 WHERE hotel_id = (SELECT hotel_id FROM deleted);
-
 END;
 
 ALTER TABLE HOTEL_CAPACITY_BOOKED

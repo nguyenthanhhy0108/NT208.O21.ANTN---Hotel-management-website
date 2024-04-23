@@ -124,5 +124,9 @@ INSERT INTO ROOM(hotel_id, room_id, num_people, price, star_rating) VALUES
 INSERT INTO ROOM(hotel_id, room_id, num_people, price, star_rating) VALUES
     ('12', '12.2', 4, 650, 4.9)
 
+
+UPDATE HOTEL_DETAIL
+SET country = 'South Korea' where country = 'Seoul'
+
 UPDATE HOTEL
 SET is_active = 1
