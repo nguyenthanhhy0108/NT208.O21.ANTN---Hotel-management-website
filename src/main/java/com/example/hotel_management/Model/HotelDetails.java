@@ -100,8 +100,8 @@ public class HotelDetails {
      * Get address of selected Hotel
      * @return a String with format: country, province, city, street, houseNumber
      */
-    public String getAddress(){
-        return country+", "+province+", "+city+", "+street+", "+houseNumber;
+    public String getAddress() {
+        return country + ", " + province + ", " + city + ", " + street + ", " + houseNumber;
     }
 
     public HotelDetails() {

@@ -137,4 +137,63 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
 
         return result;
     }
+
+    /**
+     * Implement method get list hotel address by provided list name
+     * @param providedListName: List<String>
+     * @return
+     * A list object
+     */
+    @Override
+    public List<Object> getListHotelAddressByProvidedListName(List<String> providedListName) {
+        List<Object> result = new ArrayList<>();
+        for(String name : providedListName){
+            String address = this.hotelDetailsRepository
+                    .findByName(name)
+                    .get(0)
+                    .getAddress();
+            result.add(address);
+        }
+        return result;
+    }
+
+    /**
+     * Implement method get list price for a specific group by provided list name
+     * @param providedListName: List<String>
+     * @param numberOfPeople: int
+     * @return
+     * A list object
+     */
+    @Override
+    public List<Object> getListPriceForASpecificGroupByProvidedListName(List<String> providedListName,
+                                                                        int numberOfPeople) {
+        List<Object> result = new ArrayList<>();
+        for(String name : providedListName){
+            long price = this.hotelDetailsRepository
+                    .findByName(name)
+                    .get(0)
+                    .getPricePerPerson() * numberOfPeople;
+            result.add(price);
+        }
+        return result;
+    }
+
+    /**
+     * Implement get a list id by provided list name
+     * @param providedListName: List<String>
+     * @return
+     * A list id
+     */
+    @Override
+    public List<Object> getListIDByProvidedListName(List<String> providedListName) {
+        List<Object> result = new ArrayList<>();
+        for(String name : providedListName){
+            String id = this.hotelDetailsRepository
+                    .findByName(name)
+                    .get(0)
+                    .getHotelID();
+            result.add(id);
+        }
+        return result;
+    }
 }

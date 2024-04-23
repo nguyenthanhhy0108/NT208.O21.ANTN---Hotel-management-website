@@ -142,18 +142,51 @@ public class SearchController {
      */
     @GetMapping("/get-sorted-hotels-details")
     @ResponseBody
-    public ResponseEntity<Map<String, List<Object>>> getHotelDetails(@RequestParam String country) {
-        HashMap<String, List<Object>> map = new HashMap<>();
+    public ResponseEntity<Map<String, List<String>>> getHotelDetails(@RequestParam String country) {
+        HashMap<String, List<String>> map = new HashMap<>();
 
         int intCheckInIndex = (int)this.checkInIndex;
         int intCheckOutIndex = (int)this.checkOutIndex;
 
-        List<Object> names = this.bookedCapacityServices.getSatisfiedHotelNames(intCheckInIndex,
+        List<Object> namesObject = this.bookedCapacityServices.getSatisfiedHotelNames(intCheckInIndex,
                 intCheckOutIndex,
                 this.numberOfPeople,
                 country);
+        List<String> names = new ArrayList<>();
+
+        for(Object name : namesObject) {
+            names.add((String) name);
+        }
+
+        List<Object> prices = this.hotelDetailsServices.getListPriceForASpecificGroupByProvidedListName(names,
+                this.numberOfPeople);
+
+        List<String> pricesString = new ArrayList<>();
+        for(Object price : prices) {
+            pricesString.add(price.toString());
+        }
+
+        List<Object> addresses = this.hotelDetailsServices.getListHotelAddressByProvidedListName(names);
+        List<String> addressesString = new ArrayList<>();
+        for(Object address : addresses) {
+            addressesString.add((String) address);
+        }
+
+        List<String> numberOfPeople = new ArrayList<>();
+        numberOfPeople.add(String.valueOf(this.numberOfPeople));
+
+        List<Object> ids = new ArrayList<>();
+        ids = this.hotelDetailsServices.getListIDByProvidedListName(names);
+        List<String> idsString = new ArrayList<>();
+        for(Object id : ids) {
+            idsString.add((String) id);
+        }
 
         map.put("names", names);
+        map.put("prices", pricesString);
+        map.put("addresses", addressesString);
+        map.put("numberOfPeople", numberOfPeople);
+        map.put("ids", idsString);
 
         return ResponseEntity.ok(map);
     }

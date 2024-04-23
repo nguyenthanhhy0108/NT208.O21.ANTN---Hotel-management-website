@@ -60,4 +60,29 @@ public interface HotelDetailsServices {
      * A list object
      */
     List<Object> getHotelNameSortedByBookingCount(String country);
+
+    /**
+     * Get a list hotel address by provided list hotel name
+     * @param providedListName: List<String>
+     * @return
+     * A list object
+     */
+    List<Object> getListHotelAddressByProvidedListName(List<String> providedListName);
+
+    /**
+     * Get a list price for a specific people by provided list name
+     * @param providedListName: List<String>
+     * @param numberOfPeople: int
+     * @return
+     * A list object
+     */
+    List<Object> getListPriceForASpecificGroupByProvidedListName(List<String> providedListName, int numberOfPeople);
+
+    /**
+     * Get a list id by a provided list hotel name
+     * @param providedListName: List<String>
+     * @return
+     * A list object
+     */
+    List<Object> getListIDByProvidedListName(List<String> providedListName);
 }

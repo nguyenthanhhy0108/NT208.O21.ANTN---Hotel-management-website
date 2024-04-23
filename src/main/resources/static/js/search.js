@@ -152,11 +152,10 @@ function autocomplete(inp, countries, names) {
 
     document.getElementById("num_people").addEventListener("input", function() {
         var people = this.value;
-        if(people == 0){
+        if(people <= 0){
             let inp = document.querySelector("#searchInput");
             inp.placeholder = "Number of people must be greater than 0 !!!";
-            var out = document.getElementById("checkoutDate");
-            out.value = "";
+            this.value = "";
         }
     });
 
@@ -176,7 +175,8 @@ function autocomplete(inp, countries, names) {
             var out = document.getElementById("checkoutDate");
             out.value = "";
 
-            // location.reload();
+            let form = document.getElementById("search_form");
+            form.preventDefault();
         }
 
         if(checkinDate < currentDate || checkoutDate < currentDate){
@@ -187,6 +187,8 @@ function autocomplete(inp, countries, names) {
             outDate.value = "";
             inDate.value = "";
 
+            let form = document.getElementById("search_form");
+            form.preventDefault();
             // location.reload();
         }
 
@@ -200,6 +202,8 @@ function autocomplete(inp, countries, names) {
             outDate.value = "";
             inDate.value = "";
 
+            let form = document.getElementById("search_form");
+            form.preventDefault();
             // location.reload();
         }
     });
@@ -209,6 +213,12 @@ function autocomplete(inp, countries, names) {
         if (this.value.length > 10) {
             this.value = this.value.slice(0, 10);
         }
+    });
+
+    document.getElementById("search_form").addEventListener("submit", function (){
+        var checkinDate = new Date(document.getElementById("checkinDate").value);
+        var checkoutDate = new Date(document.getElementById("checkoutDate").value);
+        var numPeople = document.getElementById("num_people").value;
     });
 
     document.getElementById("checkoutDate").addEventListener("input", function() {
