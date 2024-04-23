@@ -119,15 +119,28 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
 
     /**
      * Implement get hotel name sorted by booking count in a specific country
+     * @param country: String
+     * @param option: int
      * @return
      * A list of objects
      */
     @Override
-    public List<Object> getHotelNameSortedByBookingCount(String country) {
+    public List<Object> getHotelNameSortedList(String country, int option) {
 
         List<HotelDetails> allHotelDetails = this.hotelDetailsRepository.findByCountry(country);
 
-        allHotelDetails.sort(Comparator.comparing(HotelDetails::getBookingCount).reversed());
+        if(option == 1){
+            allHotelDetails.sort(Comparator.comparing(HotelDetails::getBookingCount).reversed());
+        }
+        if(option == 2){
+            allHotelDetails.sort(Comparator.comparing(HotelDetails::getBookingCount));
+        }
+        if(option == 3){
+            allHotelDetails.sort(Comparator.comparing(HotelDetails::getPricePerPerson).reversed());
+        }
+        if(option == 4){
+            allHotelDetails.sort(Comparator.comparing(HotelDetails::getPricePerPerson));
+        }
 
         List<Object> result = new ArrayList<>();
 

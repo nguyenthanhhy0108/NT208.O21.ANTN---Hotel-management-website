@@ -56,10 +56,11 @@ public interface HotelDetailsServices {
 
     /**
      * Get highest to lowest booking count hotel details name in a specific country
+     * @param option: int
      * @return
      * A list object
      */
-    List<Object> getHotelNameSortedByBookingCount(String country);
+    List<Object> getHotelNameSortedList(String country, int option);
 
     /**
      * Get a list hotel address by provided list hotel name

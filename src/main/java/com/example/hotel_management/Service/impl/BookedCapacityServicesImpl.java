@@ -45,6 +45,7 @@ public class BookedCapacityServicesImpl implements BookedCapacityServices {
      * @param checkOutIndex: int
      * @param numberOfPeople: int
      * @param country: String
+     * @param option: int
      * @return
      * A names list
      */
@@ -52,9 +53,11 @@ public class BookedCapacityServicesImpl implements BookedCapacityServices {
     public List<Object> getSatisfiedHotelNames(int checkInIndex,
                                                int checkOutIndex,
                                                int numberOfPeople,
-                                               String country) {
+                                               String country,
+                                               int option) {
 
-        List<Object> allHotelDetailsName = hotelDetailsServices.getHotelNameSortedByBookingCount(country);
+        List<Object> allHotelDetailsName = hotelDetailsServices.getHotelNameSortedList(country, option);
+
 
         List<Object> toRemove = new ArrayList<>();
         for(Object name: allHotelDetailsName){

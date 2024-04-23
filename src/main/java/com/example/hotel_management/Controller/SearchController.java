@@ -4,6 +4,7 @@ import com.example.hotel_management.Service.BookedCapacityServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
 import com.example.hotel_management.Service.HotelServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -131,18 +132,23 @@ public class SearchController {
             return "redirect:/first-page?not_exist=true";
         }
 
-        return "redirect:/home?country=" + typedName + "&page=1";
+        return "redirect:/home?country=" + typedName + "&page=1" + "&numberOfPeople=" + this.numberOfPeople + "&option=1";
     }
 
     /**
      * Get search result
      * @param country: String
+     * @param numberOfPeople: int
+     * @param option: int
      * @return
      * Json for front end
      */
     @GetMapping("/get-sorted-hotels-details")
     @ResponseBody
-    public ResponseEntity<Map<String, List<String>>> getHotelDetails(@RequestParam String country) {
+    public ResponseEntity<Map<String, List<String>>> getHotelDetails(@RequestParam String country,
+                                                                     @RequestParam int numberOfPeople,
+                                                                     @RequestParam int option) {
+
         HashMap<String, List<String>> map = new HashMap<>();
 
         int intCheckInIndex = (int)this.checkInIndex;
@@ -150,8 +156,10 @@ public class SearchController {
 
         List<Object> namesObject = this.bookedCapacityServices.getSatisfiedHotelNames(intCheckInIndex,
                 intCheckOutIndex,
-                this.numberOfPeople,
-                country);
+                numberOfPeople,
+                country,
+                option);
+
         List<String> names = new ArrayList<>();
 
         for(Object name : namesObject) {
@@ -159,7 +167,7 @@ public class SearchController {
         }
 
         List<Object> prices = this.hotelDetailsServices.getListPriceForASpecificGroupByProvidedListName(names,
-                this.numberOfPeople);
+                numberOfPeople);
 
         List<String> pricesString = new ArrayList<>();
         for(Object price : prices) {
@@ -172,8 +180,8 @@ public class SearchController {
             addressesString.add((String) address);
         }
 
-        List<String> numberOfPeople = new ArrayList<>();
-        numberOfPeople.add(String.valueOf(this.numberOfPeople));
+        List<String> numberOfPeopleToFE = new ArrayList<>();
+        numberOfPeopleToFE.add(String.valueOf(numberOfPeople));
 
         List<Object> ids = new ArrayList<>();
         ids = this.hotelDetailsServices.getListIDByProvidedListName(names);
@@ -185,7 +193,7 @@ public class SearchController {
         map.put("names", names);
         map.put("prices", pricesString);
         map.put("addresses", addressesString);
-        map.put("numberOfPeople", numberOfPeople);
+        map.put("numberOfPeople", numberOfPeopleToFE);
         map.put("ids", idsString);
 
         return ResponseEntity.ok(map);

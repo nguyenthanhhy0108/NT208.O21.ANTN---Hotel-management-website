@@ -114,6 +114,8 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
     const urlParams = new URLSearchParams(window.location.search);
     const country = urlParams.get('country');
     const page = urlParams.get("page");
+    const numPeople = urlParams.get('numberOfPeople');
+    const option = urlParams.get('option')
 
     for (var i = 1; i <= totalPages; i++) {
         var button = document.createElement("button");
@@ -122,7 +124,7 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
         button.onclick = function() {
             // alert(this.textContent);
             var url = 'http://localhost:8080/home?country=abc';
-            var newURL = url + "&page=" + this.textContent;
+            var newURL = url + "&page=" + this.textContent + "&numberOfPeople=" + numPeople + "&option=" + option;
             window.location.href = newURL;
 
             // alert(this.textContent);
@@ -133,8 +135,8 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
     }
 }
 
-function callAPI(country, page){
-    let url = '/get-sorted-hotels-details?country=' + country + '&page=' + page;
+function callAPI(country, page, numofpeople, option){
+    let url = '/get-sorted-hotels-details?country=' + country + '&page=' + page + '&numberOfPeople=' + numofpeople + '&option=' + option;
 
     $.ajax({
         url: url,
@@ -162,12 +164,25 @@ function callAPI(country, page){
     });
 }
 
+function changeOption(option){
+    const urlParams = new URLSearchParams(window.location.search);
+    var country = urlParams.get('country');
+    var page = urlParams.get('page');
+    var numberOfPeople = urlParams.get('numberOfPeople');
+
+    var newURL = '/home' + '?country=' + country + '&page=1' + '&numberOfPeople=' + numberOfPeople + '&option=' + option;
+
+    window.location.href = newURL;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const country = urlParams.get('country');
-
+    const numberofpeople = urlParams.get('numberOfPeople')
+    const option = urlParams.get('option');
+    // alert(numberofpeople)
     var page = parseInt(urlParams.get("page"))
 
-    callAPI(country, page);
+    callAPI(country, page, numberofpeople, option);
 });

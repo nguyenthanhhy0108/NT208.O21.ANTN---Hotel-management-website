@@ -19,8 +19,9 @@ public interface BookedCapacityServices {
      * @param checkOutIndex: int
      * @param numberOfPeople: int
      * @param country: String
+     * @param option: int
      * @return
      * A names list
      */
-    List<Object> getSatisfiedHotelNames(int checkInIndex, int checkOutIndex, int numberOfPeople, String country);
+    List<Object> getSatisfiedHotelNames(int checkInIndex, int checkOutIndex, int numberOfPeople, String country, int option);
 }

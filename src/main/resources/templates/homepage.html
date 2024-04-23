@@ -123,10 +123,25 @@
 <!--  <div class="container shadow mx-auto search " style="width:80%;" data-aos="zoom-in">-->
     <br>
 
-  <!-- ...............coustomer end................ -->
+  <!-- ...............customer end................ -->
   <!-- ...............our rooms................ -->
 <!--style="display: none"-->
+<div id="container" style="position: relative; margin-left: 72%; font-size: 90%;">
+  <label for="sort_by" style="transform: translateY(450%);">Sorted by:</label>
+  <select id="sort_by" style="transform: translateY(450%);" onchange="changeOption(this.value)">
+    <!--    high to low-->
+    <option value="1">The number of bookings &#9660;</option>
+<!--  low to high-->
+    <option value="2">The number of bookings &#9650;</option>
+<!--    high to low-->
+    <option value="3">Price &#9660;</option>
+<!--    low to high-->
+    <option value="4">Price &#9650;</option>
+  </select>
+</div>
+
   <section class="container" id="room" >
+
 <!--    <h1 class="mt-4 pt-5 text-center headings  ">Hotels fit your request</h1>-->
 <!--    <hr class=" animate__animated  animate__zoomIn  animate__infinite " data-aos="zoom-in"-->
 <!--&lt;!&ndash;      style="width:150px; background-color:red; height: 4px; margin: 4px auto;">&ndash;&gt;<br>-->
