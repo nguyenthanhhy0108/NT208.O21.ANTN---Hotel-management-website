@@ -93,7 +93,7 @@ public class SearchController {
             return "redirect:/hotel-detail?hotel_id=" + id;
         }
 
-        List<String> countries = Arrays.asList( "abc",
+        List<String> countries = Arrays.asList(
                 "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda", "Argentina",
                 "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
                 "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",

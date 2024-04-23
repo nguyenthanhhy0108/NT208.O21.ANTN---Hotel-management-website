@@ -14,7 +14,7 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
     hotelListElement.innerHTML = "";
 
     var wholeTitle = document.createElement("h1");
-    wholeTitle.textContent = "Hotels fit your request";
+    wholeTitle.textContent = "Hotels that fit your request";
     wholeTitle.classList.add("pt-5");
     wholeTitle.classList.add("text-center");
     wholeTitle.classList.add("headings");
@@ -40,7 +40,7 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
         cardDiv.style.height = "30rem";
 
         var img = document.createElement("img");
-        img.src = "/images/room1.jpg";
+        img.src = "/images/room3.jpg";
         img.classList.add("card-img-top");
         img.onclick = function (event) {
             window.location.href = "/hotel-detail?hotel_id=" + ids[index].toString();
@@ -59,6 +59,7 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
         text1.style.marginTop = "-25%";
         text1.style.marginRight = "-80%";
         text1.style.fontSize = "80%";
+        text1.style.color = "#05cd05";
         text1.textContent = "Price only from";
 
         var text2 = document.createElement("p");
@@ -74,12 +75,15 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
         text3.style.marginTop = "-18%";
         text3.style.marginRight = "-80%";
         text3.style.fontSize = "80%";
+        text3.style.color = "#05cd05";
         text3.textContent = "for " + numberOfPeople.toString() + " people";
 
         var address = document.createElement("p")
         address.classList.add("card-text");
-        address.style.marginTop = "-43%";
-        address.style.marginLeft = "-43%";
+        address.style.marginTop = "-30%";
+        // address.style.marginLeft = "-43%";
+        address.style.position = "absolute";
+        address.style.maxWidth = "50%";
         address.style.fontSize = "80%";
         address.textContent = hotelAddresses[i];
 
@@ -123,7 +127,7 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
         button.style.padding = "0.5%";
         button.onclick = function() {
             // alert(this.textContent);
-            var url = 'http://localhost:8080/home?country=abc';
+            var url = 'http://localhost:8080/home?country=' + country;
             var newURL = url + "&page=" + this.textContent + "&numberOfPeople=" + numPeople + "&option=" + option;
             window.location.href = newURL;
 
@@ -179,6 +183,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const country = urlParams.get('country');
+    // alert(country)
+    if(country == null){
+        window.location.href = "/first-page";
+    }
     const numberofpeople = urlParams.get('numberOfPeople')
     const option = urlParams.get('option');
     // alert(numberofpeople)
