@@ -7,11 +7,14 @@ import lombok.Data;
 @Data
 @Entity(name = "HOTEL")
 public class Hotel {
+    public static int countHotel = 0;
     @Id
     @Column(name = "hotel_id")
     private String hotelID;
     @Column(name = "owner_username")
     private String ownerUsername;
+    @Column(name = "is_active")
+    private int isActive;
 
     @OneToOne(mappedBy = "hotel",
             cascade = {
@@ -46,12 +49,12 @@ public class Hotel {
 
     /**
      * Constructor
-     * @param hotelID: String
      * @param ownerUsername: String
      */
-    public Hotel(String hotelID, String ownerUsername) {
-        this.hotelID = hotelID;
+    public Hotel(String ownerUsername) {
+        this.hotelID = String.valueOf(++countHotel);
         this.ownerUsername = ownerUsername;
+        this.isActive = 0;
     }
 
     public Hotel() {

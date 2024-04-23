@@ -1,7 +1,7 @@
 use NT
 
 alter table HOTEL
-    add is_active int
+add is_active int
 
 --TRIGGER INSERT HOTEL
 CREATE TRIGGER insert_hotel
