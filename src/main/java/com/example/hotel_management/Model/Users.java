@@ -34,6 +34,14 @@ public class Users {
 
     @OneToMany(mappedBy = "users",
             cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+            })
+    private List<Hotel> Hotel;
+    @OneToMany(mappedBy = "users",
+            cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
@@ -41,14 +49,6 @@ public class Users {
     })
     private List<Authorities> Authorities;
 
-    @OneToMany(mappedBy = "users",
-            cascade = {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.PERSIST,
-                    CascadeType.REFRESH
-            })
-    private List<Hotel> Hotel;
 
     public Users() {
     }

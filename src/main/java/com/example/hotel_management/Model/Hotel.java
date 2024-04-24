@@ -3,6 +3,8 @@ package com.example.hotel_management.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 //This class is match with HOTEL table in database
 @Data
 @Entity(name = "HOTEL")
@@ -44,6 +46,14 @@ public class Hotel {
             updatable = false)
     private Users users;
 
+    @OneToMany(mappedBy = "hotel",
+            cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    private List<Room> rooms;
     /**
      * Constructor
      * @param hotelID: String
