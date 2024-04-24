@@ -117,27 +117,67 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
 
     const urlParams = new URLSearchParams(window.location.search);
     const country = urlParams.get('country');
-    const page = urlParams.get("page");
+    const page = parseInt(urlParams.get("page")); // Chuyển đổi page sang số nguyên
     const numPeople = urlParams.get('numberOfPeople');
     const option = urlParams.get('option')
 
+    var previousPage = page - 1;
+    if (page === 1) {
+        previousPage = 1;
+    }
+
     for (var i = 1; i <= totalPages; i++) {
         var button = document.createElement("button");
-        button.textContent = i;
+        button.textContent = i.toString();
         button.style.padding = "0.5%";
-        button.onclick = function() {
-            // alert(this.textContent);
-            var url = 'http://localhost:8080/home?country=' + country;
+        if (i === page) {
+            button.classList.add("hover");
+        }
+        if (i === page + 2) {
+            var button_ = document.createElement("button");
+            button_.textContent = 'Next';
+            button_.style.padding = "0.5%";
+            var nextButton_ = button_;
+            button_.onclick = function () {
+                if (page < totalPages) {
+                    nextButton_.classList.add("hover");
+                    var url = '/home?country=' + country + '&page=' + (page + 1) +
+                        '&numberOfPeople=' + numPeople + '&option=' + option;
+                    window.location.href = url;
+                }
+            }.bind(null, totalPages, country, page, numPeople, option);
+            paginationElement.appendChild(button_);
+            break;
+        }
+        if (i <= page - 2) {
+            var button_pre = document.createElement("button");
+            button_pre.textContent = 'Previous';
+            button_pre.style.padding = "0.5%"
+            var nextButton_pre = button_pre;
+            button_pre.onclick = function () {
+                if (page > 1) {
+                    nextButton_pre.classList.add("hover");
+                    var url = '/home?country=' + country + '&page=' + (page - 1) +
+                        '&numberOfPeople=' + numPeople + '&option=' + option;
+                    window.location.href = url;
+                }
+            }.bind(null, totalPages, country, page, numPeople, option);
+            paginationElement.appendChild(button_pre);
+            continue;
+        }
+        button.onclick = function () {
+            this.classList.add("hover");
+            var url = '/home?country=' + country;
             var newURL = url + "&page=" + this.textContent + "&numberOfPeople=" + numPeople + "&option=" + option;
             window.location.href = newURL;
-
-            // alert(this.textContent);
-
             callAPI(country, this.textContent);
         };
         paginationElement.appendChild(button);
     }
 }
+
+
+
 
 function callAPI(country, page, numofpeople, option){
     let url = '/get-sorted-hotels-details?country=' + country + '&page=' + page + '&numberOfPeople=' + numofpeople + '&option=' + option;

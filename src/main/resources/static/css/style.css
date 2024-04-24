@@ -469,3 +469,8 @@ font-size: 25px!important;padding:15px!important;
 	padding:10px!important;
 }
 }
+#pagination{
+	.hover{
+		color: #0e4bf1; !important;
+	}
+}
