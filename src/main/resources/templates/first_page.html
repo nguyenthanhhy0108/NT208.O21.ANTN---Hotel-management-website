@@ -73,7 +73,7 @@
               <span style="color: lawngreen" th:text="${session.name}"></span>
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">Information</a>
+              <a class="dropdown-item" href="/profile">Information</a>
               <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
                 <form id="myForm" th:action="@{/logout}" method="post">
                   <input type="hidden">

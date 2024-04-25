@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8" />
   <title>Profile</title>
 
-  <link rel="stylesheet" href="../static/css/bootstrap-profiles.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/js/first_page.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/imagehover.min.css}">
+  <link rel="stylesheet" th:href="@{/css/hotel.css}">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 </head>
 
@@ -56,7 +65,7 @@
               <span style="color: lawngreen" th:text="${session.name}"></span>
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">Information</a>
+              <a class="dropdown-item" href="" th:action="@{/profile}">Information</a>
               <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
                 <form id="myForm" th:action="@{/logout}" method="post">
                   <input type="hidden">
@@ -72,8 +81,9 @@
 
 
   </nav>
+
   <section style="background-color: #a6c0cc; display: flex; flex-direction: column; height: 100vh;">
-    <div class="container py-5">
+    <div class="container py-5 my-3">
     
         <div class="col-lg-4 mx-auto">
           <div class="card mb-4">
@@ -89,63 +99,66 @@
           </div>
         </div>
         <div class="col-lg-8 mx-auto">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="text-end mb-3">
+          <div class="card mb-4 py-2">
+            <div class="card-body py-2">
+              <div class="text-end mb-3 py-2">
                 <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
               </div>
 
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-sm-3">
                   <p class="mb-0">Full Name</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="fullName">name</p>
+                  <p class="text-muted mb-0" id="fullName"
+                     th:text="${userDetails.getName()}"/>
                   <input type="text" class="form-control d-none" id="fullNameInput">
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-sm-3">
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="email">example@example.com</p>
+                  <p class="text-muted mb-0" id="email"
+                     th:text="${userDetails.getUsername()}"/>
                   <input type="email" class="form-control d-none" id="emailInput">
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-sm-3">
                   <p class="mb-0">Phone</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="phone">12345678</p>
+                  <p class="text-muted mb-0" id="phone"
+                     th:text="${userDetails.getPhoneNumber()}"/>
                   <input type="tel" class="form-control d-none" id="phoneInput">
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-sm-3">
                   <p class="mb-0">Nationality</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="nationality">Vietnam</p>
+                  <p class="text-muted mb-0" id="nationality" th:text="${userDetails.getNationality()}"/>
                   <input type="tel" class="form-control d-none" id="nationalityInput">
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-sm-3">
                   <p class="mb-0">Address</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="address">address</p>
+                  <p class="text-muted mb-0" id="address" th:text="${userDetails.getAddress()}">
                   <input type="text" class="form-control d-none" id="addressInput">
                 </div>
               </div>
               <hr>
-              <div class="row">
+              <div class="row py-2">
                 <div class="col-12 text-center">
                   <button type="button" class="btn btn-primary" id="saveButton" disabled>Save Changes</button>
                 </div>
@@ -159,5 +172,11 @@
     </div>
   </section>
   <script src="../static/js/user_profile.js"></script>
+  <script>
+    $(window).scroll(function () {
+      $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
+    });
+
+  </script>
 </body>
 </html>
