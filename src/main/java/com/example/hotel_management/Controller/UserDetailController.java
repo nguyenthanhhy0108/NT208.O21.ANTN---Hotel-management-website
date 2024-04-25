@@ -20,11 +20,15 @@ public class UserDetailController {
         this.userDetailsServices = userDetailsServices;
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
+    public List<UserDetails> getUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        List<UserDetails> result = userDetailsServices.findByUsername(username);
+        return userDetailsServices.findByUsername(username);
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        List<UserDetails> result = getUsername();
         UserDetails userDetails = null;
         if (result.isEmpty()) {
             return "redirect:/login";
@@ -34,6 +38,19 @@ public class UserDetailController {
         }
         model.addAttribute("userDetails", userDetails);
         return "user_profile";
+    }
 
+    @GetMapping("/request-owner")
+    public String requestOwner(Model model) {
+        List<UserDetails> result = getUsername();
+        UserDetails userDetails = null;
+        if (result.isEmpty()) {
+            return "redirect:/login";
+        }
+        else {
+            userDetails = result.get(0);
+        }
+        model.addAttribute("userDetails", userDetails);
+        return "request_owner_form";
     }
 }
