@@ -7,4 +7,12 @@ function showLoginMessage() {
     }
 }
 
+function checkLogOut() {
+    const url = window.location.search;
+    if (url.includes('?logout')) {
+        window.location.replace('/login');
+    }
+}
+
+
 window.onload = showLoginMessage;
