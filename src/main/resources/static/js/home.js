@@ -177,8 +177,6 @@ function displayPagination(totalPages, hotelsPerPage, hotels) {
 }
 
 
-
-
 function callAPI(country, page, numofpeople, option){
     let url = '/get-sorted-hotels-details?country=' + country + '&page=' + page + '&numberOfPeople=' + numofpeople + '&option=' + option;
 
@@ -231,6 +229,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const option = urlParams.get('option');
     // alert(numberofpeople)
     var page = parseInt(urlParams.get("page"))
+
+    var sort = document.getElementById("sort_by");
+    sort.value = option;
 
     callAPI(country, page, numberofpeople, option);
 });

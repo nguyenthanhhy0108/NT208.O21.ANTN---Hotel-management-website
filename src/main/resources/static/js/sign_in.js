@@ -7,4 +7,19 @@ function showLoginMessage() {
     }
 }
 
+function checkLogOut() {
+    const url = window.location.search;
+    if (url.includes('?logout')) {
+        window.location.replace('/login');
+    }
+}
+
+function focus() {
+    const url = window.location.search;
+    if (!url.includes('?logout')) {
+        let username = document.getElementById("exampleInputEmail1");
+        username.focus();
+    }
+}
+
 window.onload = showLoginMessage;

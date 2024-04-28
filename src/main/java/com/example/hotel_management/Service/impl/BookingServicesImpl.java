@@ -3,10 +3,12 @@ package com.example.hotel_management.Service.impl;
 import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Service.BookingServices;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
 
