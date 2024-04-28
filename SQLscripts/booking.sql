@@ -8,6 +8,7 @@ CREATE TABLE BOOKING (
  hotel_id VARCHAR(50),
  room_id VARCHAR(50),
  total_price FLOAT,
+ is_accepted INT DEFAULT 0,
  FOREIGN KEY (customer) REFERENCES USERS(username),
  FOREIGN KEY (hotel_id) REFERENCES HOTEL(hotel_id),
  FOREIGN KEY (room_id) REFERENCES ROOM(room_id)
