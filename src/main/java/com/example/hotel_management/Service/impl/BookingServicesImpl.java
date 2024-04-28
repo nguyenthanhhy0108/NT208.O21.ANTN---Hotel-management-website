@@ -6,22 +6,16 @@ import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Repository.RoomRepository;
 import com.example.hotel_management.Service.BookingServices;
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
->>>>>>> booking
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
-    final RoomRepository roomRepository
+    final RoomRepository roomRepository;
     @Autowired
     public BookingServicesImpl(BookingRepository bookingRepository, RoomRepository roomRepository) {
 
@@ -66,8 +60,8 @@ public class BookingServicesImpl implements BookingServices {
         Room requestRoom = null;
 
         if (Room.isPresent()){
-            Room requestRoom = Room.get();
-            requestRoom.getHotel()
+            requestRoom = Room.get();
+            requestRoom.getHotel();
         }
         else {
             // Handle the case when the room with the given ID does not exist
@@ -81,6 +75,44 @@ public class BookingServicesImpl implements BookingServices {
         }
 
         return false;
+    }
+
+    /**
+     * Implement find by customer
+     * @param customer: String
+     * @return
+     * A List booking objects
+     */
+    @Override
+    public List<Booking> findByCustomer(String customer) {
+        return this.bookingRepository.findByCustomer(customer);
+    }
+
+    /**
+     * Implement find by hotel ID
+     * @param hotelId: String
+     * @return
+     * A list of booking objects
+     */
+    @Override
+    public List<Booking> findByHotelId(String hotelId) {
+        return this.bookingRepository.findByHotelId(hotelId);
+    }
+
+    /**
+     * Implement find by a list hotel ID
+     * @param hotelIds: List String
+     * @return
+     * A list of bookings objects
+     */
+    @Override
+    public List<Booking> findByHotelId(List<String> hotelIds) {
+        List<Booking> result = new ArrayList<>();
+        for (String id : hotelIds) {
+            List<Booking> bookings = this.findByHotelId(id);
+            result.addAll(bookings);
+        }
+        return result;
     }
 
     public void createBooking(Booking bookingInfoRequest){

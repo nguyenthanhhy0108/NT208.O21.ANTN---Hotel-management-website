@@ -50,7 +50,7 @@ public class BookingController {
     public  String saveBooking(HttpServletRequest request,
                                HttpServletResponse response,
                                Model model){
-        this.bookingServices.save(theBooking);
+//        this.bookingServices.save(theBooking);
         return "first-page";
     }
 

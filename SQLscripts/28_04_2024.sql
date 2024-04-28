@@ -1,0 +1,1 @@
+alter table BOOKING add is_accepted int default 0;

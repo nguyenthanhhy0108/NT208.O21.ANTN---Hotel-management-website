@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -61,6 +62,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
         //Custom login form
         //Redirect login form to home page
         //Config customAuthenticationFailureHandler
@@ -91,6 +93,8 @@ public class SecurityConfig {
                         .requestMatchers("/search").permitAll()
                         .requestMatchers("/get-sorted-hotels-details").permitAll()
                         .requestMatchers("/get-sorted-hotels-details/**").permitAll()
+                        .requestMatchers("/loading-user-page/**").permitAll()
+                        .requestMatchers("/loading-user-page").permitAll()
                         .requestMatchers(staticResources).permitAll()
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/password").permitAll()

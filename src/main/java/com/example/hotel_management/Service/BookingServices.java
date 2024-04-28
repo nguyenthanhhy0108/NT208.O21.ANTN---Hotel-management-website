@@ -38,4 +38,28 @@ public interface BookingServices {
     boolean isValidBooking(String roomId, int num_people, String checkingDate, String checkoutDate);
 
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
+
+    /**
+     * Find all hotel by provided customer
+     * @param customer: String
+     * @return
+     * A list booking object
+     */
+    List<Booking> findByCustomer(String customer);
+
+    /**
+     * Find hotel by provided hotel ID
+     * @param hotelId: String
+     * @return
+     * A List of booking objects
+     */
+    List<Booking> findByHotelId(String hotelId);
+
+    /**
+     * Find hotel by provided list hotel ID
+     * @param hotelIds: List String
+     * @return
+     * A list of booking objects
+     */
+    List<Booking> findByHotelId(List<String> hotelIds);
 }

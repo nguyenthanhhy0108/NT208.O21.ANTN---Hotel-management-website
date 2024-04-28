@@ -12,5 +12,19 @@ import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,String> {
+    /**
+     * Find all hotel by provided customer
+     * @param customer: String
+     * @return
+     * A list booking objects
+     */
+    List<Booking> findByCustomer(String customer);
 
+    /**
+     * Find hotel by provided hotel ID
+     * @param hotelId: String
+     * @return
+     * A List of booking objects
+     */
+    List<Booking> findByHotelId(String hotelId);
 }

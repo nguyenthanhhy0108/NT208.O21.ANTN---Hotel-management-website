@@ -209,4 +209,15 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
         }
         return result;
     }
+
+    /**
+     * Implement find by hotel ID
+     * @param hotelID: String
+     * @return
+     * A list of hotel details
+     */
+    @Override
+    public List<HotelDetails> findByHotelID(String hotelID) {
+        return this.hotelDetailsRepository.findByHotelID(hotelID);
+    }
 }

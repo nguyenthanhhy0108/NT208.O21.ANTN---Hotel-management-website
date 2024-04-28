@@ -5,7 +5,7 @@
   <title>Profile</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/js/first_page.js"></script>
+<!--  <script src="/js/first_page.js"></script>-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,7 +27,7 @@
   </style>
 </head>
 
-<body>
+<body onload="getAllRequests()">
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
@@ -74,7 +74,7 @@
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/profile">Information</a>
-              <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
+              <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
                 <form id="myForm" th:action="@{/logout}" method="post">
                   <input type="hidden">
                 </form>
@@ -90,7 +90,7 @@
 
   </nav>
 
-  <section style="background-color: #a6c0cc; display: flex; flex-direction: column; height: 100vh;">
+  <section style="background-color: #a6c0cc; display: flex; flex-direction: column;">
     <div class="container py-5 my-3">
     
         <div class="col-lg-4 mx-auto">
@@ -123,9 +123,9 @@
                   <p class="mb-0">Full Name</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="fullName"
+                  <p class="text-muted mb-0"
                      th:text="${userDetails.getName()}"/>
-                  <input type="text" class="form-control d-none" id="fullNameInput">
+                  <input type="text" class="form-control d-none" >
                 </div>
               </div>
               <hr>
@@ -134,9 +134,9 @@
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="email"
+                  <p class="text-muted mb-0"
                      th:text="${userDetails.getUsername()}"/>
-                  <input type="email" class="form-control d-none" id="emailInput">
+                  <input type="email" class="form-control d-none" >
                 </div>
               </div>
               <hr>
@@ -145,9 +145,9 @@
                   <p class="mb-0">Phone</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="phone"
+                  <p class="text-muted mb-0"
                      th:text="${userDetails.getPhoneNumber()}"/>
-                  <input type="tel" class="form-control d-none" id="phoneInput">
+                  <input type="tel" class="form-control d-none" >
                 </div>
               </div>
               <hr>
@@ -156,8 +156,8 @@
                   <p class="mb-0">Nationality</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="nationality" th:text="${userDetails.getNationality()}"/>
-                  <input type="tel" class="form-control d-none" id="nationalityInput">
+                  <p class="text-muted mb-0"  th:text="${userDetails.getNationality()}"/>
+                  <input type="tel" class="form-control d-none" >
                 </div>
               </div>
               <hr>
@@ -166,30 +166,105 @@
                   <p class="mb-0">Address</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0" id="address" th:text="${userDetails.getAddress()}">
-                  <input type="text" class="form-control d-none" id="addressInput">
+                  <p class="text-muted mb-0"  th:text="${userDetails.getAddress()}">
+                  <input type="text" class="form-control d-none" >
                 </div>
               </div>
               <hr>
               <div class="row py-2">
                 <div class="col-12 text-center">
-                  <button type="button" class="btn btn-primary" id="saveButton" disabled>Save Changes</button>
+                  <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
                 </div>
               </div>
             </div>
           </div>
 
         </div>
+
+      <div class="col-lg-8 mx-auto">
+        <div class="card mb-4 py-2">
+          <div class="card-body py-2">
+            <div class="row text-end mb-3 py-2">
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-sm btn-outline-primary" id="">Edit Information</button>
+              </div>
+              <div class="col-sm-3">
+                <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
+              </div>
+
+            </div>
+            <div class="row py-2">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0" id="fullName"
+                   th:text="${userDetails.getName()}"/>
+                <input type="text" class="form-control d-none" id="fullNameInput">
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0" id="email"
+                   th:text="${userDetails.getUsername()}"/>
+                <input type="email" class="form-control d-none" id="emailInput">
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0" id="phone"
+                   th:text="${userDetails.getPhoneNumber()}"/>
+                <input type="tel" class="form-control d-none" id="phoneInput">
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2">
+              <div class="col-sm-3">
+                <p class="mb-0">Nationality</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0" id="nationality" th:text="${userDetails.getNationality()}"/>
+                <input type="tel" class="form-control d-none" id="nationalityInput">
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0" id="address" th:text="${userDetails.getAddress()}">
+                  <input type="text" class="form-control d-none" id="addressInput">
+              </div>
+            </div>
+            <hr>
+            <div class="row py-2">
+              <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" id="saveButton" disabled>Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
       
       
     </div>
   </section>
-  <script src="../static/js/user_profile.js"></script>
+  <script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script type="text/javascript" th:src="@{/js/all.js}" defer></script>
+<!--  <script type="text/javascript" th:src="@{/js/all.js}" defer></script>-->
   <script>
     $(window).scroll(function () {
       $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
