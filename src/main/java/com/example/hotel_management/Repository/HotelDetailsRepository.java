@@ -24,4 +24,5 @@ public interface HotelDetailsRepository extends JpaRepository<HotelDetails,Strin
      * A list of HotelDetails objects
      */
     List<HotelDetails> findByCountry(String country);
+
 }

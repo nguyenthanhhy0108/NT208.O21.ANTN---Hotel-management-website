@@ -38,21 +38,19 @@
 							<h1>Make your reservation</h1>
 							<h2 class = "text-info">Hotel name</h2>
 						</div>
-						<form>
-							<div class="form-group">
-								<input class="form-control" type="text" placeholder="Country, ZIP, city...">
-								<span class="form-label">Destination</span>
-							</div>
+						<form action="#" th:action="@{/booking/book_action}" th:object="${Booking}" method="POST">
 							<div class="row">
+								<div style="display: none;" id="alertAreaCheking">
+								</div>
 								<div class="col-md-6  col-sm-11" >
 									<div class="form-group">
-										<input class="form-control" type="date" required>
+										<input class="form-control" type="date" id="checkinDate" required>
 										<span class="form-label">Check In</span>
 									</div>
 								</div>
 								<div class="col-md-6  col-sm-11">
 									<div class="form-group">
-										<input class="form-control" type="date" required>
+										<input class="form-control" type="date" id="checkoutDate" required>
 										<span class="form-label">Check out</span>
 									</div>
 								</div>
@@ -110,7 +108,7 @@
 								</div>
 							</div>
 							<div class="form-btn">
-								<button class="submit-btn">Book Now</button>
+								<button class="submit-btn" id="submitButton">Book Now</button>
 							</div><br>
 							<center><a href="first-page" class="btn btn-lime text-white text-center mx-auto " style="background-color: lightblue;border-radius: 50px;">Back</a></center>
 						</form>

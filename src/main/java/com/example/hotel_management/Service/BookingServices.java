@@ -1,8 +1,12 @@
 package com.example.hotel_management.Service;
 
 import com.example.hotel_management.Model.Booking;
+import com.example.hotel_management.Model.Hotel;
+import com.example.hotel_management.Model.Room;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingServices {
     /**
@@ -16,7 +20,7 @@ public interface BookingServices {
      * @param id id of the booking (Integer)
      * @return Booking
      */
-    Booking findById(Integer id);
+    Booking findById(String id);
 
     /**
      * Save the chosen Booking
@@ -30,4 +34,8 @@ public interface BookingServices {
      * @param booking (Booking)
      */
     void delete(Booking booking);
+
+    boolean isValidBooking(String roomId, int num_people, String checkingDate, String checkoutDate);
+
+    // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
 }
