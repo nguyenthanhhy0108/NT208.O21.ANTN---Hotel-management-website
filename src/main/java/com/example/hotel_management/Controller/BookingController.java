@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 public class BookingController {
 
@@ -38,11 +40,12 @@ public class BookingController {
      * Get book_now.html
      */
     @GetMapping("/booking")
-    public String BookingPage(@RequestParam("hotel_id") String hotel_id, Model model){
-        HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
+    public String BookingPage(@RequestParam("hotel_id") String hotelID, Model model){
+        HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("hotel", hotelDetails);
-        model.addAttribute("user", user);
+
+        model.addAttribute("hotelDetail", hotelDetails);
+        // model.addAttribute("userID", user.getUsername);
         return "book_now";
     }
 
@@ -50,6 +53,20 @@ public class BookingController {
     public  String saveBooking(HttpServletRequest request,
                                HttpServletResponse response,
                                Model model){
+        Booking theBooking = new Booking();
+
+        String Customer = request.getParameter("");
+        String checkinDate = request.getParameter("");
+        String checkoutDate = request.getParameter("");
+        String hotelID = request.getParameter("")
+
+
+        theBooking.setCustomer();
+        theBooking.setCheckInDate();
+        theBooking.setCheckOutDate();
+        theBooking.setTotalPrice();
+        theBooking.setHotelId();
+
         this.bookingServices.save(theBooking);
         return "first-page";
     }

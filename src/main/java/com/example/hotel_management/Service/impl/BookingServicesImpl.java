@@ -6,11 +6,10 @@ import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Repository.RoomRepository;
 import com.example.hotel_management.Service.BookingServices;
-<<<<<<< HEAD
-=======
+import com.example.hotel_management.Service.RoomServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
->>>>>>> booking
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,12 +20,12 @@ import java.util.Optional;
 @Service
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
-    final RoomRepository roomRepository
-    @Autowired
-    public BookingServicesImpl(BookingRepository bookingRepository, RoomRepository roomRepository) {
+    final RoomServices roomServices;
 
+    @Autowired
+    public BookingServicesImpl(BookingRepository bookingRepository, RoomServices roomServices) {
         this.bookingRepository = bookingRepository;
-        this.roomRepository = roomRepository;
+        this.roomServices = roomServices;
     }
 
     @Override
@@ -55,35 +54,37 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public void delete(Booking booking) {
-        bookingRepository.delete(booking);
+    public Booking delete(Booking theBooking){
+        bookingRepository.delete(theBooking);
+        return theBooking;
+    }
+
+    @Override
+    public Booking deleteByID(String bookingID) {
+        Booking deleteBooking = this.findById(bookingID);
+        //consider delete and delete by id
+        bookingRepository.deleteById(bookingID);
+
+        return  deleteBooking;
     }
 
 
     @Override
-    public boolean isValidBooking(String roomId, int num_people, String checkingDate, String checkoutDate){
-        Optional<Room> Room = this.roomRepository.findById(roomId);
-        Room requestRoom = null;
+    public boolean isValidBooking(Booking theBooking){
+        String roomId = theBooking.getRoomId();
+        Room requestRoom = this.roomServices.findRoomByID(roomId);
 
-        if (Room.isPresent()){
-            Room requestRoom = Room.get();
-            requestRoom.getHotel()
-        }
-        else {
-            // Handle the case when the room with the given ID does not exist
-            throw new NoSuchElementException("Room with ID " + roomId + " not found");
-        }
+        Hotel requestedHotel = requestRoom.getHotel();
+        int num_people = requestRoom.getNumPeople();
+        Date checkingDate = theBooking.getCheckInDate();
+        Date checkoutDate = theBooking.getCheckOutDate();
 
-        List<Room> availableRooms = this.roomRepository.findAvailableRoomForBooking(requestRoom.getHotelID(), num_people, checkingDate, checkoutDate);
+        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestRoom.getHotelID(), num_people, checkingDate, checkoutDate);
 
         if (availableRooms.contains(requestRoom)){
             return true;
         }
 
         return false;
-    }
-
-    public void createBooking(Booking bookingInfoRequest){
-
     }
 }

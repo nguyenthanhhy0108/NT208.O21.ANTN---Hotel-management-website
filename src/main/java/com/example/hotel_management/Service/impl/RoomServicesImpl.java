@@ -26,29 +26,36 @@ public class RoomServicesImpl implements RoomServices {
 
     @Transactional
     @Override
-    public void deleteByRoomId(String roomId) {
-        // Find the room by its ID
-        Optional<Room> Room = roomRepository.findById(roomId);
-
-        // Check if the room exists
-        if (Room.isPresent()) {
-            Room roomToDelete = Room.get();
-
-            // Delete the room
-            roomRepository.delete(roomToDelete);
-        } else {
-            // Handle the case when the room with the given ID does not exist
-            throw new NoSuchElementException("Room with ID " + roomId + " not found");
-        }
+    public Room deleteRoomById(String roomID) {
+        Room roomToDelete = this.findRoomByID(roomID);
+        this.roomRepository.deleteById(roomID);
+        return roomToDelete;
     }
 
     @Override
-    public List<Room> findAllRooms() {
-        return roomRepository.findAll();
+    public List<Room> findAllRoomsByHotelID(String hotelID) {
+        return roomRepository.findAllRoomByHotelID(hotelID);
     }
 
     @Override
     public List<Room> findAvailableRoomForBooking(String hotelID, int num_people, String checkingDate, String checkoutDate){
         return roomRepository.findAvailableRoomForBooking(hotelID, num_people, checkingDate, checkoutDate);
     };
+
+    @Override
+    public Room findRoomByID(String roomID){
+        Optional<Room> Room = roomRepository.findById(roomID);
+
+        // Check if the room exists
+        if (Room.isPresent()) {
+            Room room = Room.get();
+
+            // Delete the room
+            roomRepository.deleteById(room.getRoomID());
+            return room;
+        } else {
+            // Handle the case when the room with the given ID does not exist
+            throw new NoSuchElementException("Room with ID " + roomID + " not found");
+        }
+    }
 }

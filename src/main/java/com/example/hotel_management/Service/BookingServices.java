@@ -31,11 +31,13 @@ public interface BookingServices {
 
     /**
      * Delete the chosen Booking
-     * @param booking (Booking)
+     * @param bookingID (String)
      */
-    void delete(Booking booking);
+    Booking deleteByID(String bookingID);
 
-    boolean isValidBooking(String roomId, int num_people, String checkingDate, String checkoutDate);
+    Booking delete(Booking theBooking);
+
+    boolean isValidBooking(Booking theBooking);
 
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
 }

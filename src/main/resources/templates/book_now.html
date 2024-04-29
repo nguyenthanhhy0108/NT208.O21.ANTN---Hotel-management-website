@@ -36,45 +36,51 @@
 					<div class="booking-form">
 						<div class="form-header">
 							<h1>Make your reservation</h1>
-							<h2 class = "text-info">Hotel name</h2>
+							<h2 class="d-none" th:name="hotelDetails.hotelID"></h2>
+							<h2 class = "text-info" th:name="hotelDetail.name"></h2>
 						</div>
-						<form action="#" th:action="@{/booking/book_action}" th:object="${Booking}" method="POST">
+						<form action="#" th:action="@{/booking}" method="POST">
 							<div class="row">
 								<div style="display: none;" id="alertAreaCheking">
 								</div>
 								<div class="col-md-6  col-sm-11" >
 									<div class="form-group">
-										<input class="form-control" type="date" id="checkinDate" required>
+										<input class="form-control" type="date" id="checkinDate" name="checkinDate" required>
 										<span class="form-label">Check In</span>
 									</div>
 								</div>
 								<div class="col-md-6  col-sm-11">
 									<div class="form-group">
-										<input class="form-control" type="date" id="checkoutDate" required>
+										<input class="form-control" type="date" id="checkoutDate" name="checkoutDate" required>
 										<span class="form-label">Check out</span>
 									</div>
 								</div>
 							</div>
 							<div class="row">
+<!--								<div class="col-md-4  col-sm-11">-->
+<!--									<div class="form-group">-->
+<!--										<select class="form-control" required>-->
+<!--											<option value="" selected hidden>no of rooms</option>-->
+<!--											<option>1</option>-->
+<!--											<option>2</option>-->
+<!--											<option>3</option>-->
+<!--										</select>-->
+<!--										<span class="select-arrow"></span>-->
+<!--										<span class="form-label">Rooms</span>-->
+<!--									</div>-->
+<!--								</div>-->
 								<div class="col-md-4  col-sm-11">
 									<div class="form-group">
-										<select class="form-control" required>
-											<option value="" selected hidden>no of rooms</option>
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-										</select>
-										<span class="select-arrow"></span>
-										<span class="form-label">Rooms</span>
-									</div>
-								</div>
-								<div class="col-md-4  col-sm-11">
-									<div class="form-group">
-										<select class="form-control" required>
+										<select class="form-control" name = "numPeople" required>
 											<option value="" selected hidden>no of adults</option>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+											<option>6</option>
+											<option>7</option>
+											<option>8</option>
 										</select>
 										<span class="select-arrow"></span>
 										<span class="form-label">Adults</span>
@@ -93,20 +99,20 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-6 col-sm-11">
-									<div class="form-group">
-										<input class="form-control" type="email" placeholder="Enter your Email">
-										<span class="form-label">Email</span>
-									</div>
-								</div>
-								<div class="col-md-6  col-sm-11">
-									<div class="form-group">
-										<input class="form-control" type="tel" placeholder="Enter you Phone">
-										<span class="form-label">Phone</span>
-									</div>
-								</div>
-							</div>
+<!--							<div class="row">-->
+<!--								<div class="col-md-6 col-sm-11">-->
+<!--									<div class="form-group">-->
+<!--										<input class="form-control" type="email" placeholder="Enter your Email">-->
+<!--										<span class="form-label">Email</span>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--								<div class="col-md-6  col-sm-11">-->
+<!--									<div class="form-group">-->
+<!--										<input class="form-control" type="tel" placeholder="Enter you Phone">-->
+<!--										<span class="form-label">Phone</span>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
 							<div class="form-btn">
 								<button class="submit-btn" id="submitButton">Book Now</button>
 							</div><br>

@@ -34,6 +34,9 @@ public class Booking {
     @Column(name = "total_price")
     private double totalPrice;
 
+    @Column(name="is_accepted")
+    private int isAccepted;
+
     /**
      * Constructor
      * @param bookingId booking id (Integer)
@@ -59,5 +62,5 @@ public class Booking {
         this.roomId = roomId;
         this.totalPrice = totalPrice;
     }
-    public Booking() {}
+    public Booking() {this.isAccepted = 0;}
 }

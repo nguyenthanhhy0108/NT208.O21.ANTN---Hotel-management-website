@@ -9,6 +9,7 @@ public interface RoomServices{
 
     Room saveRoom(Room room);
     List<Room> findAvailableRoomForBooking(String hotelID, int num_people, String checkingDate, String checkoutDate);
-    List<Room> findAllRooms();
-    void deleteByRoomId(String roomId);
+    List<Room> findAllRoomsByHotelID(String hotelID);
+    Room deleteRoomById(String roomID);
+    Room findRoomByID(String roomID);
 }
