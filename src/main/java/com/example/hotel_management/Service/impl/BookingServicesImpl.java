@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -76,15 +75,16 @@ public class BookingServicesImpl implements BookingServices {
 
         Hotel requestedHotel = requestRoom.getHotel();
         int num_people = requestRoom.getNumPeople();
-        Date checkingDate = theBooking.getCheckInDate();
-        Date checkoutDate = theBooking.getCheckOutDate();
+        Date checkingDate = (Date) theBooking.getCheckInDate();
+        Date checkoutDate = (Date) theBooking.getCheckOutDate();
 
         List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestRoom.getHotelID(), num_people, checkingDate, checkoutDate);
 
         if (availableRooms.contains(requestRoom)){
             return true;
         }
-
-        return false;
+        else{
+            return false;
+        }
     }
 }

@@ -36,10 +36,11 @@
 					<div class="booking-form">
 						<div class="form-header">
 							<h1>Make your reservation</h1>
-							<h2 class="d-none" th:name="hotelDetails.hotelID"></h2>
-							<h2 class = "text-info" th:name="hotelDetail.name"></h2>
 						</div>
+
 						<form action="#" th:action="@{/booking}" method="POST">
+							<div th:if="${invalidBooking}" class="msg form-bt">Invalid booking request, please try again</div>
+							<input type="hidden" id="hotelID" name="hotelID" th:value="hotelID">
 							<div class="row">
 								<div style="display: none;" id="alertAreaCheking">
 								</div>

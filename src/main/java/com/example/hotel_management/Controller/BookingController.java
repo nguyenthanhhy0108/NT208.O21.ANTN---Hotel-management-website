@@ -2,10 +2,12 @@ package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.HotelDetails;
+import com.example.hotel_management.Model.UserDetails;
 import com.example.hotel_management.Service.BookingServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -40,36 +44,43 @@ public class BookingController {
      * Get book_now.html
      */
     @GetMapping("/booking")
-    public String BookingPage(@RequestParam("hotel_id") String hotelID, Model model){
+    public String BookingPage(@RequestParam("id") String hotelID, Model model){
         HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("hotelDetail", hotelDetails);
-        // model.addAttribute("userID", user.getUsername);
+        model.addAttribute("hotelID", hotelDetails.getHotelID());
         return "book_now";
     }
 
     @PostMapping("/booking")
-    public  String saveBooking(HttpServletRequest request,
-                               HttpServletResponse response,
-                               Model model){
+    public  String requestBooking(HttpServletRequest request,
+                               Model model) throws ParseException {
+        HttpSession session = request.getSession();
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
         Booking theBooking = new Booking();
 
-        String Customer = request.getParameter("");
-        String checkinDate = request.getParameter("");
-        String checkoutDate = request.getParameter("");
-        String hotelID = request.getParameter("")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date checkinDate = dateFormat.parse(request.getParameter("checkinDate"));
+        Date checkoutDate = dateFormat.parse(request.getParameter("checkoutDate"));
 
+        String userName = user.getName();
+        String hotelID = request.getParameter("hotelID");
 
-        theBooking.setCustomer();
-        theBooking.setCheckInDate();
-        theBooking.setCheckOutDate();
-        theBooking.setTotalPrice();
-        theBooking.setHotelId();
+        theBooking.setCustomer(userName);
+        theBooking.setCheckInDate(checkinDate);
+        theBooking.setCheckOutDate(checkoutDate);
+        theBooking.setHotelId(hotelID);
 
-        this.bookingServices.save(theBooking);
-        return "first-page";
+        if (bookingServices.isValidBooking(theBooking)){
+            this.bookingServices.save(theBooking);
+            session.setAttribute("notifyBookingSuccessfully", true);
+            return "homepage";
+        }
+        else{
+            model.addAttribute("invalidBooking", true);
+            model.addAttribute("hotelID", hotelID);
+            return "book_now";
+        }
     }
-
-
 }

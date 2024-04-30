@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class RoomServicesImpl implements RoomServices {
     }
 
     @Override
-    public List<Room> findAvailableRoomForBooking(String hotelID, int num_people, String checkingDate, String checkoutDate){
+    public List<Room> findAvailableRoomForBooking(String hotelID, int num_people, Date checkingDate, Date checkoutDate){
         return roomRepository.findAvailableRoomForBooking(hotelID, num_people, checkingDate, checkoutDate);
     };
 
