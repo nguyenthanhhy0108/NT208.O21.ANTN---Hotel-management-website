@@ -50,7 +50,6 @@ public class BookingController {
     }
 
     @PostMapping("/booking")
-<<<<<<< HEAD
     public  String requestBooking(HttpServletRequest request,
                                Model model) throws ParseException {
         HttpSession session = request.getSession();
@@ -85,18 +84,11 @@ public class BookingController {
             model.addAttribute("hotelID", hotelID);
             return "book_now";
         }
-=======
-    public  String saveBooking(HttpServletRequest request,
-                               HttpServletResponse response,
-                               Model model){
-//        this.bookingServices.save(theBooking);
-        return "first-page";
->>>>>>> 99221d26a2961235ed8d6b4d5a5fc6cad112c697
     }
 
-    @PutMapping("/deleteBooking")
-    public String deleteBooking(HttpServletRequest request,
-                                Model model){
-
-    }
+//    @PutMapping("/deleteBooking")
+//    public String deleteBooking(HttpServletRequest request,
+//                                Model model){
+//
+//    }
 }
