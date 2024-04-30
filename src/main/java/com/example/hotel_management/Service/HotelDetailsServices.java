@@ -86,4 +86,12 @@ public interface HotelDetailsServices {
      * A list object
      */
     List<Object> getListIDByProvidedListName(List<String> providedListName);
+
+    /**
+     * Find hotel details in database which consists a similar id
+     * @param hotelID: String
+     * @return
+     * A list of HotelDetails objects
+     */
+    List<HotelDetails> findByHotelID(String hotelID);
 }

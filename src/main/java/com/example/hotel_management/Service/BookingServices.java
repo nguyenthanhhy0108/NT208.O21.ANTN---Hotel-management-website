@@ -37,10 +37,37 @@ public interface BookingServices {
 
     Booking delete(Booking theBooking);
 
+
     boolean isValidBooking(Booking theBooking, int People);
 
     Booking assignRoomForBooking(Booking theBooking, int People);
 
     void updateBookedCapacityExecute(String roomID, String updateColumn, int value);
     void updateBookedCapacity(String roomID, Date checkinDate ,Date checkoutDate, int value);
+
+    // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
+
+    /**
+     * Find all hotel by provided customer
+     * @param customer: String
+     * @return
+     * A list booking object
+     */
+    List<Booking> findByCustomer(String customer);
+
+    /**
+     * Find hotel by provided hotel ID
+     * @param hotelId: String
+     * @return
+     * A List of booking objects
+     */
+    List<Booking> findByHotelId(String hotelId);
+
+    /**
+     * Find hotel by provided list hotel ID
+     * @param hotelIds: List String
+     * @return
+     * A list of booking objects
+     */
+    List<Booking> findByHotelId(List<String> hotelIds);
 }

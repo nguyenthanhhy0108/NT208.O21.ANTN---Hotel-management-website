@@ -16,4 +16,12 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
      * A list Hotel object
      */
     List<Hotel> findByHotelID(String hotelID);
+
+    /**
+     * Get a list Hotel object with provided ownerUsername
+     * @param ownerUsername: String
+     * @return
+     * A list Hotel object
+     */
+    List<Hotel> findByOwnerUsername(String ownerUsername);
 }

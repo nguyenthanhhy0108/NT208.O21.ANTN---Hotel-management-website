@@ -59,4 +59,27 @@ public class HotelServicesImpl implements HotelServices {
         return hotelRepository.findAll();
     }
 
+    /**
+     * Implement method find by owner
+     * @param ownerUsername: String
+     * @return
+     * A list of hotels
+     */
+    @Override
+    public List<Hotel> findByOwnerUsername(String ownerUsername) {
+        return this.hotelRepository.findByOwnerUsername(ownerUsername);
+    }
+
+    /**
+     * Implement find by hotel ID
+     * @param hotelID: String
+     * @return
+     * A list of hotel objects
+     */
+    @Override
+    public List<Hotel> findByHotelID(String hotelID) {
+        return this.hotelRepository.findByHotelID(hotelID);
+    }
+
+
 }

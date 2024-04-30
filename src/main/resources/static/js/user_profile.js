@@ -35,3 +35,25 @@ function saveChanges() {
   toggleEditMode(); 
 }
 
+async function callAPI() {
+  try {
+    const test = await $.ajax({
+      url: '/loading-user-page',
+      method: 'GET',
+      dataType: 'json'
+    });
+    return test;
+  } catch (error) {
+    alert(error);
+  }
+}
+
+
+async function getAllRequests() {
+  alert("abca");
+  let test = await callAPI();
+  if (test.receivedBookings.length === 0){
+    alert("true");
+  }
+  alert(test.receivedBookings);
+}

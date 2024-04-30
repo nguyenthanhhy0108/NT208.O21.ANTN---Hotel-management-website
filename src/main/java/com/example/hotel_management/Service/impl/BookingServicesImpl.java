@@ -63,7 +63,8 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking save(Booking booking) {
         bookingRepository.save(booking);
-        this.updateBookedCapacity(booking.getRoomId(), booking.getCheckInDate(), booking.getCheckOutDate(), 1);
+        Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
+        this.updateBookedCapacity(booking.getRoomId(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
         return booking;
     }
 
@@ -71,10 +72,11 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking delete(Booking theBooking){
         bookingRepository.delete(theBooking);
+        Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
 
         Date checkingDate = (Date) theBooking.getCheckInDate();
         Date checkoutDate = (Date) theBooking.getCheckOutDate();
-        this.updateBookedCapacity(theBooking.getRoomId(),checkingDate, checkoutDate, -1);
+        this.updateBookedCapacity(theBooking.getRoomId(),checkingDate, checkoutDate, -requestRoom.getNumPeople());
 
         return theBooking;
     }
@@ -106,7 +108,7 @@ public class BookingServicesImpl implements BookingServices {
         int daysBetween = (int) (checkoutDate.getTime() / 1000 / 3600 / 24) - (int) (checkinDate.getTime() / 1000 / 3600 / 24);
 
         for (long i = 1; i < daysBetween + 1; i++){
-            this.updateBookedCapacityExecute(roomID, "day" + i, requestRoom.getNumPeople());
+            this.updateBookedCapacityExecute(roomID, "day" + i, value);
         }
     }
 

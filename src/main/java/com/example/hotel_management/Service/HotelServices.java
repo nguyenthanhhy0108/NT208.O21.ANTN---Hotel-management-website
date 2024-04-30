@@ -25,4 +25,20 @@ public interface HotelServices {
      * A list of Hotel object
      */
     List<Hotel> findAllHotels();
+
+    /**
+     * Get a list Hotel object with provided ownerUsername
+     * @param ownerUsername: String
+     * @return
+     * A list Hotel object
+     */
+    List<Hotel> findByOwnerUsername(String ownerUsername);
+
+    /**
+     * Get a list Hotel object with provided hotelID
+     * @param hotelID: String
+     * @return
+     * A list Hotel object
+     */
+    List<Hotel> findByHotelID(String hotelID);
 }

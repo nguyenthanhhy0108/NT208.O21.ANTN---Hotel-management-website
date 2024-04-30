@@ -29,7 +29,7 @@ public class TestController {
 //        Hotel hotel1 = hotelServices.saveHotel(new Hotel("22520593@gm.uit.edu.vn"));
 //        Hotel hotel2 = hotelServices.saveHotel(new Hotel("22520593@gm.uit.edu.vn"));
 //        Hotel hotel3 = hotelServices.saveHotel(new Hotel("22520593@gm.uit.edu.vn"));
-        System.out.println(Hotel.countHotel);
+//        System.out.println(Hotel.countHotel);
 //        System.out.println(hotelDetailsServices.getHotelSortedByBookingCount().get(0).getBookingCount());
         return "test";
     }

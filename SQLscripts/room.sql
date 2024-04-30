@@ -6,7 +6,5 @@ CREATE TABLE ROOM (
   num_people INT,
 
   price FLOAT,
-  is_booked INT DEFAULT 0,
-  booked_guests INT DEFAULT 0,
   star_rating FLOAT
 );
