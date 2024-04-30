@@ -37,13 +37,16 @@
                     <div class="form-header">
                         <h1>Request Owner</h1>
                     </div>
-                    <form>
+                    <form action="#" th:action="@{/add-request-owner}" th:object="${requestOwner}" th:method="POST">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Message (optional)">
+                            <input type="hidden" th:field="*{requestId}">
+                            <input type="hidden" th:field="*{username}">
+                            <textarea class="form-control" cols="10" rows="30" placeholder="Message (optional)" th:field="*{message}"></textarea>
                             <span class="form-label">Message</span>
+                            <input type="hidden" th:field="*{isAccepted}">
                         </div>
                         <div class="form-btn">
-                            <button class="submit-btn">Request</button>
+                            <button class="submit">Request</button>
                         </div><br>
                         <center><a href="/profile" class="btn btn-lime text-white text-center mx-auto " style="background-color: lightblue;border-radius: 50px;">Back</a></center>
                     </form>

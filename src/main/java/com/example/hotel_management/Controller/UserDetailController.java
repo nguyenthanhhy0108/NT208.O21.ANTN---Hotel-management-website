@@ -3,11 +3,9 @@ package com.example.hotel_management.Controller;
 import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.DataDTO.WaitingRequest;
 import com.example.hotel_management.Model.Hotel;
+import com.example.hotel_management.Model.RequestOwner;
 import com.example.hotel_management.Model.UserDetails;
-import com.example.hotel_management.Service.BookingServices;
-import com.example.hotel_management.Service.HotelDetailsServices;
-import com.example.hotel_management.Service.HotelServices;
-import com.example.hotel_management.Service.UserDetailsServices;
+import com.example.hotel_management.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -29,16 +29,19 @@ public class UserDetailController {
     private final BookingServices bookingServices;
     private final HotelServices hotelServices;
     private final HotelDetailsServices hotelDetailsServices;
+    private final RequestOwnerServices requestOwnerServices;
 
     @Autowired
     public UserDetailController(UserDetailsServices userDetailsServices,
                                 BookingServices bookingServices,
                                 HotelServices hotelServices,
-                                HotelDetailsServices hotelDetailsServices) {
+                                HotelDetailsServices hotelDetailsServices,
+                                RequestOwnerServices requestOwnerServices) {
         this.userDetailsServices = userDetailsServices;
         this.bookingServices = bookingServices;
         this.hotelServices = hotelServices;
         this.hotelDetailsServices = hotelDetailsServices;
+        this.requestOwnerServices = requestOwnerServices;
     }
 
     public List<UserDetails> getUsername(){
@@ -72,7 +75,18 @@ public class UserDetailController {
             userDetails = result.get(0);
         }
         model.addAttribute("userDetails", userDetails);
+
+        RequestOwner request = new RequestOwner();
+        request.setUsername(userDetails.getUsername());
+        request.setIsAccepted(0);
+        model.addAttribute("requestOwner", request);
         return "request_owner_form";
+    }
+
+    @PostMapping("/add-request-owner")
+    public String addRequestOwner(@ModelAttribute("requestOwner") RequestOwner requestOwner, Model model) {
+        requestOwnerServices.save(requestOwner);
+        return "redirect:/profile";
     }
 
     @ResponseBody
