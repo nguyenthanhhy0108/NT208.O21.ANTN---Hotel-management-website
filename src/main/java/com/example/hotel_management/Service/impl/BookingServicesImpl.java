@@ -1,21 +1,18 @@
 package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.Booking;
-import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
-import com.example.hotel_management.Repository.RoomRepository;
 import com.example.hotel_management.Service.BookingServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Service;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -110,6 +107,44 @@ public class BookingServicesImpl implements BookingServices {
         for (long i = 1; i < daysBetween + 1; i++){
             this.updateBookedCapacityExecute(roomID, "day" + i, value);
         }
+    }
+
+    /**
+     * Implement find by customer
+     * @param customer: String
+     * @return
+     * A List booking objects
+     */
+    @Override
+    public List<Booking> findByCustomer(String customer) {
+        return this.bookingRepository.findByCustomer(customer);
+    }
+
+    /**
+     * Implement find by hotel ID
+     * @param hotelId: String
+     * @return
+     * A list of booking objects
+     */
+    @Override
+    public List<Booking> findByHotelId(String hotelId) {
+        return this.bookingRepository.findByHotelId(hotelId);
+    }
+
+    /**
+     * Implement find by a list hotel ID
+     * @param hotelIds: List String
+     * @return
+     * A list of bookings objects
+     */
+    @Override
+    public List<Booking> findByHotelId(List<String> hotelIds) {
+        List<Booking> result = new ArrayList<>();
+        for (String id : hotelIds) {
+            List<Booking> bookings = this.findByHotelId(id);
+            result.addAll(bookings);
+        }
+        return result;
     }
 
     @Override
