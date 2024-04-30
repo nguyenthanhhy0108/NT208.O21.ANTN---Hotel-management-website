@@ -55,8 +55,7 @@ public class RoomServicesImpl implements RoomServices {
             roomRepository.deleteById(room.getRoomID());
             return room;
         } else {
-            // Handle the case when the room with the given ID does not exist
-            throw new NoSuchElementException("Room with ID " + roomID + " not found");
+            return null;
         }
     }
 }

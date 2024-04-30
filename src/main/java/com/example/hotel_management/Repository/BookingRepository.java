@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.lang.annotation.Native;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 

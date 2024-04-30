@@ -1,5 +1,6 @@
 package com.example.hotel_management.Service;
 
+import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.RoomRepository;
 
@@ -13,4 +14,5 @@ public interface RoomServices{
     List<Room> findAllRoomsByHotelID(String hotelID);
     Room deleteRoomById(String roomID);
     Room findRoomByID(String roomID);
+
 }

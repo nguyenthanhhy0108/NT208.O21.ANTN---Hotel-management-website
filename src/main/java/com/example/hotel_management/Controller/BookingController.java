@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,12 +64,17 @@ public class BookingController {
         String userName = user.getName();
         String hotelID = request.getParameter("hotelID");
 
+        String numPeopleString = request.getParameter("numPeople");
+        int numPeople = Integer.parseInt(numPeopleString);
+
         theBooking.setCustomer(userName);
         theBooking.setCheckInDate(checkinDate);
         theBooking.setCheckOutDate(checkoutDate);
         theBooking.setHotelId(hotelID);
 
-        if (bookingServices.isValidBooking(theBooking)){
+        Booking assignedRoomBooking = bookingServices.assignRoomForBooking(theBooking, numPeople);
+
+        if (assignedRoomBooking != null){
             this.bookingServices.save(theBooking);
             session.setAttribute("notifyBookingSuccessfully", true);
             return "homepage";
@@ -82,5 +84,11 @@ public class BookingController {
             model.addAttribute("hotelID", hotelID);
             return "book_now";
         }
+    }
+
+    @PutMapping("/deleteBooking")
+    public String deleteBooking(HttpServletRequest request,
+                                Model model){
+
     }
 }
