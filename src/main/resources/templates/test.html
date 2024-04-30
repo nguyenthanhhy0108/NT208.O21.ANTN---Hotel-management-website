@@ -1,35 +1,292 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Search</title>
+    <title>Profile</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <script src="/js/first_page.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/imagehover.min.css}">
+    <link rel="stylesheet" th:href="@{/css/hotel.css}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
-        #searchInput {
-            width: 300px;
-            padding: 10px;
-            font-size: 16px;
+        .scrolled {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+
         }
-        #searchSuggestions {
-            list-style-type: none;
-            padding: 0;
-            margin-top: 5px;
-        }
-        #searchSuggestions li {
-            padding: 5px;
-            cursor: pointer;
-        }
-        #searchSuggestions li:hover {
-            background-color: #f4f4f4;
+
+        nav {
+            transition: 0.45s ease-in all !important;
         }
     </style>
 </head>
-<body>
-<h1>Hotel Search</h1>
-<input type="text" id="searchInput" placeholder="Enter hotel name...">
-<ul id="searchSuggestions"></ul>
 
+<body onload="getAllRequests()">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+
+                <!--          <li class="nav-item">-->
+                <!--            <a class="nav-link" href="/home">Home</a>-->
+                <!--          </li>-->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#cont">Contact</a>
+                </li>
+
+                <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+                    <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
+
+                    <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+                </div>
+
+                <li class="nav-item dropdown" style="color: lawngreen">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span style="color: lawngreen" ></span>
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile">Information</a>
+                        <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
+                        <form id="myForm" th:action="@{/logout}" method="post">
+                            <input type="hidden">
+                        </form>
+
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+
+<section style="background-color: #a6c0cc; display: flex; flex-direction: column;">
+    <div class="container py-5 my-3">
+
+        <div class="col-lg-4 mx-auto">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="avatar" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3">Name</h5>
+                    <p class="text-muted mb-1">Info</p>
+                    <p class="text-muted mb-4">Info</p>
+                    <div class="d-flex justify-content-center mb-2">
+                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 mx-auto">
+            <div class="card mb-4 py-2">
+                <div class="card-body py-2">
+                    <div class="row text-end mb-3 py-2">
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
+                        </div>
+
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"></p>
+<!--                               th:text="${userDetails.getName()}"/>-->
+                            ddadas
+                            </p>
+                            <input type="text" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">
+<!--                               th:text="${userDetails.getUsername()}"/>-->
+                            dsadas</p>
+                            <input type="email" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">
+                               dasdsa</p>
+<!--                               th:text="${userDetails.getPhoneNumber()}"/>-->
+                            <input type="tel" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Nationality</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" >
+<!--                                th:text="${userDetails.getNationality()}"/>-->
+
+                            </p><input type="tel" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"  >
+<!--                               th:text="${userDetails.getAddress()}">-->
+                            >dsdas</p>
+                            <input type="text" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-8 mx-auto">
+            <div class="card mb-4 py-2">
+                <div class="card-body py-2">
+                    <div class="row text-end mb-3 py-2">
+                        <h1 style="padding-left: 40%">
+                            Your sent requests
+                        </h1>
+                    </div>
+                    <div class="row py-2">
+                        <table>
+                            <tr>
+                                <td>abc</td>
+                                <td>abc1</td>
+                                <td>abc2</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr>
+                    <div class="row py-2" style="margin-left: 1%">
+                        <table>
+                            <tr >
+                                <td style="border-right: 1px solid black; padding-right: 50px;">abc</td>
+                                <td style="border-right: 1px solid black; padding-right: 50px" >abc</td>
+                                <td style="border-right: 1px solid black; padding-right: 50px" >abc</td>
+                                <td style="border-right: 1px solid black; padding-right: 50px" >abc</td>
+                                <td style="border-right: 1px solid black; padding-right: 50px" >abc</td>
+                                <td style="border-right: 1px solid black; padding-right: 50px" >abc</td>
+                                <td style="padding-right: 50px">abc</td>
+                                <td>
+                                    <button type="button" class="btn btn-success mr-2">Confirm</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">
+                                dasdsa</p>
+                            <!--                               th:text="${userDetails.getPhoneNumber()}"/>-->
+                            <input type="tel" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Nationality</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0" >
+                                <!--                                th:text="${userDetails.getNationality()}"/>-->
+
+                            </p><input type="tel" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"  >
+                                <!--                               th:text="${userDetails.getAddress()}">-->
+                                >dsdas</p>
+                            <input type="text" class="form-control d-none" >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row py-2">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+<script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/test.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<!--  <script type="text/javascript" th:src="@{/js/all.js}" defer></script>-->
+<script>
+    $(window).scroll(function () {
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
+    });
+
+</script>
 </body>
 </html>

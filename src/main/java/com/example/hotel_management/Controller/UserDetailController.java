@@ -94,6 +94,10 @@ public class UserDetailController {
         public WaitingRequest loadingUserPage(Authentication authentication) {
         WaitingRequest waitingRequest = new WaitingRequest();
 
+        waitingRequest.setCustomerName(this.userDetailsServices
+                .findByUsername(authentication.getName())
+                .get(0).getName());
+
         waitingRequest.setSentBookings(this.bookingServices
                 .findByCustomer(authentication.getName()));
 
