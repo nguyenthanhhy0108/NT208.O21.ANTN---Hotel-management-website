@@ -13,7 +13,7 @@ public class WaitingRequest {
     private List<Booking> sentBookings;
     private List<String> receivedHotelNames;
     private List<String> receivedCustomerNames;
-    List<String> sentHotelNames;
+    private List<String> sentHotelNames;
 
     public WaitingRequest(boolean roleOwner,
                           String customerName,
