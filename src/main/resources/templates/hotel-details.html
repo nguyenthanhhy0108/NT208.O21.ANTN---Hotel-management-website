@@ -49,14 +49,14 @@
 
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">HOTEL BOOKING</a>
+      <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
       <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item ">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="/first-page">Home</a>
           </li>
 
           <li class="nav-item">
@@ -84,10 +84,29 @@
           <!--          </li>-->
 
           <li class="nav-item">
-            <a class="nav-link" href="index.html#cont">Contact</a>
+            <a class="nav-link" href="/first-page#cont">Contact</a>
           </li>
-          <a type="button" class="btn btn-primary px-3 btncmn"  href="sign_in.html">Sign In</a><br>
-          <a type="button" class="btn signup  btn-success px-3 btncmn " href="sign_up.html">Sign Up</a>
+          <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+            <a type="button" class="btn btn-primary px-4 btncmn"  href="/login">Sign In</a><br>
+
+            <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+          </div>
+
+          <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <span style="color: lawngreen" th:text="${session.name}"></span>
+            </a>
+            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/profile">Information</a>
+              <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
+              <form id="myForm" th:action="@{/logout}" method="post">
+                <input type="hidden">
+              </form>
+
+              <!--              <a class="dropdown-item" href=""></a>-->
+            </div>
+          </li>
         </ul>
 
       </div>

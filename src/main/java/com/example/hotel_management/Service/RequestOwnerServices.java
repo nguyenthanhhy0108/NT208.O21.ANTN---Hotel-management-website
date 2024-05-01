@@ -11,6 +11,8 @@ public interface RequestOwnerServices {
 
     public List<RequestOwner> findByUsername(String username);
 
+    public List<RequestOwner> findByIsAccepted(int isAccepted);
+
     public RequestOwner save(RequestOwner requestOwner);
 
     public void delete(RequestOwner requestOwner);

@@ -13,10 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,6 @@ public class UserDetailController {
     private final BookingServices bookingServices;
     private final HotelServices hotelServices;
     private final HotelDetailsServices hotelDetailsServices;
-    private final RequestOwnerServices requestOwnerServices;
 
     @Autowired
     public UserDetailController(UserDetailsServices userDetailsServices,
@@ -41,7 +37,6 @@ public class UserDetailController {
         this.bookingServices = bookingServices;
         this.hotelServices = hotelServices;
         this.hotelDetailsServices = hotelDetailsServices;
-        this.requestOwnerServices = requestOwnerServices;
     }
 
     public List<UserDetails> getUsername(){
@@ -62,31 +57,6 @@ public class UserDetailController {
         }
         model.addAttribute("userDetails", userDetails);
         return "user_profile";
-    }
-
-    @GetMapping("/request-owner")
-    public String requestOwner(Model model) {
-        List<UserDetails> result = getUsername();
-        UserDetails userDetails = null;
-        if (result.isEmpty()) {
-            return "redirect:/login";
-        }
-        else {
-            userDetails = result.get(0);
-        }
-        model.addAttribute("userDetails", userDetails);
-
-        RequestOwner request = new RequestOwner();
-        request.setUsername(userDetails.getUsername());
-        request.setIsAccepted(0);
-        model.addAttribute("requestOwner", request);
-        return "request_owner_form";
-    }
-
-    @PostMapping("/add-request-owner")
-    public String addRequestOwner(@ModelAttribute("requestOwner") RequestOwner requestOwner, Model model) {
-        requestOwnerServices.save(requestOwner);
-        return "redirect:/profile";
     }
 
     @ResponseBody
