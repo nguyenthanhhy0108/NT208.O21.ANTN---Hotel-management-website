@@ -34,30 +34,30 @@ function saveChanges() {
   email.textContent = emailInput.value;
   toggleEditMode(); 
 }
-
-async function callAPI() {
-  try {
-    const test = await $.ajax({
-      url: '/loading-user-page',
-      method: 'GET',
-      dataType: 'json'
-    });
-    return test;
-  } catch (error) {
-    alert(error);
-  }
-}
-
-
-async function getAllRequests() {
-  // alert("abca");
-  let test = await callAPI();
-
-  console.log(test);
-
-  alert(test.customerName)
-
-  // alert(test.receivedBookings[0]);
-
-  // alert(test.customerName)
-}
+//
+// async function callAPI() {
+//   try {
+//     const test = await $.ajax({
+//       url: '/loading-user-page',
+//       method: 'GET',
+//       dataType: 'json'
+//     });
+//     return test;
+//   } catch (error) {
+//     alert(error);
+//   }
+// }
+//
+//
+// async function getAllRequests() {
+//   // alert("abca");
+//   let test = await callAPI();
+//
+//   console.log(test);
+//
+//   alert(test.customerName)
+//
+//   // alert(test.receivedBookings[0]);
+//
+//   // alert(test.customerName)
+// }

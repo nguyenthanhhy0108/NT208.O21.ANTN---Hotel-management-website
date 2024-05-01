@@ -51,9 +51,10 @@ public class BookingController {
         }
         else{
             model.addAttribute("hotelID", hotelDetails.getHotelID());
+            String hotelName = hotelDetails.getName();
+            model.addAttribute("hotelName", hotelName);
             return "book_now";
         }
-
     }
 
     @PostMapping("/booking")
@@ -85,8 +86,8 @@ public class BookingController {
         if (assignedRoomBooking != null){
             // assignedRoomBooking.setBookingId(0);
             Booking savedBooking = this.bookingServices.save(theBooking);
-            session.setAttribute("notifyBookingSuccessfully", true);
-            return "homepage";
+            session.setAttribute("notifyBookingSuccessfully", "true");
+            return "redirect:/profile";
         }
         else{
             model.addAttribute("invalidBooking", true);

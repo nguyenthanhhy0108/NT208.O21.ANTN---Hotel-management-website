@@ -60,13 +60,15 @@ public class BookingServicesImpl implements BookingServices {
     @Transactional
     @Override
     public Booking save(Booking booking) {
-        bookingRepository.save(booking);
         Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
 
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() + 1);
         roomServices.saveRoom(requestRoom);
 
-        this.updateBookedCapacity(requestRoom.getHotelID(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
+        int numOfDates = this.updateBookedCapacity(requestRoom.getHotelID(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
+        booking.setTotalPrice(requestRoom.getPrice() * numOfDates);
+
+        bookingRepository.save(booking);
         return booking;
     }
 
@@ -106,14 +108,15 @@ public class BookingServicesImpl implements BookingServices {
 
     @Override
     @Transactional
-    public void updateBookedCapacity(String hotelID, java.util.Date checkinDate , java.util.Date checkoutDate, int value){
+    public int updateBookedCapacity(String hotelID, java.util.Date checkinDate , java.util.Date checkoutDate, int value){
         int now = (int) ((new Date()).getTime() / 1000 / 3600 / 24);
         int checkinDateCount =  (int) (checkinDate.getTime() / 1000 / 3600 / 24) - now;
         int checkoutDateCount = (int) (checkoutDate.getTime() / 1000 / 3600 / 24) - now;
 
-        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
+        for (int i = checkinDateCount + 1; i <= checkoutDateCount + 1; i++){
             this.updateBookedCapacityExecute(hotelID, "day" + i, value);
-    }
+        }
+        return checkoutDateCount - checkinDateCount + 1;
     }
 
     /**

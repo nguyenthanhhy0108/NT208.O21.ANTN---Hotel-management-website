@@ -37,14 +37,19 @@
 						<div class="form-header">
 							<h1>Make your reservation</h1>
 						</div>
+						<div class="form-header">
+
+							<h1 class="text-white fw-bold" th:text="${hotelName}"></h1>
+
+						</div>
 
 						<form action="#" th:action="@{/booking}" method="POST">
-
 							<input type="hidden" id="hotelID" name="hotelID" th:value="${hotelID}">
+
 							<div class="row">
 								<div style="display: none;" id="alertAreaCheking">
 								</div>
-								<div th:if="${invalidBooking}" class="msg form-bt">Invalid booking request, please try again</div>
+								<div th:if="${invalidBooking}" class="msg form-bt", style="color: red; font-weight: bold;">Invalid booking request, please try again</div>
 								<div class="col-md-6  col-sm-11" >
 									<div class="form-group">
 										<input class="form-control" type="date" id="checkinDate" name="checkinDate" required>
@@ -83,6 +88,10 @@
 											<option>6</option>
 											<option>7</option>
 											<option>8</option>
+											<option>9</option>
+											<option>10</option>
+											<option>11</option>
+											<option>12</option>
 										</select>
 										<span class="select-arrow"></span>
 										<span class="form-label">People</span>
