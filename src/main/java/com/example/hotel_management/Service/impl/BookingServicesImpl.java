@@ -76,9 +76,12 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking delete(Booking theBooking){
         bookingRepository.delete(theBooking);
-        Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
 
+        // increase booked guest
+        Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
+        roomServices.saveRoom(requestRoom);
+
         this.updateBookedCapacityForDelete(theBooking);
 
         return theBooking;
@@ -92,6 +95,12 @@ public class BookingServicesImpl implements BookingServices {
         if (deleteBooking == null){
             return null;
         }
+
+        // decrease the booked guest as the booking is deleted
+        Room requestRoom = roomServices.findRoomByID(deleteBooking.getRoomId());
+        requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
+
+        roomServices.saveRoom(requestRoom);
 
         //consider delete and delete by id
         bookingRepository.deleteById(bookingID);
@@ -108,8 +117,8 @@ public class BookingServicesImpl implements BookingServices {
         Date bookTime = new Date();
         int now = (int) (bookTime.getTime() / 1000 / 3600 / 24);
 
-        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24 + 1) - now;
-        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24 + 1) - now;
+        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24) - now;
+        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24) - now;
 
         for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
             this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + i, requestRoom.getNumPeople());
@@ -133,6 +142,7 @@ public class BookingServicesImpl implements BookingServices {
 
         for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
             int updateDate = i - bookDateCount;
+            System.out.println(updateDate);
             this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + updateDate, -requestRoom.getNumPeople());
         }
     }

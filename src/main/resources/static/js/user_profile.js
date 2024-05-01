@@ -241,9 +241,27 @@ async function printData() {
     cancelButton.classList.add("btn");
     cancelButton.classList.add("btn-danger");
     cancelButton.textContent = "Cancel";
+
     if(data.sentBookings[i].isAccepted === 1) {
       cancelButton.style.opacity = "0";
     }
+
+    cancelButton.addEventListener("click", function() {
+      const bookingId = data.sentBookings[i].bookingId; // Get the booking ID
+
+      fetch(`/delete?id=${bookingId}`, {
+        method: "DELETE"
+      })
+          .then(response => {
+            if (response.ok) {
+              alert("Successfully deleted your booking!")
+              window.location.reload();
+            } else {
+              alert("The booking does not exist anymore!");
+            }
+          });
+    });
+
     col9.appendChild(cancelButton);
 
     row.appendChild(col1);

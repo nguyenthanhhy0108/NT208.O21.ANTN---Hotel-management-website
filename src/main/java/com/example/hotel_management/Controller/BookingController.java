@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
+
+import static java.util.TimeZone.*;
 
 @Controller
 public class BookingController {
@@ -66,6 +70,7 @@ public class BookingController {
         Booking theBooking = new Booking();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setTimeZone(getTimeZone("Asian/Hanoi"));
         Date checkinDate = dateFormat.parse(request.getParameter("checkinDate"));
         Date checkoutDate = dateFormat.parse(request.getParameter("checkoutDate"));
 
@@ -97,18 +102,22 @@ public class BookingController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteBooking(@RequestParam("id") String bookingID, Model model){
+    public ResponseEntity<String> deleteBooking(@RequestParam("id") String bookingID, Model model){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         Booking deleteBooking = bookingServices.findById(bookingID);
-        Booking deleteBooking = bookingServices.deleteByID(bookingID);
+        deleteBooking = bookingServices.deleteByID(bookingID);
 
-        if (deleteBooking != null && deleteBooking.getCustomer() == user.getName()){
-            System.out.println("delete success");
+        if (deleteBooking != null && deleteBooking.getCustomer().equals(user.getName())){
+            return ResponseEntity.ok().body("Successfully deleted booking!");
         }
         else{
-            System.out.println("nop");
+            return ResponseEntity.notFound().build();
         }
-        return "redirect:/profile";
     }
+
+//    @DeleteMapping("/accept")
+//    public String deleteBooking(@RequestParam("id") String bookingID, Model model){
+//
+//    }
 }
