@@ -6,11 +6,12 @@ import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Service.BookingServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
     final RoomServices roomServices;
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
@@ -29,16 +31,15 @@ public class BookingServicesImpl implements BookingServices {
 
     @Transactional
     @Override
-    public void updateBookedCapacityExecute(String roomID, String updateColumn, int value) {
-        String sql = "UPDATE HOTEL_CAPACITY_BOOKED SET " + updateColumn + " = " + updateColumn + " + " + value + " WHERE room_id = :roomId";
+    public void updateBookedCapacityExecute(String hotelID, String updateColumn, int value) {
+        String sql = "UPDATE HOTEL_CAPACITY_BOOKED SET " + updateColumn + " = " + updateColumn + " + " + value + " WHERE hotel_id = :hotelId";
         entityManager.createNativeQuery(sql)
-                .setParameter("roomId", roomID)
+                .setParameter("hotelId", hotelID)
                 .executeUpdate();
     }
 
     @Override
     public List<Booking> findAll() {
-
         return bookingRepository.findAll();
     }
 
@@ -61,7 +62,11 @@ public class BookingServicesImpl implements BookingServices {
     public Booking save(Booking booking) {
         bookingRepository.save(booking);
         Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
-        this.updateBookedCapacity(booking.getRoomId(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
+
+        requestRoom.setBookedGuests(requestRoom.getBookedGuests() + 1);
+        roomServices.saveRoom(requestRoom);
+
+        this.updateBookedCapacity(requestRoom.getHotelID(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
         return booking;
     }
 
@@ -73,7 +78,9 @@ public class BookingServicesImpl implements BookingServices {
 
         Date checkingDate = (Date) theBooking.getCheckInDate();
         Date checkoutDate = (Date) theBooking.getCheckOutDate();
-        this.updateBookedCapacity(theBooking.getRoomId(),checkingDate, checkoutDate, -requestRoom.getNumPeople());
+
+        requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
+        this.updateBookedCapacity(requestRoom.getHotelID(), checkingDate, checkoutDate, -requestRoom.getNumPeople());
 
         return theBooking;
     }
@@ -99,14 +106,14 @@ public class BookingServicesImpl implements BookingServices {
 
     @Override
     @Transactional
-    public void updateBookedCapacity(String roomID, java.util.Date checkinDate , java.util.Date checkoutDate, int value){
-        Room requestRoom = roomServices.findRoomByID(roomID);
+    public void updateBookedCapacity(String hotelID, java.util.Date checkinDate , java.util.Date checkoutDate, int value){
+        int now = (int) ((new Date()).getTime() / 1000 / 3600 / 24);
+        int checkinDateCount =  (int) (checkinDate.getTime() / 1000 / 3600 / 24) - now;
+        int checkoutDateCount = (int) (checkoutDate.getTime() / 1000 / 3600 / 24) - now;
 
-        int daysBetween = (int) (checkoutDate.getTime() / 1000 / 3600 / 24) - (int) (checkinDate.getTime() / 1000 / 3600 / 24);
-
-        for (long i = 1; i < daysBetween + 1; i++){
-            this.updateBookedCapacityExecute(roomID, "day" + i, value);
-        }
+        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
+            this.updateBookedCapacityExecute(hotelID, "day" + i, value);
+    }
     }
 
     /**
@@ -178,6 +185,7 @@ public class BookingServicesImpl implements BookingServices {
         }
         else{
             theBooking.setRoomId(availableRooms.get(0).getRoomID());
+            theBooking.setRoom(availableRooms.get(0));
             return  theBooking;
         }
     }

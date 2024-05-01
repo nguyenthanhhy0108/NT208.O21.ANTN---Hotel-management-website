@@ -42,7 +42,7 @@ public class HotelDetailsServicesImpl implements HotelDetailsServices {
             hotelDetail = result.get();
         }
         else {
-            throw new RuntimeException("Did not find hotel id - " + id);
+            return null;
         }
         return hotelDetail;
     }

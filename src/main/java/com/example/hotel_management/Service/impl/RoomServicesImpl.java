@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -45,14 +45,11 @@ public class RoomServicesImpl implements RoomServices {
 
     @Override
     public Room findRoomByID(String roomID){
-        Optional<Room> Room = roomRepository.findById(roomID);
+        Optional<Room> roomOptional = roomRepository.findById(roomID);
 
         // Check if the room exists
-        if (Room.isPresent()) {
-            Room room = Room.get();
-
-            // Delete the room
-            roomRepository.deleteById(room.getRoomID());
+        if (roomOptional.isPresent()) {
+            Room room = roomOptional.get();
             return room;
         } else {
             return null;
