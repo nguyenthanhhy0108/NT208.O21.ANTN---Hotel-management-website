@@ -47,7 +47,8 @@ public interface BookingServices {
     Booking updateBookedCapacityForSave(Booking theBooking);
     public void updateBookedCapacityForDelete(Booking theBooking);
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
-
+    public Booking acceptBookingById(String bookingId, String Username);
+    public Booking refuseBookingById(String bookingId, String Username);
     /**
      * Find all hotel by provided customer
      * @param customer: String

@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -102,22 +104,56 @@ public class BookingController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBooking(@RequestParam("id") String bookingID, Model model){
+    public ResponseEntity<String> deleteBooking(@RequestParam("id") String bookingID){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         Booking deleteBooking = bookingServices.findById(bookingID);
-        deleteBooking = bookingServices.deleteByID(bookingID);
+        Date currentTime = new Date();
 
-        if (deleteBooking != null && deleteBooking.getCustomer().equals(user.getName())){
-            return ResponseEntity.ok().body("Successfully deleted booking!");
+        if (deleteBooking != null){
+            if (deleteBooking.getCustomer().equals(user.getName())){
+                if (deleteBooking.getCheckInDate().getTime() > currentTime.getTime()){
+                    deleteBooking = bookingServices.deleteByID(bookingID);
+                    return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Successfully deleted booking!");
+                }
+                else{
+                    return ResponseEntity.status(HttpStatus.CONFLICT).contentType(MediaType.TEXT_PLAIN).body("It is too late to delete!");
+                }
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.TEXT_PLAIN).body("You are not the owner!");
+            }
         }
         else{
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.TEXT_PLAIN).body("Can not found the request");
         }
     }
 
-//    @DeleteMapping("/accept")
-//    public String deleteBooking(@RequestParam("id") String bookingID, Model model){
-//
-//    }
+    @PostMapping("/accept")
+    public ResponseEntity<String> acceptBooking(@RequestParam("id") String bookingID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking acceptedBooking = bookingServices.acceptBookingById(bookingID, user.getName());
+
+        if (acceptedBooking != null){
+            return ResponseEntity.ok().body("Successfully accept booking!");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Can not accept the booking");
+        }
+    }
+
+    @PostMapping("/refuse")
+    public ResponseEntity<String> refuseBooking(@RequestParam("id") String bookingID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking refusedBooking = bookingServices.refuseBookingById(bookingID, user.getName());
+
+        if (refusedBooking != null){
+            return ResponseEntity.ok().body("Successfully refused booking!");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Can not refuse the booking");
+        }
+    }
 }

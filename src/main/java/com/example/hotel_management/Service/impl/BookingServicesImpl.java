@@ -2,13 +2,18 @@ package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.DataDTO.BookingDTO;
+import com.example.hotel_management.Model.Hotel;
+import com.example.hotel_management.Model.HotelDetails;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Service.BookingServices;
+import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -21,13 +26,15 @@ import java.util.Optional;
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
     final RoomServices roomServices;
+    final HotelServices hotelServices;
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public BookingServicesImpl(BookingRepository bookingRepository, RoomServices roomServices) {
+    public BookingServicesImpl(BookingRepository bookingRepository, RoomServices roomServices, HotelServices hotelServices) {
         this.bookingRepository = bookingRepository;
         this.roomServices = roomServices;
+        this.hotelServices = hotelServices;
     }
 
     @Transactional
@@ -65,7 +72,6 @@ public class BookingServicesImpl implements BookingServices {
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() + 1);
         roomServices.saveRoom(requestRoom);
 
-        Date bookDate = new Date();
         booking = this.updateBookedCapacityForSave(booking);
 
         bookingRepository.save(booking);
@@ -243,6 +249,52 @@ public class BookingServicesImpl implements BookingServices {
             theBooking.setRoomId(availableRooms.get(0).getRoomID());
             theBooking.setRoom(availableRooms.get(0));
             return  theBooking;
+        }
+    }
+
+    @Override
+    @Transactional
+    public Booking acceptBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
+
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
+
+        if (hotels.isEmpty()){
+            return null;
+        }
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setIsAccepted(1);
+                bookingRepository.save(requestBooking);
+                return requestBooking;
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public Booking refuseBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
+
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
+
+        if (requestBooking.getIsAccepted() != 0 && hotels.isEmpty()){
+            return null;
+        }
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setTotalPrice(2);
+                this.updateBookedCapacityForDelete(requestBooking);
+                return bookingRepository.save(requestBooking);
+            }
+            else{
+                return null;
+            }
         }
     }
 }

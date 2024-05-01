@@ -224,6 +224,10 @@ async function printData() {
       col7.textContent = "Waiting";
       col7.style.color = "blue";
     }
+    if(data.sentBookings[i].isAccepted === 2) {
+      col7.textContent = "Refused";
+      col7.style.color = "red";
+    }
 
     let col8 = document.createElement("td");
     let confirmButton = document.createElement("span");
@@ -242,7 +246,7 @@ async function printData() {
     cancelButton.classList.add("btn-danger");
     cancelButton.textContent = "Cancel";
 
-    if(data.sentBookings[i].isAccepted === 1) {
+    if(data.sentBookings[i].isAccepted === 1 || data.sentBookings[i].isAccepted === 2) {
       cancelButton.style.opacity = "0";
     }
 
@@ -254,15 +258,28 @@ async function printData() {
       })
           .then(response => {
             if (response.ok) {
-              alert("Successfully deleted your booking!")
+              alert("Successfully deleted your booking!");
               window.location.reload();
             } else {
-              alert("The booking does not exist anymore!");
+              // Access the response text by chaining another .then() block
+              response.text().then(errorMessage => {
+                // Alert the error message
+                alert(errorMessage);
+              });
             }
           });
-    });
+  });
 
-    col9.appendChild(cancelButton);
+    if(data.sentBookings[i].isAccepted === 0) {
+      col9.appendChild(cancelButton);
+    }
+    else {
+      let hide2 = document.createElement("span");
+      hide2.style.opacity = "0";
+      col9.appendChild(hide2);
+    }
+
+    // col9.appendChild(cancelButton);
 
     row.appendChild(col1);
     row.appendChild(col2);
@@ -457,6 +474,10 @@ async function printData() {
         col7.textContent = "Waiting";
         col7.style.color = "blue";
       }
+      if(data.receivedBookings[i].isAccepted === 2) {
+        col7.textContent = "Refused";
+        col7.style.color = "red";
+      }
 
       let col8 = document.createElement("td");
       let confirmButton = document.createElement("button");
@@ -465,6 +486,27 @@ async function printData() {
       confirmButton.classList.add("btn-success");
       confirmButton.classList.add("mr-2");
       confirmButton.textContent = "Confirm";
+
+      confirmButton.addEventListener("click", function() {
+        const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
+
+          fetch(`/accept?id=${bookingId}`, {
+            method: "POST"
+          })
+              .then(response => {
+                if (response.ok) {
+                  alert("Successfully accepted customer booking!");
+                  window.location.reload();
+                } else {
+                  // Access the response text by chaining another .then() block
+                  response.text().then(errorMessage => {
+                    // Alert the error message
+                    alert(errorMessage);
+                  });
+                }
+              });
+        });
+
       if(data.receivedBookings[i].isAccepted === 0) {
         col8.appendChild(confirmButton);
       }
@@ -480,6 +522,27 @@ async function printData() {
       cancelButton.classList.add("btn");
       cancelButton.classList.add("btn-danger");
       cancelButton.textContent = "Cancel";
+
+      cancelButton.addEventListener("click", function() {
+        const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
+
+        fetch(`/refuse?id=${bookingId}`, {
+          method: "POST"
+        })
+            .then(response => {
+              if (response.ok) {
+                alert("Successfully refuse customer booking!");
+                window.location.reload();
+              } else {
+                // Access the response text by chaining another .then() block
+                response.text().then(errorMessage => {
+                  // Alert the error message
+                  alert(errorMessage);
+                });
+              }
+            });
+      });
+
       if(data.receivedBookings[i].isAccepted === 0) {
         col9.appendChild(cancelButton);
       }
