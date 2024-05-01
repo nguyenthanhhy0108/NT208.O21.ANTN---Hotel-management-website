@@ -88,9 +88,9 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
         address.textContent = hotelAddresses[i];
 
         var bookNowLink = document.createElement("a");
-        bookNowLink.href = "/first-page";
+        bookNowLink.href = "/hotel-detail?hotel_id=" + ids[index].toString();
         bookNowLink.classList.add("button");
-        bookNowLink.textContent = "Book Now";
+        bookNowLink.textContent = "More...";
 
         cardBodyDiv.appendChild(title);
         cardBodyDiv.appendChild(text1);

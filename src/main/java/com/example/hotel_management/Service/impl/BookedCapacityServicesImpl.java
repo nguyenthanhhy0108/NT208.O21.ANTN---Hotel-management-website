@@ -65,15 +65,15 @@ public class BookedCapacityServicesImpl implements BookedCapacityServices {
 
             HotelDetails details = this.hotelDetailsServices.findByName(hotelName).get(0);
 
-            boolean flag = false;
+            boolean flag = true;
             BookedCapacity schedule = this.bookedCapacityRepository.findByHotelID(details.getHotelID());
             for(long i = checkInIndex; i <= checkOutIndex; i++){
                 int index = (int)i;
                 long bookedCapacity = Long.parseLong(schedule.toList().get(index).toString());
                 long currentCapacity = details.getTotalCapacity() - bookedCapacity;
 
-                if(currentCapacity >= numberOfPeople){
-                    flag = true;
+                if(currentCapacity < numberOfPeople){
+                    flag = false;
                 }
             }
             if(!flag){
