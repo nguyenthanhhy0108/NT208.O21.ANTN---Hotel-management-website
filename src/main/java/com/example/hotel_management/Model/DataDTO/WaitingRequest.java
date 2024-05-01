@@ -8,17 +8,17 @@ import java.util.List;
 @Data
 public class WaitingRequest {
     private boolean roleOwner;
-    String customerName;
-    private List<Booking> receivedBookings;
-    private List<Booking> sentBookings;
+    private String customerName;
+    private List<BookingDTO> receivedBookings;
+    private List<BookingDTO> sentBookings;
     private List<String> receivedHotelNames;
     private List<String> receivedCustomerNames;
     private List<String> sentHotelNames;
 
     public WaitingRequest(boolean roleOwner,
                           String customerName,
-                          List<Booking> receivedBookings,
-                          List<Booking> sentBookings,
+                          List<BookingDTO> receivedBookings,
+                          List<BookingDTO> sentBookings,
                           List<String> receivedHotelNames,
                           List<String> receivedCustomerNames,
                           List<String> sentHotelNames) {

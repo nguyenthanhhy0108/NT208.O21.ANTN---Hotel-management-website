@@ -1,5 +1,6 @@
 package com.example.hotel_management.Model;
 
+import com.example.hotel_management.Model.DataDTO.BookingDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -82,4 +83,16 @@ public class Booking {
     private Room room;
 
     public Booking() {this.isAccepted = 0;}
+
+    public BookingDTO toDTO() {
+        return new BookingDTO(
+                this.bookingId,
+                this.checkInDate,
+                this.checkOutDate,
+                this.customer,
+                this.hotelId,
+                this.roomId,
+                this.totalPrice,
+                this.isAccepted);
+    }
 }

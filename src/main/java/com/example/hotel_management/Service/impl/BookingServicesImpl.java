@@ -1,6 +1,7 @@
 package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.Booking;
+import com.example.hotel_management.Model.DataDTO.BookingDTO;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Service.BookingServices;
@@ -170,6 +171,31 @@ public class BookingServicesImpl implements BookingServices {
         for (String id : hotelIds) {
             List<Booking> bookings = this.findByHotelId(id);
             result.addAll(bookings);
+        }
+        return result;
+    }
+
+    /**
+     * Implement convert to DTO
+     * @param bookings: List
+     * @return
+     * List booking DTO
+     */
+    @Override
+    public List<BookingDTO> convertToDTO(List<Booking> bookings) {
+        List<BookingDTO> result = new ArrayList<>();
+        for(Booking booking : bookings){
+            BookingDTO bookingDTO = new BookingDTO(
+                    booking.getBookingId(),
+                    booking.getCheckInDate(),
+                    booking.getCheckOutDate(),
+                    booking.getCustomer(),
+                    booking.getHotelId(),
+                    booking.getRoomId(),
+                    booking.getTotalPrice(),
+                    booking.getIsAccepted());
+
+            result.add(bookingDTO);
         }
         return result;
     }
