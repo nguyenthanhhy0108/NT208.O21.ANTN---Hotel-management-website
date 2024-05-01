@@ -43,7 +43,6 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
       <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
@@ -81,7 +80,7 @@
             <a class="nav-link" href="first_page.html#cont">Contact</a>
           </li>
           <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-            <a type="button" class="btn btn-primary px-4 btncmn"  href="/login">Sign In</a><br>
+            <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
 
             <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
           </div>
@@ -242,6 +241,7 @@
         duration: 2000,
       });
   </script>
+
  
 </body>
 

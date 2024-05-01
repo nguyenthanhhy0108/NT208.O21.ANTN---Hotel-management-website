@@ -1,9 +1,7 @@
 package com.example.hotel_management.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.hotel_management.Model.DataDTO.BookingDTO;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,11 +12,14 @@ import java.util.Date;
 public class Booking {
     @Id
     @Column(name = "booking_id")
-    private Integer bookingId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int bookingId;
 
     @Column(name = "check_in_date")
+    @Temporal(TemporalType.DATE)
     private Date checkInDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "check_out_date")
     private Date checkOutDate;
 
@@ -34,6 +35,10 @@ public class Booking {
     @Column(name = "total_price")
     private double totalPrice;
 
+    @Column(name="is_accepted")
+    private int isAccepted;
+
+
     /**
      * Constructor
      * @param bookingId booking id (Integer)
@@ -44,7 +49,7 @@ public class Booking {
      * @param roomId id of booking room (String)
      * @param totalPrice total price (double)
      */
-    public Booking(Integer bookingId,
+    public Booking(int bookingId,
                    Date checkInDate,
                    Date checkOutDate,
                    String customer,
@@ -59,5 +64,29 @@ public class Booking {
         this.roomId = roomId;
         this.totalPrice = totalPrice;
     }
-    public Booking() {}
+
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinColumn(name = "room_id",
+            insertable = false,
+            updatable = false)
+    private Room room;
+
+    public Booking() {this.isAccepted = 0;}
+
+    public BookingDTO toDTO() {
+        return new BookingDTO(
+                this.bookingId,
+                this.checkInDate,
+                this.checkOutDate,
+                this.customer,
+                this.hotelId,
+                this.roomId,
+                this.totalPrice,
+                this.isAccepted);
+    }
 }

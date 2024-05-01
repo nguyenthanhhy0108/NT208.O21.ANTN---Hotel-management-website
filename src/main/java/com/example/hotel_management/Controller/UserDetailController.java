@@ -1,6 +1,7 @@
 package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Model.Booking;
+import com.example.hotel_management.Model.DataDTO.BookingDTO;
 import com.example.hotel_management.Model.DataDTO.WaitingRequest;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.RequestOwner;
@@ -64,11 +65,17 @@ public class UserDetailController {
         public WaitingRequest loadingUserPage(Authentication authentication) {
         WaitingRequest waitingRequest = new WaitingRequest();
 
+        waitingRequest.setCustomerName(this.userDetailsServices
+                .findByUsername(authentication.getName())
+                .get(0).getName());
+
         waitingRequest.setSentBookings(this.bookingServices
-                .findByCustomer(authentication.getName()));
+                .convertToDTO(
+                        this.bookingServices
+                                .findByCustomer(authentication.getName())));
 
         List<String> sentHotelNames = new ArrayList<>();
-        for (Booking booking : waitingRequest.getSentBookings()) {
+        for (BookingDTO booking : waitingRequest.getSentBookings()) {
             sentHotelNames.add(
                     this.hotelDetailsServices
                             .findByHotelID(
@@ -95,19 +102,31 @@ public class UserDetailController {
             hotelIDS.add(hotel.getHotelID());
         }
 
-        waitingRequest.setReceivedBookings(this.bookingServices
-                .findByHotelId(hotelIDS));
+        waitingRequest.setReceivedBookings(
+                this.bookingServices
+                        .convertToDTO(
+                                this.bookingServices
+                                        .findByHotelId(hotelIDS)));
 
         List<String> receivedHotelNames = new ArrayList<>();
-        for (Booking booking : waitingRequest.getReceivedBookings()) {
+        List<String> receivedCustomerNames = new ArrayList<>();
+        for (BookingDTO booking : waitingRequest.getReceivedBookings()) {
             receivedHotelNames.add(
                     this.hotelDetailsServices
                             .findByHotelID(
                                     booking.getHotelId())
                             .get(0)
                             .getName());
+
+            receivedCustomerNames.add(
+                    this.userDetailsServices
+                            .findByUsername(booking.getCustomer())
+                            .get(0)
+                            .getName()
+            );
         }
         waitingRequest.setReceivedHotelNames(receivedHotelNames);
+        waitingRequest.setReceivedCustomerNames(receivedCustomerNames);
 
         return waitingRequest;
     }

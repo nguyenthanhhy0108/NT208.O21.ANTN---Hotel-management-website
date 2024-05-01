@@ -8,20 +8,26 @@ import java.util.List;
 @Data
 public class WaitingRequest {
     private boolean roleOwner;
-    private List<Booking> receivedBookings;
-    private List<Booking> sentBookings;
+    private String customerName;
+    private List<BookingDTO> receivedBookings;
+    private List<BookingDTO> sentBookings;
     private List<String> receivedHotelNames;
-    List<String> sentHotelNames;
+    private List<String> receivedCustomerNames;
+    private List<String> sentHotelNames;
 
     public WaitingRequest(boolean roleOwner,
-                          List<Booking> receivedBookings,
-                          List<Booking> sentBookings,
+                          String customerName,
+                          List<BookingDTO> receivedBookings,
+                          List<BookingDTO> sentBookings,
                           List<String> receivedHotelNames,
+                          List<String> receivedCustomerNames,
                           List<String> sentHotelNames) {
         this.roleOwner = roleOwner;
+        this.customerName = customerName;
         this.receivedBookings = receivedBookings;
         this.sentBookings = sentBookings;
         this.receivedHotelNames = receivedHotelNames;
+        this.receivedCustomerNames = receivedCustomerNames;
         this.sentHotelNames = sentHotelNames;
     }
 

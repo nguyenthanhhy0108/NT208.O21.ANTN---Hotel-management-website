@@ -1,6 +1,7 @@
 package com.example.hotel_management.Service;
 
 import com.example.hotel_management.Model.Booking;
+import com.example.hotel_management.Model.DataDTO.BookingDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 
@@ -11,31 +12,39 @@ import java.util.Optional;
 public interface BookingServices {
     /**
      * Find all booking item
-     * @return List of Booking
+     * @return List of BookingDTO
      */
     List<Booking> findAll();
 
     /**
      * Find the booking by id
      * @param id id of the booking (Integer)
-     * @return Booking
+     * @return BookingDTO
      */
     Booking findById(String id);
 
     /**
-     * Save the chosen Booking
-     * @param booking (Booking)
-     * @return the saved Booking
+     * Save the chosen BookingDTO
+     * @param booking (BookingDTO)
+     * @return the saved BookingDTO
      */
     Booking save(Booking booking);
 
     /**
-     * Delete the chosen Booking
-     * @param booking (Booking)
+     * Delete the chosen BookingDTO
+     * @param bookingID (String)
      */
-    void delete(Booking booking);
+    Booking deleteByID(String bookingID);
 
-    boolean isValidBooking(String roomId, int num_people, String checkingDate, String checkoutDate);
+    Booking delete(Booking theBooking);
+
+
+    boolean isValidBooking(Booking theBooking, int People);
+
+    Booking assignRoomForBooking(Booking theBooking, int People);
+
+    void updateBookedCapacityExecute(String roomID, String updateColumn, int value);
+    int updateBookedCapacity(String roomID, Date checkinDate ,Date checkoutDate, int value);
 
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
 
@@ -62,4 +71,12 @@ public interface BookingServices {
      * A list of booking objects
      */
     List<Booking> findByHotelId(List<String> hotelIds);
+
+    /**
+     * Convert booking list to DTO
+     * @param bookings: List
+     * @return
+     * List booking DTO objects
+     */
+    List<BookingDTO> convertToDTO(List<Booking> bookings);
 }
