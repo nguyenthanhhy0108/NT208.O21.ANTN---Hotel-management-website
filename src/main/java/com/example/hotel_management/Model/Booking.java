@@ -14,6 +14,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookingId;
 
+    @Column(name = "book_date")
+    @Temporal(TemporalType.DATE)
+    private Date bookDate;
+
     @Column(name = "check_in_date")
     @Temporal(TemporalType.DATE)
     private Date checkInDate;
@@ -49,6 +53,7 @@ public class Booking {
      * @param totalPrice total price (double)
      */
     public Booking(int bookingId,
+                   Date bookDate,
                    Date checkInDate,
                    Date checkOutDate,
                    String customer,
@@ -56,6 +61,7 @@ public class Booking {
                    String roomId,
                    double totalPrice) {
         this.bookingId = bookingId;
+        this.bookDate = bookDate;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.customer = customer;

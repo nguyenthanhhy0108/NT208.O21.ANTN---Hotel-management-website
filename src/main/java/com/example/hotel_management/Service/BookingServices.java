@@ -43,8 +43,8 @@ public interface BookingServices {
     Booking assignRoomForBooking(Booking theBooking, int People);
 
     void updateBookedCapacityExecute(String roomID, String updateColumn, int value);
-    int updateBookedCapacity(String roomID, Date checkinDate ,Date checkoutDate, int value);
-
+    Booking updateBookedCapacityForSave(Booking theBooking);
+    public void updateBookedCapacityForDelete(Booking theBooking);
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
 
     /**

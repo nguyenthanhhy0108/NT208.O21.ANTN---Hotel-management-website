@@ -96,9 +96,19 @@ public class BookingController {
         }
     }
 
-//    @PutMapping("/deleteBooking")
-//    public String deleteBooking(HttpServletRequest request,
-//                                Model model){
-//
-//    }
+    @DeleteMapping("/delete")
+    public String deleteBooking(@RequestParam("id") String bookingID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking deleteBooking = bookingServices.findById(bookingID);
+        Booking deleteBooking = bookingServices.deleteByID(bookingID);
+
+        if (deleteBooking != null && deleteBooking.getCustomer() == user.getName()){
+            System.out.println("delete success");
+        }
+        else{
+            System.out.println("nop");
+        }
+        return "redirect:/profile";
+    }
 }

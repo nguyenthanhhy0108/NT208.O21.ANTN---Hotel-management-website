@@ -2,6 +2,7 @@ use NT;
 
 CREATE TABLE BOOKING (
  booking_id INT PRIMARY KEY IDENTITY(1,1),
+ book_date DATE,
  check_in_date DATE,
  check_out_date DATE,
  customer VARCHAR(50),
