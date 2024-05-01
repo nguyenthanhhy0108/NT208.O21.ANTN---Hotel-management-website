@@ -133,6 +133,7 @@ public class UserDetailController {
                 .findByHotelId(hotelIDS));
 
         List<String> receivedHotelNames = new ArrayList<>();
+        List<String> receivedCustomerNames = new ArrayList<>();
         for (Booking booking : waitingRequest.getReceivedBookings()) {
             receivedHotelNames.add(
                     this.hotelDetailsServices
@@ -140,8 +141,16 @@ public class UserDetailController {
                                     booking.getHotelId())
                             .get(0)
                             .getName());
+
+            receivedCustomerNames.add(
+                    this.userDetailsServices
+                            .findByUsername(booking.getCustomer())
+                            .get(0)
+                            .getName()
+            );
         }
         waitingRequest.setReceivedHotelNames(receivedHotelNames);
+        waitingRequest.setReceivedCustomerNames(receivedCustomerNames);
 
         return waitingRequest;
     }

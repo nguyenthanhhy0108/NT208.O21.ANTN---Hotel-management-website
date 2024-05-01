@@ -12,19 +12,22 @@ public class WaitingRequest {
     private List<Booking> receivedBookings;
     private List<Booking> sentBookings;
     private List<String> receivedHotelNames;
-    List<String> sentHotelNames;
+    private List<String> receivedCustomerNames;
+    private List<String> sentHotelNames;
 
     public WaitingRequest(boolean roleOwner,
                           String customerName,
                           List<Booking> receivedBookings,
                           List<Booking> sentBookings,
                           List<String> receivedHotelNames,
+                          List<String> receivedCustomerNames,
                           List<String> sentHotelNames) {
         this.roleOwner = roleOwner;
         this.customerName = customerName;
         this.receivedBookings = receivedBookings;
         this.sentBookings = sentBookings;
         this.receivedHotelNames = receivedHotelNames;
+        this.receivedCustomerNames = receivedCustomerNames;
         this.sentHotelNames = sentHotelNames;
     }
 
