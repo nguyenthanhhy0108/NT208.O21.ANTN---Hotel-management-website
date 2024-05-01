@@ -62,7 +62,7 @@
           </li>
 
           <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-            <a type="button" class="btn btn-primary px-4 btncmn"  href="/login">Sign In</a><br>
+            <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
 
             <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
           </div>
@@ -70,7 +70,7 @@
           <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-              <span style="color: lawngreen" th:text="${session.name}"></span>
+              <span style="color: lawngreen" id="sign-in-name" th:text="${session.name}"></span>
             </a>
             <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/profile">Information</a>

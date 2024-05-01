@@ -50,10 +50,14 @@ async function callAPI() {
 
 
 async function getAllRequests() {
-  alert("abca");
+  // alert("abca");
   let test = await callAPI();
-  if (test.receivedBookings.length === 0){
-    alert("true");
-  }
-  alert(test.receivedBookings);
+
+  console.log(test);
+
+  alert(test.customerName)
+
+  // alert(test.receivedBookings[0]);
+
+  // alert(test.customerName)
 }
