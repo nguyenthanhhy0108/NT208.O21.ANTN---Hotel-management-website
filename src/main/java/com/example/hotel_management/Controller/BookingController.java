@@ -45,8 +45,15 @@ public class BookingController {
         HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        model.addAttribute("hotelID", hotelDetails.getHotelID());
-        return "book_now";
+        if (hotelDetails == null){
+            model.addAttribute("cannotFindHotel", true);
+            return "homepage";
+        }
+        else{
+            model.addAttribute("hotelID", hotelDetails.getHotelID());
+            return "book_now";
+        }
+
     }
 
     @PostMapping("/booking")
@@ -62,6 +69,7 @@ public class BookingController {
         Date checkoutDate = dateFormat.parse(request.getParameter("checkoutDate"));
 
         String userName = user.getName();
+
         String hotelID = request.getParameter("hotelID");
 
         String numPeopleString = request.getParameter("numPeople");
@@ -75,7 +83,8 @@ public class BookingController {
         Booking assignedRoomBooking = bookingServices.assignRoomForBooking(theBooking, numPeople);
 
         if (assignedRoomBooking != null){
-            this.bookingServices.save(theBooking);
+            // assignedRoomBooking.setBookingId(0);
+            Booking savedBooking = this.bookingServices.save(theBooking);
             session.setAttribute("notifyBookingSuccessfully", true);
             return "homepage";
         }

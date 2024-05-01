@@ -39,11 +39,12 @@
 						</div>
 
 						<form action="#" th:action="@{/booking}" method="POST">
-							<div th:if="${invalidBooking}" class="msg form-bt">Invalid booking request, please try again</div>
-							<input type="hidden" id="hotelID" name="hotelID" th:value="hotelID">
+
+							<input type="hidden" id="hotelID" name="hotelID" th:value="${hotelID}">
 							<div class="row">
 								<div style="display: none;" id="alertAreaCheking">
 								</div>
+								<div th:if="${invalidBooking}" class="msg form-bt">Invalid booking request, please try again</div>
 								<div class="col-md-6  col-sm-11" >
 									<div class="form-group">
 										<input class="form-control" type="date" id="checkinDate" name="checkinDate" required>
@@ -73,7 +74,7 @@
 								<div class="col-md-4  col-sm-11">
 									<div class="form-group">
 										<select class="form-control" name = "numPeople" required>
-											<option value="" selected hidden>no of adults</option>
+											<option value="" selected hidden>num of people</option>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -84,21 +85,21 @@
 											<option>8</option>
 										</select>
 										<span class="select-arrow"></span>
-										<span class="form-label">Adults</span>
+										<span class="form-label">People</span>
 									</div>
 								</div>
-								<div class="col-md-4  col-sm-11">
-									<div class="form-group">
-										<select class="form-control" required>
-											<option value="" selected hidden>no of children</option>
-											<option>0</option>
-											<option>1</option>
-											<option>2</option>
-										</select>
-										<span class="select-arrow"></span>
-										<span class="form-label">Children</span>
-									</div>
-								</div>
+<!--								<div class="col-md-4  col-sm-11">-->
+<!--									<div class="form-group">-->
+<!--										<select class="form-control" required>-->
+<!--											<option value="" selected hidden>no of children</option>-->
+<!--											<option>0</option>-->
+<!--											<option>1</option>-->
+<!--											<option>2</option>-->
+<!--										</select>-->
+<!--										<span class="select-arrow"></span>-->
+<!--										<span class="form-label">Children</span>-->
+<!--									</div>-->
+<!--								</div>-->
 							</div>
 <!--							<div class="row">-->
 <!--								<div class="col-md-6 col-sm-11">-->

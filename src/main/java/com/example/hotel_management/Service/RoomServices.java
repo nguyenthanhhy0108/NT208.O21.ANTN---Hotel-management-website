@@ -4,7 +4,7 @@ import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.RoomRepository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface RoomServices{

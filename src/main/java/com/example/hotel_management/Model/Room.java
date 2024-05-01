@@ -3,6 +3,8 @@ package com.example.hotel_management.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class Room {
@@ -18,9 +20,6 @@ public class Room {
 
     @Column(name = "price")
     private float price;
-
-    @Column(name = "is_booked")
-    private boolean isBooked;
 
     @Column(name = "booked_guests")
     private int bookedGuests;
@@ -39,15 +38,19 @@ public class Room {
             updatable = false)
     private Hotel hotel;
 
+    @OneToMany(mappedBy = "room", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Booking> bookings;
 
-    public Room(String roomID, String hotelID, int numPeople, float price, boolean isBooked, int bookedGuests, String starRating, Hotel hotel) {
+
+    public Room(String roomID, String hotelID, int numPeople, float price, int bookedGuests, String starRating, Hotel hotel) {
         this.roomID = roomID;
         this.hotelID = hotelID;
         this.numPeople = numPeople;
         this.price = price;
-        this.isBooked = isBooked;
         this.bookedGuests = bookedGuests;
         this.starRating = starRating;
         this.hotel = hotel;
     }
+
+    public Room(){this.bookedGuests = 0;};
 }
