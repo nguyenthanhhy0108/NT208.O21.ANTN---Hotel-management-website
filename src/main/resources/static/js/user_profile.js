@@ -35,7 +35,6 @@ function saveChanges() {
   toggleEditMode(); 
 }
 
-
 async function callAPI() {
   try {
     const test = await $.ajax({
@@ -61,9 +60,11 @@ function formatDate(dateString) {
 
 async function printData() {
 
+  // alert("abc")
   data = await callAPI();
 
-  console.log(data);
+  // console.log(data);
+  // alert(data)
 
   let requestList = document.getElementById("my-requests");
   let cardHead = document.createElement("div");
@@ -490,3 +491,24 @@ async function printData() {
     }
   }
 }
+
+
+// // Define a function to check for successBooking and notify the user
+// function checkSuccessBooking() {
+//   alert("abc");
+//   // Check if there is a successBooking attribute in the session
+//   if (sessionStorage.getItem('notifyBookingSuccessfully') === 'true') {
+//     // Notify the user after 10 seconds
+//     setTimeout(function() {
+//       alert('Your booking was successful!');
+//       // Replace the attribute with 'false' after 10 seconds
+//       sessionStorage.setItem('notifyBookingSuccessfully', 'false');
+//     }, 5000); // 10 seconds delay
+//   }
+// }
+//
+// // Call the function when the DOM content is loaded
+// window.onload = async function (){
+//   await printData();
+//   checkSuccessBooking();
+// };

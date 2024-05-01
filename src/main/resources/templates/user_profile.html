@@ -214,22 +214,5 @@
     });
 
   </script>
-  <script>
-    // Define a function to check for successBooking and notify the user
-    function checkSuccessBooking() {
-      // Check if there is a successBooking attribute in the session
-      if (sessionStorage.getItem('notifyBookingSuccessfully') === 'true') {
-        // Notify the user after 10 seconds
-        setTimeout(function() {
-          alert('Your booking was successful!');
-          // Replace the attribute with 'false' after 10 seconds
-          sessionStorage.setItem('notifyBookingSuccessfully', 'false');
-        }, 5000); // 10 seconds delay
-      }
-    }
-
-    // Call the function when the DOM content is loaded
-    window.onload = function (){checkSuccessBooking();};
-  </script>
 </body>
 </html>
