@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -39,13 +41,25 @@ public class RoomServicesImpl implements RoomServices {
     }
 
     @Override
-    public List<Room> findAvailableRoomForBooking(String hotelID, Date checkingDate, Date checkoutDate){
-        return roomRepository.findAvailableRoomForBooking(hotelID, checkingDate, checkoutDate);
+    public List<Room> findAvailableRoomForBooking(String hotelID, Date checkinDate, Date checkoutDate){
+        String pattern = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(pattern);
+
+        String checkinDateString = df.format(checkinDate);
+        String checkoutDateString = df.format(checkoutDate);
+
+        return roomRepository.findAvailableRoomForBooking(hotelID, checkinDateString, checkoutDateString);
     };
 
     @Override
-    public List<Room> validRequestRooms(String roomID, Date checkingDate, Date checkoutDate){
-        return roomRepository.validRequestRooms(roomID, checkingDate, checkoutDate);
+    public List<Room> validRequestRooms(String roomID, Date checkinDate, Date checkoutDate){
+        String pattern = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(pattern);
+
+        String checkinDateString = df.format(checkinDate);
+        String checkoutDateString = df.format(checkoutDate);
+
+        return roomRepository.validRequestRooms(roomID, checkinDateString, checkoutDateString);
     }
 
     @Override

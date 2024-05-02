@@ -121,6 +121,23 @@ public class BookingServicesImpl implements BookingServices {
 
     @Override
     @Transactional
+    public Booking deleteForRefuseAndCompleteBooking(String bookingID){
+        Booking deleteBooking = this.findById(bookingID);
+        if (deleteBooking == null){
+            return null;
+        }
+
+        Room requestRoom = roomServices.findRoomByID(deleteBooking.getRoomId());
+        requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
+
+        roomServices.saveRoom(requestRoom);
+        this.updateBookedCapacityForDelete(deleteBooking);
+
+        return deleteBooking;
+    }
+
+    @Override
+    @Transactional
     public Booking updateBookedCapacityForSave(Booking theBooking){
         Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
 
@@ -222,13 +239,14 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public boolean isValidBooking(Booking theBooking){
         String requestedHotelID = theBooking.getHotelId();
-        Date checkingDate = (Date) theBooking.getCheckInDate();
-        Date checkoutDate = (Date) theBooking.getCheckOutDate();
+        Date checkinDate = theBooking.getCheckInDate();
+        Date checkoutDate = theBooking.getCheckOutDate();
 
-        List<Room> checkValid = this.roomServices.validRequestRooms(theBooking.getRoomId(), checkingDate, checkoutDate);
+        List<Room> checkValid = this.roomServices.validRequestRooms(theBooking.getRoomId(), checkinDate, checkoutDate);
 
         if (checkValid.isEmpty()){
             return false;
+
         }
         else{
             return true;
@@ -291,7 +309,7 @@ public class BookingServicesImpl implements BookingServices {
             Hotel hotel = hotels.get(0);
             if (hotel.getOwnerUsername().equals(Username)){
                 requestBooking.setIsAccepted(2);
-                this.updateBookedCapacityForDelete(requestBooking);
+                this.deleteForRefuseAndCompleteBooking(bookingId);
                 return bookingRepository.save(requestBooking);
             }
             else{
@@ -315,7 +333,7 @@ public class BookingServicesImpl implements BookingServices {
             Hotel hotel = hotels.get(0);
             if (hotel.getOwnerUsername().equals(Username)){
                 requestBooking.setIsAccepted(3);
-                this.updateBookedCapacityForDelete(requestBooking);
+                this.deleteForRefuseAndCompleteBooking(bookingId);
                 return bookingRepository.save(requestBooking);
             }
             else{
