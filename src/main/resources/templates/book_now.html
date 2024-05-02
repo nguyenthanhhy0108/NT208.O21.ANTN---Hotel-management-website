@@ -38,14 +38,13 @@
 							<h1>Make your reservation</h1>
 						</div>
 						<div class="form-header">
-
-							<h1 class="text-white fw-bold" th:text="${hotelName}"></h1>
-
+							<h1 class="text-white fw-bold" th:text="'Hotel ' + ${hotelName} + ' room ' + ${roomID}"></h1>
+							<h3 class="text-white fw-bold"  style="color: white;" th:text="'For ' + ${numPeople} + ' people'"></h3>
 						</div>
 
 						<form action="#" th:action="@{/booking}" method="POST">
 							<input type="hidden" id="hotelID" name="hotelID" th:value="${hotelID}">
-
+							<input type="hidden" id="roomID" name="roomID" th:value="${roomID}">
 							<div class="row">
 								<div style="display: none;" id="alertAreaCheking">
 								</div>
@@ -76,27 +75,27 @@
 <!--										<span class="form-label">Rooms</span>-->
 <!--									</div>-->
 <!--								</div>-->
-								<div class="col-md-4  col-sm-11">
-									<div class="form-group">
-										<select class="form-control" name = "numPeople" required>
-											<option value="" selected hidden>num of people</option>
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-											<option>6</option>
-											<option>7</option>
-											<option>8</option>
-											<option>9</option>
-											<option>10</option>
-											<option>11</option>
-											<option>12</option>
-										</select>
-										<span class="select-arrow"></span>
-										<span class="form-label">People</span>
-									</div>
-								</div>
+<!--								<div class="col-md-4  col-sm-11">-->
+<!--									<div class="form-group">-->
+<!--										<select class="form-control" name = "numPeople" required>-->
+<!--											<option value="" selected hidden>num of people</option>-->
+<!--											<option>1</option>-->
+<!--											<option>2</option>-->
+<!--											<option>3</option>-->
+<!--											<option>4</option>-->
+<!--											<option>5</option>-->
+<!--											<option>6</option>-->
+<!--											<option>7</option>-->
+<!--											<option>8</option>-->
+<!--											<option>9</option>-->
+<!--											<option>10</option>-->
+<!--											<option>11</option>-->
+<!--											<option>12</option>-->
+<!--										</select>-->
+<!--										<span class="select-arrow"></span>-->
+<!--										<span class="form-label">People</span>-->
+<!--									</div>-->
+<!--								</div>-->
 <!--								<div class="col-md-4  col-sm-11">-->
 <!--									<div class="form-group">-->
 <!--										<select class="form-control" required>-->

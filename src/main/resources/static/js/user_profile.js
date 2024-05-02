@@ -224,6 +224,14 @@ async function printData() {
       col7.textContent = "Waiting";
       col7.style.color = "blue";
     }
+    if(data.sentBookings[i].isAccepted === 2) {
+      col7.textContent = "Refused";
+      col7.style.color = "red";
+    }
+    if(data.sentBookings[i].isAccepted === 3) {
+      col7.textContent = "Completed";
+      col7.style.color = "green";
+    }
 
     let col8 = document.createElement("td");
     let confirmButton = document.createElement("span");
@@ -241,10 +249,41 @@ async function printData() {
     cancelButton.classList.add("btn");
     cancelButton.classList.add("btn-danger");
     cancelButton.textContent = "Cancel";
-    if(data.sentBookings[i].isAccepted === 1) {
+
+    if(data.sentBookings[i].isAccepted === 1 || data.sentBookings[i].isAccepted === 2) {
       cancelButton.style.opacity = "0";
     }
-    col9.appendChild(cancelButton);
+
+    cancelButton.addEventListener("click", function() {
+      const bookingId = data.sentBookings[i].bookingId; // Get the booking ID
+
+      fetch(`/delete?id=${bookingId}`, {
+        method: "DELETE"
+      })
+          .then(response => {
+            if (response.ok) {
+              alert("Successfully deleted your booking!");
+              window.location.reload();
+            } else {
+              // Access the response text by chaining another .then() block
+              response.text().then(errorMessage => {
+                // Alert the error message
+                alert(errorMessage);
+              });
+            }
+          });
+  });
+
+    if(data.sentBookings[i].isAccepted === 0) {
+      col9.appendChild(cancelButton);
+    }
+    else {
+      let hide2 = document.createElement("span");
+      hide2.style.opacity = "0";
+      col9.appendChild(hide2);
+    }
+
+    // col9.appendChild(cancelButton);
 
     row.appendChild(col1);
     row.appendChild(col2);
@@ -439,6 +478,14 @@ async function printData() {
         col7.textContent = "Waiting";
         col7.style.color = "blue";
       }
+      if(data.receivedBookings[i].isAccepted === 2) {
+        col7.textContent = "Refused";
+        col7.style.color = "red";
+      }
+      if(data.receivedBookings[i].isAccepted === 3) {
+        col7.textContent = "Completed";
+        col7.style.color = "green";
+      }
 
       let col8 = document.createElement("td");
       let confirmButton = document.createElement("button");
@@ -447,10 +494,72 @@ async function printData() {
       confirmButton.classList.add("btn-success");
       confirmButton.classList.add("mr-2");
       confirmButton.textContent = "Confirm";
+
+      confirmButton.addEventListener("click", function() {
+        const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
+
+          fetch(`/accept?id=${bookingId}`, {
+            method: "POST"
+          })
+              .then(response => {
+                if (response.ok) {
+                  alert("Successfully accepted customer booking!");
+                  window.location.reload();
+                } else {
+                  // Access the response text by chaining another .then() block
+                  response.text().then(errorMessage => {
+                    // Alert the error message
+                    alert(errorMessage);
+                  });
+                }
+              });
+        });
+
+      let completeButton = document.createElement("button");
+      completeButton.type = "button";
+      completeButton.classList.add("btn");
+      completeButton.classList.add("btn-success");
+      completeButton.classList.add("mr-2");
+      completeButton.textContent = "Confirm";
+
+      completeButton.addEventListener("click", function() {
+        const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
+
+        fetch(`/complete?id=${bookingId}`, {
+          method: "POST"
+        })
+            .then(response => {
+              if (response.ok) {
+                alert("Successfully complete the booking!");
+                window.location.reload();
+              } else {
+                // Access the response text by chaining another .then() block
+                response.text().then(errorMessage => {
+                  // Alert the error message
+                  alert(errorMessage);
+                });
+              }
+            });
+      });
+
       if(data.receivedBookings[i].isAccepted === 0) {
         col8.appendChild(confirmButton);
       }
-      else {
+
+      else if(data.receivedBookings[i].isAccepted === 1) {
+        const currentTime = new Date();
+        const checkoutDate  = new Date(receivedBookings[i].checkOutDate);
+
+        if (checkoutDate.getTime() < currentTime.getTime()){
+          col8.appendChild(completeButton);
+        }
+        else{
+          let hide1 = document.createElement("span");
+          hide1.style.opacity = "0";
+          col8.appendChild(hide1);
+        }
+      }
+      else{
         let hide1 = document.createElement("span");
         hide1.style.opacity = "0";
         col8.appendChild(hide1);
@@ -462,6 +571,27 @@ async function printData() {
       cancelButton.classList.add("btn");
       cancelButton.classList.add("btn-danger");
       cancelButton.textContent = "Cancel";
+
+      cancelButton.addEventListener("click", function() {
+        const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
+
+        fetch(`/refuse?id=${bookingId}`, {
+          method: "POST"
+        })
+            .then(response => {
+              if (response.ok) {
+                alert("Successfully refuse customer booking!");
+                window.location.reload();
+              } else {
+                // Access the response text by chaining another .then() block
+                response.text().then(errorMessage => {
+                  // Alert the error message
+                  alert(errorMessage);
+                });
+              }
+            });
+      });
+
       if(data.receivedBookings[i].isAccepted === 0) {
         col9.appendChild(cancelButton);
       }

@@ -96,5 +96,20 @@ public class RequestOwnerController {
         return "redirect:/owner-requests";
     }
 
+    @GetMapping("owner-requests/reject")
+    public String rejectOwner(@RequestParam("requestId") int requestId, Model model) {
+        List<RequestOwner> result = requestOwnerServices.findByRequestId(requestId);
+        if (result.isEmpty()) {
+            return "redirect:/owner-requests";
+        }
+
+        // update isAccepted in request owner
+        RequestOwner request = result.get(0);
+        request.setIsAccepted(-1);
+        requestOwnerServices.save(request);
+
+        return "redirect:/owner-requests";
+    }
+
 
 }

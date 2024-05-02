@@ -38,16 +38,16 @@ public interface BookingServices {
 
     Booking delete(Booking theBooking);
 
-
-    boolean isValidBooking(Booking theBooking, int People);
-
-    Booking assignRoomForBooking(Booking theBooking, int People);
+    // Booking assignRoomForBooking(Booking theBooking, int People);
 
     void updateBookedCapacityExecute(String roomID, String updateColumn, int value);
-    int updateBookedCapacity(String roomID, Date checkinDate ,Date checkoutDate, int value);
-
+    Booking updateBookedCapacityForSave(Booking theBooking);
+    void updateBookedCapacityForDelete(Booking theBooking);
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
-
+    Booking acceptBookingById(String bookingId, String Username);
+    Booking refuseBookingById(String bookingId, String Username);
+    Booking completeBookingById(String bookingId, String Username);
+    boolean isValidBooking(Booking theBooking);
     /**
      * Find all hotel by provided customer
      * @param customer: String

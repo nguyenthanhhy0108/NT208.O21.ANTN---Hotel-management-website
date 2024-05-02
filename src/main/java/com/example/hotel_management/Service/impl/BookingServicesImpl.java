@@ -2,13 +2,18 @@ package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.DataDTO.BookingDTO;
+import com.example.hotel_management.Model.Hotel;
+import com.example.hotel_management.Model.HotelDetails;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.BookingRepository;
 import com.example.hotel_management.Service.BookingServices;
+import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -21,13 +26,15 @@ import java.util.Optional;
 public class BookingServicesImpl implements BookingServices {
     final BookingRepository bookingRepository;
     final RoomServices roomServices;
+    final HotelServices hotelServices;
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public BookingServicesImpl(BookingRepository bookingRepository, RoomServices roomServices) {
+    public BookingServicesImpl(BookingRepository bookingRepository, RoomServices roomServices, HotelServices hotelServices) {
         this.bookingRepository = bookingRepository;
         this.roomServices = roomServices;
+        this.hotelServices = hotelServices;
     }
 
     @Transactional
@@ -61,13 +68,15 @@ public class BookingServicesImpl implements BookingServices {
     @Transactional
     @Override
     public Booking save(Booking booking) {
-        Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
+        if (!isValidBooking(booking)){
+            return null;
+        }
 
+        Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() + 1);
         roomServices.saveRoom(requestRoom);
 
-        int numOfDates = this.updateBookedCapacity(requestRoom.getHotelID(), booking.getCheckInDate(), booking.getCheckOutDate(), requestRoom.getNumPeople());
-        booking.setTotalPrice(requestRoom.getPrice() * numOfDates);
+        booking = this.updateBookedCapacityForSave(booking);
 
         bookingRepository.save(booking);
         return booking;
@@ -77,13 +86,13 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking delete(Booking theBooking){
         bookingRepository.delete(theBooking);
+
+        // increase booked guest
         Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
-
-        Date checkingDate = (Date) theBooking.getCheckInDate();
-        Date checkoutDate = (Date) theBooking.getCheckOutDate();
-
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
-        this.updateBookedCapacity(requestRoom.getHotelID(), checkingDate, checkoutDate, -requestRoom.getNumPeople());
+        roomServices.saveRoom(requestRoom);
+
+        this.updateBookedCapacityForDelete(theBooking);
 
         return theBooking;
     }
@@ -92,32 +101,59 @@ public class BookingServicesImpl implements BookingServices {
     @Override
     public Booking deleteByID(String bookingID) {
         Booking deleteBooking = this.findById(bookingID);
-        Room requestRoom = roomServices.findRoomByID(deleteBooking.getRoomId());
 
-        if(deleteBooking == null){
+        if (deleteBooking == null){
             return null;
         }
 
+        // decrease the booked guest as the booking is deleted
+        Room requestRoom = roomServices.findRoomByID(deleteBooking.getRoomId());
+        requestRoom.setBookedGuests(requestRoom.getBookedGuests() - 1);
+
+        roomServices.saveRoom(requestRoom);
+
         //consider delete and delete by id
         bookingRepository.deleteById(bookingID);
-        Date checkingDate = (Date) deleteBooking.getCheckInDate();
-        Date checkoutDate = (Date) deleteBooking.getCheckOutDate();
-        this.updateBookedCapacity(deleteBooking.getRoomId(), checkingDate, checkoutDate, -requestRoom.getNumPeople());
+        this.updateBookedCapacityForDelete(deleteBooking);
 
         return  deleteBooking;
     }
 
     @Override
     @Transactional
-    public int updateBookedCapacity(String hotelID, java.util.Date checkinDate , java.util.Date checkoutDate, int value){
-        int now = (int) ((new Date()).getTime() / 1000 / 3600 / 24);
-        int checkinDateCount =  (int) (checkinDate.getTime() / 1000 / 3600 / 24) - now;
-        int checkoutDateCount = (int) (checkoutDate.getTime() / 1000 / 3600 / 24) - now;
+    public Booking updateBookedCapacityForSave(Booking theBooking){
+        Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
 
-        for (int i = checkinDateCount + 1; i <= checkoutDateCount + 1; i++){
-            this.updateBookedCapacityExecute(hotelID, "day" + i, value);
+        Date bookTime = new Date();
+        int now = (int) (bookTime.getTime() / 1000 / 3600 / 24);
+
+        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24) - now;
+        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24) - now;
+
+        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
+            this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + i, requestRoom.getNumPeople());
         }
-        return checkoutDateCount - checkinDateCount + 1;
+
+        theBooking.setBookDate(bookTime);
+        theBooking.setTotalPrice((checkoutDateCount - checkinDateCount + 1) * requestRoom.getPrice());
+
+        return theBooking;
+    }
+
+    @Override
+    @Transactional
+    public void updateBookedCapacityForDelete(Booking theBooking){
+        Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
+
+        int now = (int) ((new Date()).getTime() / 1000 / 3600 / 24);
+        int bookDateCount = (int) (theBooking.getBookDate().getTime() / 1000 / 3600 / 24) - now;
+        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24) - now;
+        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24) - now;
+
+        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
+            int updateDate = i - bookDateCount;
+            this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + updateDate, -requestRoom.getNumPeople());
+        }
     }
 
     /**
@@ -184,15 +220,14 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public boolean isValidBooking(Booking theBooking, int numPeople){
-
+    public boolean isValidBooking(Booking theBooking){
         String requestedHotelID = theBooking.getHotelId();
         Date checkingDate = (Date) theBooking.getCheckInDate();
         Date checkoutDate = (Date) theBooking.getCheckOutDate();
 
-        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
+        List<Room> checkValid = this.roomServices.validRequestRooms(theBooking.getRoomId(), checkingDate, checkoutDate);
 
-        if (availableRooms.isEmpty()){
+        if (checkValid.isEmpty()){
             return false;
         }
         else{
@@ -200,22 +235,92 @@ public class BookingServicesImpl implements BookingServices {
         }
     }
 
+//    @Override
+//    public Booking assignRoomForBooking(Booking theBooking, int numPeople){
+//        String requestedHotelID = theBooking.getHotelId();
+//
+//        Date checkingDate = theBooking.getCheckInDate();
+//        Date checkoutDate = theBooking.getCheckOutDate();
+//
+//        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
+//
+//        if (availableRooms.isEmpty()){
+//            return null;
+//        }
+//        else{
+//            theBooking.setRoomId(availableRooms.get(0).getRoomID());
+//            theBooking.setRoom(availableRooms.get(0));
+//            return  theBooking;
+//        }
+//    }
+
     @Override
-    public Booking assignRoomForBooking(Booking theBooking, int numPeople){
-        String requestedHotelID = theBooking.getHotelId();
+    @Transactional
+    public Booking acceptBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
 
-        Date checkingDate = (Date) theBooking.getCheckInDate();
-        Date checkoutDate = (Date) theBooking.getCheckOutDate();
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
 
-        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
-
-        if (availableRooms.isEmpty()){
+        if (requestBooking.getIsAccepted() != 0 || hotels.isEmpty()){
             return null;
         }
-        else{
-            theBooking.setRoomId(availableRooms.get(0).getRoomID());
-            theBooking.setRoom(availableRooms.get(0));
-            return  theBooking;
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setIsAccepted(1);
+                bookingRepository.save(requestBooking);
+                return requestBooking;
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public Booking refuseBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
+
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
+
+        if (requestBooking.getIsAccepted() != 0 || hotels.isEmpty()){
+            return null;
+        }
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setIsAccepted(2);
+                this.updateBookedCapacityForDelete(requestBooking);
+                return bookingRepository.save(requestBooking);
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public Booking completeBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
+
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
+        Date currentTime = new Date();
+
+        if (requestBooking.getIsAccepted() != 1 || hotels.isEmpty() || currentTime.getTime() < requestBooking.getCheckOutDate().getTime()){
+            return null;
+        }
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setIsAccepted(3);
+                this.updateBookedCapacityForDelete(requestBooking);
+                return bookingRepository.save(requestBooking);
+            }
+            else{
+                return null;
+            }
         }
     }
 }

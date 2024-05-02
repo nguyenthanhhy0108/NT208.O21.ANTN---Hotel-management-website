@@ -10,9 +10,10 @@ import java.util.List;
 public interface RoomServices{
 
     Room saveRoom(Room room);
-    List<Room> findAvailableRoomForBooking(String hotelID, int num_people, Date checkingDate, Date checkoutDate);
+    List<Room> findAvailableRoomForBooking(String hotelID, Date checkingDate, Date checkoutDate);
     List<Room> findAllRoomsByHotelID(String hotelID);
     Room deleteRoomById(String roomID);
     Room findRoomByID(String roomID);
+    List<Room> validRequestRooms(String roomID, Date checkingDate, Date checkoutDate);
 
 }
