@@ -46,6 +46,7 @@ public interface BookingServices {
     // void acceptBooking(String roomId, int num_people, String checkingDate, String checkoutDate, int price);
     Booking acceptBookingById(String bookingId, String Username);
     Booking refuseBookingById(String bookingId, String Username);
+    Booking completeBookingById(String bookingId, String Username);
     boolean isValidBooking(Booking theBooking);
     /**
      * Find all hotel by provided customer

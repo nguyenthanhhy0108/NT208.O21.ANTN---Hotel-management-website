@@ -261,7 +261,7 @@ public class BookingServicesImpl implements BookingServices {
 
         List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
 
-        if (hotels.isEmpty()){
+        if (requestBooking.getIsAccepted() != 0 || hotels.isEmpty()){
             return null;
         }
         else {
@@ -284,13 +284,37 @@ public class BookingServicesImpl implements BookingServices {
 
         List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
 
-        if (requestBooking.getIsAccepted() != 0 && hotels.isEmpty()){
+        if (requestBooking.getIsAccepted() != 0 || hotels.isEmpty()){
             return null;
         }
         else {
             Hotel hotel = hotels.get(0);
             if (hotel.getOwnerUsername().equals(Username)){
-                requestBooking.setTotalPrice(2);
+                requestBooking.setIsAccepted(2);
+                this.updateBookedCapacityForDelete(requestBooking);
+                return bookingRepository.save(requestBooking);
+            }
+            else{
+                return null;
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public Booking completeBookingById(String bookingId, String Username){
+        Booking requestBooking = this.findById(bookingId);
+
+        List<Hotel> hotels = hotelServices.findByHotelID(requestBooking.getHotelId());
+        Date currentTime = new Date();
+
+        if (requestBooking.getIsAccepted() != 1 || hotels.isEmpty() || currentTime.getTime() < requestBooking.getCheckOutDate().getTime()){
+            return null;
+        }
+        else {
+            Hotel hotel = hotels.get(0);
+            if (hotel.getOwnerUsername().equals(Username)){
+                requestBooking.setIsAccepted(3);
                 this.updateBookedCapacityForDelete(requestBooking);
                 return bookingRepository.save(requestBooking);
             }

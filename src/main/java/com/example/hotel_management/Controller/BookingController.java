@@ -159,4 +159,18 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Can not refuse the booking");
         }
     }
+
+    @PostMapping("/complete")
+    public ResponseEntity<String> completeBooking(@RequestParam("id") String bookingID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking completeBooking = bookingServices.completeBookingById(bookingID, user.getName());
+
+        if (completeBooking != null){
+            return ResponseEntity.ok().body("Successfully refused booking!");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Can not complete the booking");
+        }
+    }
 }
