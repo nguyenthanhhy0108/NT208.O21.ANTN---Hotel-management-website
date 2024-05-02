@@ -68,6 +68,10 @@ public class BookingServicesImpl implements BookingServices {
     @Transactional
     @Override
     public Booking save(Booking booking) {
+        if (!isValidBooking(booking)){
+            return null;
+        }
+
         Room requestRoom = roomServices.findRoomByID(booking.getRoomId());
         requestRoom.setBookedGuests(requestRoom.getBookedGuests() + 1);
         roomServices.saveRoom(requestRoom);
@@ -148,7 +152,6 @@ public class BookingServicesImpl implements BookingServices {
 
         for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
             int updateDate = i - bookDateCount;
-            System.out.println(updateDate);
             this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + updateDate, -requestRoom.getNumPeople());
         }
     }
@@ -217,15 +220,14 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
-    public boolean isValidBooking(Booking theBooking, int numPeople){
-
+    public boolean isValidBooking(Booking theBooking){
         String requestedHotelID = theBooking.getHotelId();
         Date checkingDate = (Date) theBooking.getCheckInDate();
         Date checkoutDate = (Date) theBooking.getCheckOutDate();
 
-        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
+        List<Room> checkValid = this.roomServices.validRequestRooms(theBooking.getRoomId(), checkingDate, checkoutDate);
 
-        if (availableRooms.isEmpty()){
+        if (checkValid.isEmpty()){
             return false;
         }
         else{
@@ -233,24 +235,24 @@ public class BookingServicesImpl implements BookingServices {
         }
     }
 
-    @Override
-    public Booking assignRoomForBooking(Booking theBooking, int numPeople){
-        String requestedHotelID = theBooking.getHotelId();
-
-        Date checkingDate = theBooking.getCheckInDate();
-        Date checkoutDate = theBooking.getCheckOutDate();
-
-        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
-
-        if (availableRooms.isEmpty()){
-            return null;
-        }
-        else{
-            theBooking.setRoomId(availableRooms.get(0).getRoomID());
-            theBooking.setRoom(availableRooms.get(0));
-            return  theBooking;
-        }
-    }
+//    @Override
+//    public Booking assignRoomForBooking(Booking theBooking, int numPeople){
+//        String requestedHotelID = theBooking.getHotelId();
+//
+//        Date checkingDate = theBooking.getCheckInDate();
+//        Date checkoutDate = theBooking.getCheckOutDate();
+//
+//        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(requestedHotelID, numPeople, checkingDate, checkoutDate);
+//
+//        if (availableRooms.isEmpty()){
+//            return null;
+//        }
+//        else{
+//            theBooking.setRoomId(availableRooms.get(0).getRoomID());
+//            theBooking.setRoom(availableRooms.get(0));
+//            return  theBooking;
+//        }
+//    }
 
     @Override
     @Transactional

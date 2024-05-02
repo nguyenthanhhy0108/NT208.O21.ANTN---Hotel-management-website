@@ -39,9 +39,14 @@ public class RoomServicesImpl implements RoomServices {
     }
 
     @Override
-    public List<Room> findAvailableRoomForBooking(String hotelID, int num_people, Date checkingDate, Date checkoutDate){
-        return roomRepository.findAvailableRoomForBooking(hotelID, num_people, checkingDate, checkoutDate);
+    public List<Room> findAvailableRoomForBooking(String hotelID, Date checkingDate, Date checkoutDate){
+        return roomRepository.findAvailableRoomForBooking(hotelID, checkingDate, checkoutDate);
     };
+
+    @Override
+    public List<Room> validRequestRooms(String roomID, Date checkingDate, Date checkoutDate){
+        return roomRepository.validRequestRooms(roomID, checkingDate, checkoutDate);
+    }
 
     @Override
     public Room findRoomByID(String roomID){

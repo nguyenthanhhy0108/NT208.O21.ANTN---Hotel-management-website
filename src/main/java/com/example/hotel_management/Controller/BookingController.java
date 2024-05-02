@@ -1,10 +1,9 @@
 package com.example.hotel_management.Controller;
 
-import com.example.hotel_management.Model.Booking;
-import com.example.hotel_management.Model.HotelDetails;
-import com.example.hotel_management.Model.UserDetails;
+import com.example.hotel_management.Model.*;
 import com.example.hotel_management.Service.BookingServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.RoomServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -29,14 +28,16 @@ import static java.util.TimeZone.*;
 public class BookingController {
 
     private final HotelDetailsServices hotelDetailsServices;
+    private final RoomServices roomServices;
     private final BookingServices bookingServices;
     /**
      * Dependency Injection
      * @param hotelDetailsServices: HotelDetailsServices object
      */
     @Autowired
-    public BookingController(HotelDetailsServices hotelDetailsServices, BookingServices bookingServices) {
+    public BookingController(HotelDetailsServices hotelDetailsServices, RoomServices roomServices, BookingServices bookingServices) {
         this.hotelDetailsServices = hotelDetailsServices;
+        this.roomServices = roomServices;
         this.bookingServices = bookingServices;
     }
 
@@ -47,15 +48,18 @@ public class BookingController {
      * Get book_now.html
      */
     @GetMapping("/booking")
-    public String BookingPage(@RequestParam("id") String hotelID, Model model){
-        HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
+    public String BookingPage(@RequestParam("id") String roomID, Model model){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        Room room = roomServices.findRoomByID(roomID);
 
-        if (hotelDetails == null){
-            model.addAttribute("cannotFindHotel", true);
+        if (room == null){
+            model.addAttribute("cannotFindRoom", true);
             return "homepage";
         }
         else{
+            HotelDetails hotelDetails = hotelDetailsServices.findById(room.getHotelID());
+            model.addAttribute("roomID", roomID);
+            model.addAttribute("numPeople", room.getNumPeople());
             model.addAttribute("hotelID", hotelDetails.getHotelID());
             String hotelName = hotelDetails.getName();
             model.addAttribute("hotelName", hotelName);
@@ -78,27 +82,26 @@ public class BookingController {
 
         String userName = user.getName();
 
+        String roomID = request.getParameter("roomID");
         String hotelID = request.getParameter("hotelID");
-
-        String numPeopleString = request.getParameter("numPeople");
-        int numPeople = Integer.parseInt(numPeopleString);
 
         theBooking.setCustomer(userName);
         theBooking.setCheckInDate(checkinDate);
         theBooking.setCheckOutDate(checkoutDate);
+        theBooking.setRoomId(roomID);
         theBooking.setHotelId(hotelID);
 
-        Booking assignedRoomBooking = bookingServices.assignRoomForBooking(theBooking, numPeople);
-
-        if (assignedRoomBooking != null){
-            // assignedRoomBooking.setBookingId(0);
-            Booking savedBooking = this.bookingServices.save(theBooking);
-            session.setAttribute("notifyBookingSuccessfully", "true");
+        if (bookingServices.save(theBooking) != null){
             return "redirect:/profile";
         }
         else{
+            HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
             model.addAttribute("invalidBooking", true);
+            model.addAttribute("roomID", roomID);
             model.addAttribute("hotelID", hotelID);
+
+            String hotelName = hotelDetails.getName();
+            model.addAttribute("hotelName", hotelName);
             return "book_now";
         }
     }
