@@ -21,4 +21,11 @@ public interface RequestOwnerRepository extends JpaRepository<RequestOwner, Inte
      * @return A list of RequestOwner objects with given username
      */
     List<RequestOwner> findByUsername(String username);
+
+    /**
+     * Find all request owner by status
+     * @param isAccepted (-1: rejected, 0: not seen, 1: accepted)
+     * @return A list of RequestOwner object with chosen status
+     */
+    List<RequestOwner> findByIsAccepted(int isAccepted);
 }

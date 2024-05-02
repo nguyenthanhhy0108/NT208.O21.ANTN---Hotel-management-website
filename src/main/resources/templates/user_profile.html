@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
   <title>Profile</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--  <script src="/js/first_page.js"></script>-->
+  <!--  <script src="/js/first_page.js"></script>-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,191 +29,191 @@
 </head>
 
 <body onload="printData()">
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
-      <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav ml-auto">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ml-auto">
 
-          <!--          <li class="nav-item">-->
-          <!--            <a class="nav-link" href="/home">Home</a>-->
-          <!--          </li>-->
+        <!--          <li class="nav-item">-->
+        <!--            <a class="nav-link" href="/home">Home</a>-->
+        <!--          </li>-->
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              Services
-            </a>
-            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">Restaurant</a>
-              <a class="dropdown-item" href="">Taxi</a>
-              <!--              <a class="dropdown-item" href=""></a>-->
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="">NEWS</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#cont">Contact</a>
-          </li>
-
-          <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-            <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
-
-            <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Services
+          </a>
+          <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">Restaurant</a>
+            <a class="dropdown-item" href="">Taxi</a>
+            <!--              <a class="dropdown-item" href=""></a>-->
           </div>
+        </li>
 
-          <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              <span style="color: lawngreen" th:text="${session.name}"></span>
-            </a>
-            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/profile">Information</a>
-              <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
-                <form id="myForm" th:action="@{/logout}" method="post">
-                  <input type="hidden">
-                </form>
+        <li class="nav-item">
+          <a class="nav-link" href="">NEWS</a>
+        </li>
 
-              <!--              <a class="dropdown-item" href=""></a>-->
-            </div>
-          </li>
-        </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="#cont">Contact</a>
+        </li>
 
+        <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
+
+          <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+        </div>
+
+        <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            <span style="color: lawngreen" th:text="${session.name}"></span>
+          </a>
+          <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profile">Information</a>
+            <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
+            <form id="myForm" th:action="@{/logout}" method="post">
+              <input type="hidden">
+            </form>
+
+            <!--              <a class="dropdown-item" href=""></a>-->
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+
+</nav>
+
+<section style="background-image: url('/images/back.jpg'); background-repeat: no-repeat; background-size: cover; display: flex; flex-direction: column;">
+  <div class="container py-5 my-3">
+
+    <div class="col-lg-4 mx-auto">
+      <div class="card mb-4" style="background-color: #f7daff">
+        <div class="card-body text-center" style="background-color: #f7daff">
+          <img src="avatar" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <h5 class="my-3">Name</h5>
+          <p class="text-muted mb-1">Info</p>
+          <p class="text-muted mb-4">Info</p>
+          <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="col-lg-8 mx-auto">
+      <div class="card mb-4 py-2" style="background-color: #f7daff">
+        <div class="card-body py-2" style="background-color: #f7daff;">
+          <div class="row text-end mb-3 py-2">
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
+            </div>
+            <div class="col-sm-3" sec:authorize="not hasAuthority('ROLE_OWNER')" >
+              <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
+            </div>
+
+          </div>
+          <div class="row py-2">
+            <div class="col-sm-3">
+              <p class="mb-0">Full Name</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"
+                 th:text="${userDetails.getName()}"/>
+              <input type="text" class="form-control d-none" >
+            </div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-sm-3">
+              <p class="mb-0">Email</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"
+                 th:text="${userDetails.getUsername()}"/>
+              <input type="email" class="form-control d-none" >
+            </div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-sm-3">
+              <p class="mb-0">Phone</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"
+                 th:text="${userDetails.getPhoneNumber()}"/>
+              <input type="tel" class="form-control d-none" >
+            </div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-sm-3">
+              <p class="mb-0">Nationality</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"  th:text="${userDetails.getNationality()}"/>
+              <input type="tel" class="form-control d-none" >
+            </div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-sm-3">
+              <p class="mb-0">Address</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0"  th:text="${userDetails.getAddress()}">
+                <input type="text" class="form-control d-none" >
+            </div>
+          </div>
+          <hr>
+          <div class="row py-2">
+            <div class="col-12 text-center">
+              <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-8 mx-auto">
+      <div class="card mb-4 py-2" style="background-color: #f7daff">
+        <div class="card-body py-2" id="my-requests" style="background-color: #f7daff">
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-8 mx-auto" id="owner">
+      <div class="card mb-4 py-2" id="child1" style="background-color: #f7daff">
+        <div class="card-body py-2" id="my-received-requests" style="background-color: #f7daff">
+
+        </div>
+      </div>
+
     </div>
 
 
-  </nav>
-
-  <section style="background-image: url('/images/back.jpg'); background-repeat: no-repeat; background-size: cover; display: flex; flex-direction: column;">
-    <div class="container py-5 my-3">
-    
-        <div class="col-lg-4 mx-auto">
-          <div class="card mb-4" style="background-color: #f7daff">
-            <div class="card-body text-center" style="background-color: #f7daff">
-              <img src="avatar" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-              <h5 class="my-3">Name</h5>
-              <p class="text-muted mb-1">Info</p>
-              <p class="text-muted mb-4">Info</p>
-              <div class="d-flex justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8 mx-auto">
-          <div class="card mb-4 py-2" style="background-color: #f7daff">
-            <div class="card-body py-2" style="background-color: #f7daff;">
-              <div class="row text-end mb-3 py-2">
-                <div class="col-sm-3">
-                  <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
-                </div>
-                <div class="col-sm-3">
-                  <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
-                </div>
-
-              </div>
-              <div class="row py-2">
-                <div class="col-sm-3">
-                  <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"
-                     th:text="${userDetails.getName()}"/>
-                  <input type="text" class="form-control d-none" >
-                </div>
-              </div>
-              <hr>
-              <div class="row py-2">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"
-                     th:text="${userDetails.getUsername()}"/>
-                  <input type="email" class="form-control d-none" >
-                </div>
-              </div>
-              <hr>
-              <div class="row py-2">
-                <div class="col-sm-3">
-                  <p class="mb-0">Phone</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"
-                     th:text="${userDetails.getPhoneNumber()}"/>
-                  <input type="tel" class="form-control d-none" >
-                </div>
-              </div>
-              <hr>
-              <div class="row py-2">
-                <div class="col-sm-3">
-                  <p class="mb-0">Nationality</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"  th:text="${userDetails.getNationality()}"/>
-                  <input type="tel" class="form-control d-none" >
-                </div>
-              </div>
-              <hr>
-              <div class="row py-2">
-                <div class="col-sm-3">
-                  <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0"  th:text="${userDetails.getAddress()}">
-                  <input type="text" class="form-control d-none" >
-                </div>
-              </div>
-              <hr>
-              <div class="row py-2">
-                <div class="col-12 text-center">
-                  <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      <div class="col-lg-8 mx-auto">
-        <div class="card mb-4 py-2" style="background-color: #f7daff">
-          <div class="card-body py-2" id="my-requests" style="background-color: #f7daff">
-
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-lg-8 mx-auto" id="owner">
-        <div class="card mb-4 py-2" id="child1" style="background-color: #f7daff">
-          <div class="card-body py-2" id="my-received-requests" style="background-color: #f7daff">
-
-          </div>
-        </div>
-
-      </div>
-      
-      
-    </div>
-  </section>
-  <script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  </div>
+</section>
+<script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <!--  <script type="text/javascript" th:src="@{/js/all.js}" defer></script>-->
-  <script>
-    $(window).scroll(function () {
-      $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
-    });
+<script>
+  $(window).scroll(function () {
+    $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
+  });
 
-  </script>
+</script>
 </body>
 </html>

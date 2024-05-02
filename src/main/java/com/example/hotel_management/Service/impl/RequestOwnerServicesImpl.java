@@ -29,6 +29,11 @@ public class RequestOwnerServicesImpl implements RequestOwnerServices {
         return requestOwnerRepository.findByUsername(username);
     }
 
+    @Override
+    public List<RequestOwner> findByIsAccepted(int isAccepted) {
+        return requestOwnerRepository.findByIsAccepted(isAccepted);
+    }
+
     public RequestOwner save(RequestOwner requestOwner) {
         return requestOwnerRepository.save(requestOwner);
     }
