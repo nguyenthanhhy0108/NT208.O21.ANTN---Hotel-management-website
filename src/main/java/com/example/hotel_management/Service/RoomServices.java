@@ -14,6 +14,6 @@ public interface RoomServices{
     List<Room> findAllRoomsByHotelID(String hotelID);
     Room deleteRoomById(String roomID);
     Room findRoomByID(String roomID);
-    List<Room> validRequestRooms(String roomID, Date checkinDate, Date checkoutDate);
+    boolean isAvailableRoom(String roomID, Date checkinDate, Date checkoutDate);
 
 }
