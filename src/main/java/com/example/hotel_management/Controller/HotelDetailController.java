@@ -38,9 +38,13 @@ public class HotelDetailController {
     }
 
     @GetMapping("/hotel-detail")
-    public String showHotelDetail(@RequestParam("hotel_id") String id,
+    public String showHotelDetail(@RequestParam(value = "hotel_id", required = false ) String id,
                                   Model model,
                                   HttpServletRequest request) {
+        if(id == null || id.isEmpty()) {
+            return "first_page";
+        }
+
         HotelDetails hotelDetails = hotelDetailsServices.findById(id);
         model.addAttribute("hotel_detail", hotelDetails);
 

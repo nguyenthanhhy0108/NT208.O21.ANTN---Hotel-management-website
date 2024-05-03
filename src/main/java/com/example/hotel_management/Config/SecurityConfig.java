@@ -91,6 +91,7 @@ public class SecurityConfig {
                         .requestMatchers("/hotel-detail/**").permitAll()
                         .requestMatchers("/suggest").permitAll()
                         .requestMatchers("/search").permitAll()
+                        .requestMatchers("/room-details").permitAll()
                         .requestMatchers("/get-sorted-hotels-details").permitAll()
                         .requestMatchers("/get-sorted-hotels-details/**").permitAll()
                         .requestMatchers("/get-list-rooms").permitAll()
