@@ -1,29 +1,40 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.HotelDetails;
+import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.RoomServices;
 import com.example.hotel_management.Service.UserServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HotelDetailController {
 
     private final HotelDetailsServices hotelDetailsServices;
     private final UserServices userServices;
+    private final RoomServices roomServices;
 
     @Autowired
     HotelDetailController(HotelDetailsServices hotelDetailsServices,
-                          UserServices userServices) {
+                          UserServices userServices,
+                          RoomServices roomServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.userServices = userServices;
+        this.roomServices = roomServices;
     }
 
     @GetMapping("/hotel-detail")
@@ -47,5 +58,21 @@ public class HotelDetailController {
         }
 
         return "/hotel-details";
+    }
+
+    @GetMapping("/get-list-rooms")
+    @ResponseBody
+    public ResponseEntity<List<RoomDTO>> getAllAvailableRooms(@RequestParam String hotelID,
+                                                              HttpServletRequest request){
+        List<RoomDTO> result = new ArrayList<>();
+
+        HttpSession session = request.getSession();
+
+        String checkInDate = (String) session.getAttribute("checkInDate");
+        String checkOutDate = (String) session.getAttribute("checkOutDate");
+
+        List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(hotelID, checkInDate, checkOutDate);
+
+        return ResponseEntity.ok(result);
     }
 }

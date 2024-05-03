@@ -3,6 +3,8 @@ package com.example.hotel_management.Controller;
 import com.example.hotel_management.Service.BookedCapacityServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
 import com.example.hotel_management.Service.HotelServices;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,10 +72,15 @@ public class SearchController {
      * Redirect to some html
      */
     @GetMapping("/search")
-    public String searchHotel(@RequestParam("name") String typedName,
+    public String searchHotel(HttpServletRequest request,
+                              @RequestParam("name") String typedName,
                               @RequestParam("people") int people,
                               @RequestParam("check_in_date") String checkInDate,
                               @RequestParam("check_out_date") String checkOutDate) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute("checkInDate", checkInDate);
+        session.setAttribute("checkOutDate", checkOutDate);
 
         this.numberOfPeople = people;
 

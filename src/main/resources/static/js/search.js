@@ -237,3 +237,15 @@ function autocomplete(inp, countries, names) {
 }
 
 
+function onSubmit() {
+    var checkinDate = document.getElementById('checkinDate').value;
+    var checkoutDate = document.getElementById('checkoutDate').value;
+
+    localStorage.setItem('checkInDate', checkinDate);
+    localStorage.setItem('checkOutDate', checkoutDate);
+
+    // alert(checkinDate)
+    // alert(checkoutDate)
+}
+
+
