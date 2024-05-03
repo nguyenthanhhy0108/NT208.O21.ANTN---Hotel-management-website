@@ -18,5 +18,11 @@ public interface RoomServices{
     boolean isAvailableRoom(String roomID, Date checkinDate, Date checkoutDate);
     RoomDTO toDTO(Room room);
     List<RoomDTO> toDTO(List<Room> rooms);
-
+    /**
+     * Find room by room ID
+     * @param roomID String
+     * @return
+     * Room object
+     */
+    Room findByRoomID(String roomID);
 }

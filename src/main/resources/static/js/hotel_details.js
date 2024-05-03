@@ -6,6 +6,8 @@ var checkOutDate = localStorage.getItem("checkOutDate");
 const urlParams = new URLSearchParams(window.location.search);
 let hotel_id = urlParams.get("hotel_id");
 
+localStorage.setItem("hotel_id", hotel_id);
+
 async function getListRoom() {
     try {
         const test = await $.ajax({
@@ -80,18 +82,9 @@ async function printRooms() {
 
             let col5 = document.createElement("td");
             col5.style.position = "absolute";
-            // col5.style.paddingLeft = "17%";
             col5.style.marginLeft = "-20%";
-            // col5.style.marginTop = "-1%";
             let hide2 = document.createElement("span");
-            // hide2.style.display = "none";
-            // hide2.type = "button";
-            // hide2.classList.add("btn");
-            // hide2.classList.add("btn-success");
-            // hide2.classList.add("mr-2");
             hide2.textContent = "Action";
-            // hide2.disabled = true;
-            // hide2.style.opacity = "0";
             col5.appendChild(hide2);
 
             row.appendChild(col1);
@@ -155,6 +148,9 @@ async function printRooms() {
                 hide1.style.backgroundColor = "blue";
                 // hide1.classList.add("mr-2");
                 hide1.textContent = "More information";
+                hide1.onclick = function () {
+                    window.location.href = "/room-details?room_id=" + room.roomID.toString();
+                }
                 // hide1.disabled = true;
                 // hide1.style.opacity = "0";
                 col4.appendChild(hide1);
@@ -200,6 +196,7 @@ async function printRooms() {
             col1.style.overflowWrap = "break-word"
             col1.textContent = "There are no available rooms !!!";
             col1.style.color = "orange";
+            col1.style.paddingLeft = "40%";
 
             row.appendChild(col1);
             table.appendChild(row);

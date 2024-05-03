@@ -1,270 +1,256 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
   <title>Hotels Details</title>
-<!--  <script type="text/javascript" th:src="@{/js/hotel_details.js}" defer></script>-->
+  <script type="text/javascript" th:src="@{/js/room_details.js}" defer></script>
   <link rel="stylesheet" type="text/css"href="hotels-details.component.css" media="screen">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="css/imagehover.min.css">
-    <link rel="stylesheet" href="css/monument.css">
-    <link rel="stylesheet" href="css/hotel.css">
-    <style>
-      .scrolled {
-        background-color: rgba(0, 0, 0, 0.3) !important;
-  
-      }
-  
-      .headtext h1:hover {
-        color: yellow;
-        cursor: pointer;
-      }
-  
-      nav {
-        transition: 0.45s ease-in all !important;
-      }
-  
-      header {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/hotel_details/1.jpg');
-        background-size: 100% 100%;
-        height: 98vh;
-        z-index: -99;
-      }
-    </style>
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="css/imagehover.min.css">
+  <link rel="stylesheet" href="css/monument.css">
+  <link rel="stylesheet" href="css/hotel.css">
+  <link rel="stylesheet" href="css/room.css">
+  <style>
+    .scrolled {
+      background-color: rgba(0, 0, 0, 0.3) !important;
+
+    }
+
+    .headtext h1:hover {
+      color: yellow;
+      cursor: pointer;
+    }
+
+    nav {
+      transition: 0.45s ease-in all !important;
+    }
+
+    header {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/background.jpg');
+      background-size: 100% 100%;
+      height: 98vh;
+      z-index: -99;
+    }
+  </style>
 </head>
 
-<body onload="printRooms()">
+<body onload="receiveData()">
 
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+    <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          <a class="nav-link" href="/first-page">Home</a>
+        </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="hotel">Hotel</a>
+          </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Services
+          </a>
+          <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">Restaurant</a>
+            <a class="dropdown-item" href="">Taxi</a>
+            <!--              <a class="dropdown-item" href=""></a>-->
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="">NEWS</a>
+        </li>
+
+        <!--          <li class="nav-item">-->
+        <!--            <a class="nav-link" href=team.html>Team</a>-->
+        <!--          </li>-->
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html#cont">Contact</a>
+        </li>
+        <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+          <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
+
+          <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+        </div>
+        <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            <span style="color: lawngreen" id="username" th:text="${session.name}"></span>
+          </a>
+          <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/profile">Information</a>
+            <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
+            <form id="myForm" th:action="@{/logout}" method="post">
+              <input type="hidden">
+            </form>
+
+            <!--              <a class="dropdown-item" href=""></a>-->
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</nav>
+<!-- ~~~~~~~~~~~~~navbar end~~~~~~~~~~~~~~~~~ -->
+<!-- ~~~~~~~~~~~~~~~~header start ~~~~~~~~~~~~~~~~ -->
+<header class="container-fluid ">
+  <div class="headtext">
+    <h1 class="text-white heading" id="roomID"></h1>
+<!--    <p class="text-center" th:text="${hotel_detail.getAddress()}">Address: </p>-->
+
+  </div>
+
+</header>
+
+<!-- ~~~~~~~~~~~~~~~~header end ~~~~~~~~~~~~~~~~ -->
+<br>
+<br>
+<br>
+
+<div class="row" style="font-size: 150%">
+  <div class="col">
+    <div class="d-flex align-items-center">
+      <i class="fa-solid fa-user p-3"></i>
+      <span>Max capacity: <span id="capacity"></span></span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="d-flex align-items-center" style="margin-left: 70%">
+      <i class="fa-solid fa-dollar-sign p-3"></i>
+      <span>Price: <span id="price"></span></span>
+    </div>
+  </div>
+</div>
+
+
+<br>
+<br>
+<br>
+<div>
+  <h1 style="font-size: 250%; padding-left: 40%">Some images</h1>
+</div>
+
+<div class="m-5 p-3 shadow bg-light rounded">
+
+<!--  <div class="row p-3 align-items-top">-->
+
     <div class="container">
-      <a class="navbar-brand" href="index.html">HOTEL BOOKING</a>
-      <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item ">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="hotel.html">Hotel</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              Services
-            </a>
-            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">Restaurant</a>
-              <a class="dropdown-item" href="">Taxi</a>
-              <!--              <a class="dropdown-item" href=""></a>-->
+      <div class="img-container">
+        <div class="add-image row">
+<!--          <div class="col-md-6 col-lg-6">-->
+            <div class="row" style="padding-left: 7%">
+              <div class="col-md-6 col-lg-6">
+                <img src="/images/11.jpg" alt="Ảnh 1" class="img-fluid full">
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <img src="/images/11.jpg" alt="Ảnh 2" class="img-fluid mb-3 full">
+              </div>
             </div>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="">NEWS</a>
-          </li>
-
-          <!--          <li class="nav-item">-->
-          <!--            <a class="nav-link" href=team.html>Team</a>-->
-          <!--          </li>-->
-
-          <li class="nav-item">
-            <a class="nav-link" href="index.html#cont">Contact</a>
-          </li>
-          <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-            <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
-
-            <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
-          </div>
-          <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              <span style="color: lawngreen" id="username" th:text="${session.name}"></span>
-            </a>
-            <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/profile">Information</a>
-              <a class="dropdown-item" href="#" onclick="submitLogoutForm()">Sign Out</a>
-              <form id="myForm" th:action="@{/logout}" method="post">
-                <input type="hidden">
-              </form>
-
-              <!--              <a class="dropdown-item" href=""></a>-->
-            </div>
-          </li>
-        </ul>
-
-      </div>
-    </div>
-
-  </nav>
-  <!-- ~~~~~~~~~~~~~navbar end~~~~~~~~~~~~~~~~~ -->
-  <!-- ~~~~~~~~~~~~~~~~header start ~~~~~~~~~~~~~~~~ -->
-  <header class="container-fluid ">
-    <div class="headtext">
-<!--      <h1 class="text-white heading" th:text="${hotel_detail.name}"></h1>-->
-<!--      <p class="text-center" th:text="${hotel_detail.getAddress()}">Address: </p>-->
-
-    </div>
-
-  </header>
-
-  <!-- ~~~~~~~~~~~~~~~~header end ~~~~~~~~~~~~~~~~ -->
-
-  <div class="m-5 p-3 shadow bg-light rounded">
-
-      <div class="row p-3 align-items-top">
-        <div class="col">
-          <div class="m-3">
-            <div class="col fw-lighter">
-              <i class="fa-solid fa-trophy p-3"></i>Description:
-<!--              <div class="p-3 shadow-sm fw-normal" th:text="${hotel_detail.intro}">-->
+            <div class="row" style="padding-left: 7%">
+              <div class="col-md-6 col-lg-6">
+                <img src="/images/11.jpg" alt="Ảnh 3" class="img-fluid mb-3 full">
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  More images ...
+                </button>
               </div>
             </div>
           </div>
-
-        </div>
-        <div class="col">
-
-          <h5 class="ms-2"> Hotel Amenities:</h5>
-<!--          <div class="row" th:each="amenities_item : ${hotel_detail.amenities}">-->
-<!--            <div class="col p-2 fw-lighter">-->
-<!--              <i class="fa-solid ms-3" th:text="${amenities_item}"></i>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div class="row p-3 align-items-start">
-            <div class="col">
-              <div class="accordion" id="accordionPanel">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseOne">
-                      <i class="fa-solid fa-utensils me-3"></i>
-                      Food
-                    </button>
-                  </h2>
-                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
-                       aria-labelledby="panelsStayOpen-headingOne">
-                    <div class="accordion-body">
-                      <li class="list-group">
-                        <ul><i class="fa-solid fa-mug-saucer me-2"></i> Breakfast </ul>
-                        <ul><i class="fa-solid fa-bowl-food me-2"></i> Lunch </ul>
-                      </li>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-<!--                  <h2 class="accordion-header" id="panelsStayOpen-headingTwo">-->
-<!--                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"-->
-<!--                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"-->
-<!--                            aria-controls="panelsStayOpen-collapseTwo">-->
-<!--                      <i class="fa-solid fa-bed me-3 "></i> Bedrooms-->
-<!--                    </button>-->
-<!--                  </h2>-->
-                  <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-                       aria-labelledby="panelsStayOpen-headingTwo">
-<!--                    <div class="accordion-body" th:each="room:${hotel_details.rooms}">-->
-<!--                      <li class="list-group">-->
-<!--                        <ul><i class="fa-regular me-1" th:text="${room.room_name}"></i>-->
-<!--                          <p class="fw-lighter" th:text="${room.room_description}"></p>-->
-<!--                        </ul>-->
-<!--                      </li>-->
-<!--                    </div>-->
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
-                            aria-controls="panelsStayOpen-collapseThree">
-                      <i class="fa-solid fa-building-shield me-3"></i> Security
-                    </button>
-                  </h2>
-                  <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
-                       aria-labelledby="panelsStayOpen-headingThree">
-                    <div class="accordion-body">
-<!--                      <li class="list-group" th:each="security:${hotel_detail.security}">-->
-<!--                        <ul th:text="${security}"></ul>-->
-<!--                      </li>-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <br>
-<!--          <center>-->
-<!--            <a th:href="@{/booking(id=${hotel_detail.hotelID})}"-->
-<!--                    class="btn btn-info btn-sm">Book now</a>-->
-<!--          </center>-->
         </div>
       </div>
-<!--    <div class="col-lg-8 mx-auto" id="parent">-->
-<!--      <div class="card mb-4 py-2" id="child1" style="background-color: #FFFFFF">-->
-<!--        <div class="card-body py-2" id="rooms" style="background-color: #FFFFFF">-->
-
-<!--        </div>-->
-<!--      </div>-->
-
 <!--    </div>-->
-    </div>
-    <!-- ........footer start.......... -->
-  <footer class="footer text-white mt-2 p-1 pt-3">
-    <div style="display: flex; justify-content: center;">
-      <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fa fa-facebook text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-      <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fa fa-instagram text-danger fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-      <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fa fa-twitter text-info fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-      <a href="https://in.linkedin.com" target="_blank" class="social-icon"><i class="fa fa-linkedin text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-    </div>
-  </footer>
-    <!-- ...........footer end........... -->
-    <!-- js files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      $(window).scroll(function () {
-        $('nav').toggleClass('scrolled', $(this).scrollTop() > 400);
-      });
-      AOS.init({
-          offset: 300, // offset (in px) from the original trigger point
-          
-          duration: 2000,
-        });
-    </script>
-    <script>
-      var counter = 1; //instantiate a counter
-      var maxImage = 5; //the total number of images that are available
-      setInterval(function() {
-          document.querySelector('header').style.backgroundImage = "url('assets/hotel_details/" + (counter + 1) + ".jpg')";
-          if (counter + 1 == maxImage) {
-              counter = 0; //reset to start
-          } else {
-              ++counter; //iterate to next image
-          }
-      }, 5000);
 
-    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">More images</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="additionalImages">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: red">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="d-flex" style="padding-left: 45%">
+    <a type="button" class="btn btn-success" href="#" style="padding: 15px 30px; font-size: 20px;">Book now</a><br>
+  </div>
+  <!--  </div>-->
+</div>
+
+
+
+<!-- ........footer start.......... -->
+<footer class="footer text-white mt-2 p-1 pt-3">
+  <div style="display: flex; justify-content: center;">
+    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fa fa-facebook text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fa fa-instagram text-danger fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+    <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fa fa-twitter text-info fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+    <a href="https://in.linkedin.com" target="_blank" class="social-icon"><i class="fa fa-linkedin text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+  </div>
+</footer>
+<!-- ...........footer end........... -->
+<!-- js files -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  $(window).scroll(function () {
+    $('nav').toggleClass('scrolled', $(this).scrollTop() > 400);
+  });
+  AOS.init({
+    offset: 300, // offset (in px) from the original trigger point
+
+    duration: 2000,
+  });
+</script>
+<!--<script>-->
+<!--  var counter = 1; //instantiate a counter-->
+<!--  var maxImage = 5; //the total number of images that are available-->
+<!--  setInterval(function() {-->
+<!--    document.querySelector('header').style.backgroundImage = "url('assets/hotel_details/" + (counter + 1) + ".jpg')";-->
+<!--    if (counter + 1 == maxImage) {-->
+<!--      counter = 0; //reset to start-->
+<!--    } else {-->
+<!--      ++counter; //iterate to next image-->
+<!--    }-->
+<!--  }, 5000);-->
+
+<!--</script>-->
 
 <script src="src/app/secured/services/hotels/hotels-details/hotels-details.component.html"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

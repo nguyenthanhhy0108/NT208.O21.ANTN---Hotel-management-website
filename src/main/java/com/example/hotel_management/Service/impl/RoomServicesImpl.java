@@ -72,6 +72,17 @@ public class RoomServicesImpl implements RoomServices {
         return roomDTOs;
     }
 
+    /**
+     * Implement find by room ID
+     * @param roomID String
+     * @return
+     * Room object
+     */
+    @Override
+    public Room findByRoomID(String roomID) {
+        return this.roomRepository.findByRoomID(roomID);
+    }
+
     @Override
     public Room findRoomByID(String roomID){
         Optional<Room> roomOptional = roomRepository.findById(roomID);

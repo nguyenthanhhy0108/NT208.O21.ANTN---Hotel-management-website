@@ -24,4 +24,12 @@ public interface RoomRepository extends JpaRepository<Room, String>{
             "AND checking_rooms.room_id = ?1", nativeQuery=true)
     List<Room> validRequestRooms(String roomID, String checkinDate, String checkoutDate);
 
+    /**
+     * Find room by room ID
+     * @param roomID String
+     * @return
+     * Room object
+     */
+    Room findByRoomID(String roomID);
+
 }
