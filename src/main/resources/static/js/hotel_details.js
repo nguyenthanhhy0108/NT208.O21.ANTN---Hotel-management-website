@@ -9,7 +9,7 @@ let hotel_id = urlParams.get("hotel")
 async function getListRoom() {
     try {
         const test = await $.ajax({
-            url: '/get-list-rooms?hotel_id=',
+            url: '/get-list-rooms?hotelID=',
             method: 'GET',
             dataType: 'json'
         });

@@ -1,5 +1,6 @@
 package com.example.hotel_management.Service.impl;
 
+import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.RoomRepository;
 import com.example.hotel_management.Service.RoomServices;
@@ -9,10 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RoomServicesImpl implements RoomServices {
@@ -60,6 +58,24 @@ public class RoomServicesImpl implements RoomServices {
         String checkoutDateString = df.format(checkoutDate);
 
         return !roomRepository.validRequestRooms(roomID, checkinDateString, checkoutDateString).isEmpty();
+    }
+
+    @Override
+    public RoomDTO toDTO(Room room) {
+        RoomDTO roomDTO = new RoomDTO();
+        roomDTO.setRoomID(room.getRoomID());
+        roomDTO.setNumOfPeople(room.getNumPeople());
+        roomDTO.setPrice(room.getPrice());
+        return roomDTO;
+    }
+
+    @Override
+    public List<RoomDTO> toDTO(List<Room> rooms) {
+        List<RoomDTO> roomDTOs = new ArrayList<>();
+        for (Room room : rooms) {
+            roomDTOs.add(toDTO(room));
+        }
+        return roomDTOs;
     }
 
     @Override
