@@ -62,17 +62,21 @@ public class HotelDetailController {
 
     @GetMapping("/get-list-rooms")
     @ResponseBody
-    public ResponseEntity<List<RoomDTO>> getAllAvailableRooms(@RequestParam String hotelID,
+    public ResponseEntity<List<RoomDTO>> getAllAvailableRooms(@RequestParam("hotel_id") String hotelID,
                                                               HttpServletRequest request){
-        List<RoomDTO> result = new ArrayList<>();
 
         HttpSession session = request.getSession();
 
         String checkInDate = (String) session.getAttribute("checkInDate");
         String checkOutDate = (String) session.getAttribute("checkOutDate");
 
+//        System.out.println(hotelID);
+//
+//        System.out.println(checkInDate);
+//        System.out.println(checkOutDate);
+
         List<Room> availableRooms = this.roomServices.findAvailableRoomForBooking(hotelID, checkInDate, checkOutDate);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(this.roomServices.toDTO(availableRooms));
     }
 }
