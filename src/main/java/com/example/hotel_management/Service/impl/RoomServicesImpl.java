@@ -39,14 +39,8 @@ public class RoomServicesImpl implements RoomServices {
     }
 
     @Override
-    public List<Room> findAvailableRoomForBooking(String hotelID, Date checkinDate, Date checkoutDate){
-        String pattern = "yyyy-MM-dd";
-        DateFormat df = new SimpleDateFormat(pattern);
-
-        String checkinDateString = df.format(checkinDate);
-        String checkoutDateString = df.format(checkoutDate);
-
-        return roomRepository.findAvailableRoomForBooking(hotelID, checkinDateString, checkoutDateString);
+    public List<Room> findAvailableRoomForBooking(String hotelID, String checkinDate, String checkoutDate){
+        return roomRepository.findAvailableRoomForBooking(hotelID, checkinDate, checkoutDate);
     };
 
     @Override
