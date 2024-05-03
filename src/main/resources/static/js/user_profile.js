@@ -262,13 +262,14 @@ async function printData() {
       })
           .then(response => {
             if (response.ok) {
-              alert("Successfully deleted your booking!");
-              window.location.reload();
+              popupDialog("Success", "Successfully deleted your booking!");
+              setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
             } else {
               // Access the response text by chaining another .then() block
               response.text().then(errorMessage => {
                 // Alert the error message
-                alert(errorMessage);
+                popupDialog("Error", errorMessage);
+                setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
               });
             }
           });
@@ -503,13 +504,14 @@ async function printData() {
           })
               .then(response => {
                 if (response.ok) {
-                  alert("Successfully accepted customer booking!");
-                  window.location.reload();
+                  popupDialog("Success", "Successfully accepted customer booking!");
+                  setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
                 } else {
                   // Access the response text by chaining another .then() block
                   response.text().then(errorMessage => {
                     // Alert the error message
-                    alert(errorMessage);
+                    popupDialog("Error", errorMessage);
+                    setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
                   });
                 }
               });
@@ -520,7 +522,7 @@ async function printData() {
       completeButton.classList.add("btn");
       completeButton.classList.add("btn-success");
       completeButton.classList.add("mr-2");
-      completeButton.textContent = "Confirm";
+      completeButton.textContent = "Complete";
 
       completeButton.addEventListener("click", function() {
         const bookingId = data.receivedBookings[i].bookingId; // Get the booking ID
@@ -530,13 +532,14 @@ async function printData() {
         })
             .then(response => {
               if (response.ok) {
-                alert("Successfully complete the booking!");
-                window.location.reload();
+                popupDialog("Success", "Successfully complete the booking!");
+                setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
               } else {
                 // Access the response text by chaining another .then() block
                 response.text().then(errorMessage => {
                   // Alert the error message
-                  alert(errorMessage);
+                  popupDialog("Error", errorMessage);
+                  setTimeout(function() {console.log("Waiting for 5 seconds"); window.location.reload();}, 2000);
                 });
               }
             });
@@ -547,17 +550,21 @@ async function printData() {
       }
 
       else if(data.receivedBookings[i].isAccepted === 1) {
-        const currentTime = new Date();
-        const checkoutDate  = new Date(receivedBookings[i].checkOutDate);
-
-        if (checkoutDate.getTime() < currentTime.getTime()){
-          col8.appendChild(completeButton);
-        }
-        else{
-          let hide1 = document.createElement("span");
-          hide1.style.opacity = "0";
-          col8.appendChild(hide1);
-        }
+        // const currentTime = new Date();
+        // const checkoutDate  = new Date(receivedBookings[i].checkOutDate);
+        //
+        // console.log(currentTime)
+        // console.log(checkoutDate)
+        //
+        // if (checkoutDate.getTime() < currentTime.getTime()){
+        //   col8.appendChild(completeButton);
+        // }
+        // else{
+        //   let hide1 = document.createElement("span");
+        //   hide1.style.opacity = "0";
+        //   col8.appendChild(hide1);
+        // }
+        col8.appendChild(completeButton);
       }
       else{
         let hide1 = document.createElement("span");
@@ -580,13 +587,20 @@ async function printData() {
         })
             .then(response => {
               if (response.ok) {
-                alert("Successfully refuse customer booking!");
-                window.location.reload();
+                popupDialog("Success", "Successfully refuse customer booking!");
+                setTimeout(function() {
+                  console.log("Waiting for 5 seconds");
+                  window.location.reload();
+                }, 2000);
               } else {
                 // Access the response text by chaining another .then() block
                 response.text().then(errorMessage => {
                   // Alert the error message
-                  alert(errorMessage);
+                  popupDialog("Error", errorMessage);
+                  setTimeout(function() {
+                    console.log("Waiting for 5 seconds");
+                    window.location.reload();
+                  }, 2000);
                 });
               }
             });
@@ -622,6 +636,35 @@ async function printData() {
   }
 }
 
+function popupDialog(title, content) {
+  var dialog = document.getElementById('dialog');
+  var titleElement = document.getElementById('dialogTitle');
+  var contentElement = document.getElementById('dialogContent');
+
+  titleElement.textContent = title;
+  contentElement.textContent = content;
+
+  if (title === 'Error') {
+    titleElement.style.background = 'rgb(243 49 49)';
+  } else if (title === 'Success') {
+    titleElement.style.background = '#57c463';
+  }
+
+  dialog.showModal()
+  dialog.classList.add('show')
+
+  dialog.addEventListener('click', function (event) {
+    if (event.target == dialog) {
+      dialog.classList.add('hide');
+      dialog.addEventListener('webkitAnimationEnd', function () {
+            dialog.classList.remove('hide');
+            dialog.close();
+            dialog.removeEventListener('webkitAnimationEnd', arguments.callee, false);
+          }
+          , false);
+    }
+  });
+}
 
 // // Define a function to check for successBooking and notify the user
 // function checkSuccessBooking() {

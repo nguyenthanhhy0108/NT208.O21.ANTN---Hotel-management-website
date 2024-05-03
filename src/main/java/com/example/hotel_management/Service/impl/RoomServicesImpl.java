@@ -52,14 +52,14 @@ public class RoomServicesImpl implements RoomServices {
     };
 
     @Override
-    public List<Room> validRequestRooms(String roomID, Date checkinDate, Date checkoutDate){
+    public boolean isAvailableRoom(String roomID, Date checkinDate, Date checkoutDate){
         String pattern = "yyyy-MM-dd";
         DateFormat df = new SimpleDateFormat(pattern);
 
         String checkinDateString = df.format(checkinDate);
         String checkoutDateString = df.format(checkoutDate);
 
-        return roomRepository.validRequestRooms(roomID, checkinDateString, checkoutDateString);
+        return !roomRepository.validRequestRooms(roomID, checkinDateString, checkoutDateString).isEmpty();
     }
 
     @Override
