@@ -17,6 +17,10 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,19 +144,24 @@ public class BookingServicesImpl implements BookingServices {
     @Transactional
     public Booking updateBookedCapacityForSave(Booking theBooking){
         Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        LocalDate checkinDate = LocalDate.parse(dateFormat.format(theBooking.getCheckInDate()));
+        LocalDate checkoutDate = LocalDate.parse(dateFormat.format(theBooking.getCheckOutDate()));
 
         Date bookTime = new Date();
-        int now = (int) (bookTime.getTime() / 1000 / 3600 / 24);
+        LocalDate now = LocalDate.parse(dateFormat.format(bookTime));
 
-        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24) - now;
-        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24) - now;
+        int offset = Period.between(now, checkinDate).getDays();
+        int duration = Period.between(checkinDate, checkoutDate).getDays() + 1;
 
-        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
-            this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + i, requestRoom.getNumPeople());
+        for (int i = 0; i < duration; i++){
+            int updateColumn = offset + i;
+            this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + updateColumn, requestRoom.getNumPeople());
         }
 
         theBooking.setBookDate(bookTime);
-        theBooking.setTotalPrice((checkoutDateCount - checkinDateCount + 1) * requestRoom.getPrice());
+        theBooking.setTotalPrice(duration * requestRoom.getPrice());
 
         return theBooking;
     }
@@ -162,13 +171,18 @@ public class BookingServicesImpl implements BookingServices {
     public void updateBookedCapacityForDelete(Booking theBooking){
         Room requestRoom = roomServices.findRoomByID(theBooking.getRoomId());
 
-        int now = (int) ((new Date()).getTime() / 1000 / 3600 / 24);
-        int bookDateCount = (int) (theBooking.getBookDate().getTime() / 1000 / 3600 / 24) - now;
-        int checkinDateCount =  (int) (theBooking.getCheckInDate().getTime() / 1000 / 3600 / 24) - now;
-        int checkoutDateCount = (int) (theBooking.getCheckOutDate().getTime() / 1000 / 3600 / 24) - now;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        LocalDate checkinDate = LocalDate.parse(dateFormat.format(theBooking.getCheckInDate()));
+        LocalDate checkoutDate = LocalDate.parse(dateFormat.format(theBooking.getCheckOutDate()));
+        LocalDate bookDate = LocalDate.parse(dateFormat.format(theBooking.getBookDate()));
 
-        for (int i = checkinDateCount; i < checkoutDateCount + 1; i++){
-            int updateDate = i - bookDateCount;
+        LocalDate now = LocalDate.parse(dateFormat.format(new Date()));
+
+        int offset = Period.between(bookDate, checkinDate).getDays() - Period.between(bookDate, now).getDays();
+        int duration = Period.between(checkinDate, checkoutDate).getDays() + 1;
+
+        for (int i = 0; i < duration; i++){
+            int updateDate = i + offset;
             this.updateBookedCapacityExecute(theBooking.getHotelId(), "day" + updateDate, -requestRoom.getNumPeople());
         }
     }
@@ -242,15 +256,7 @@ public class BookingServicesImpl implements BookingServices {
         Date checkinDate = theBooking.getCheckInDate();
         Date checkoutDate = theBooking.getCheckOutDate();
 
-        List<Room> checkValid = this.roomServices.validRequestRooms(theBooking.getRoomId(), checkinDate, checkoutDate);
-
-        if (checkValid.isEmpty()){
-            return false;
-
-        }
-        else{
-            return true;
-        }
+        return roomServices.isAvailableRoom(theBooking.getRoomId(), checkinDate, checkoutDate);
     }
 
 //    @Override
@@ -333,7 +339,6 @@ public class BookingServicesImpl implements BookingServices {
             Hotel hotel = hotels.get(0);
             if (hotel.getOwnerUsername().equals(Username)){
                 requestBooking.setIsAccepted(3);
-                this.deleteForRefuseAndCompleteBooking(bookingId);
                 return bookingRepository.save(requestBooking);
             }
             else{
