@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>Add Room</title>
+</head>
+<body class="box" style="background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">HOME</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        SERVICES
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">CONTACT</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+<!--    <div class="container mb-5 " data-aos="zoom-in" style="">-->
+<div class="container mb-5 " style="">
+    <div class="row form mx-auto  shadow mt-5" style="filter: drop-shadow(0px 0px 4px black);border-radius: 10px;">
+
+        <div class="col-md-11 col-sm-11  ">
+            <h2 class="mb-5" style="font-weight: bold;">Add Room</h2>
+            <form class="p-5" action="#" th:action="@{/save_room}" th:object="${room}" th:method="POST">
+                <div class="form-group">
+                    <input type="hidden" th:field="${room.hotelID}">
+                    <input type="hidden" th:field="${room.bookedGuests}">
+                    <input type="hidden" th:field="${room.starRating}">
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="roomId" style="margin-right: 190px;">
+                            Room ID
+                        </label>
+                        <input name="name" type="text" id="roomId" th:field="${room.roomID}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="numPeople" style="margin-right: 190px;">
+                            Number of people
+                        </label>
+                        <input name="name" type="text" id="numPeople" th:field="${room.numPeople}" required>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="price" style="margin-right: 190px;">
+                            Price
+                        </label>
+                        <input name="name" type="text" id="price" th:field="${room.price}" required>
+                    </div>
+
+                </div>
+                <div class="form-btn">
+                    <button class="submit btn" th:href="@{/hotel-detail(hotel_id=${room.hotelID})}">Save</button>
+                </div><br>
+                <center><a th:href="@{/hotel-detail(hotel_id=${room.hotelID})}" class="btn btn-lime text-white text-center mx-auto "
+                           style="background-color: lightblue;border-radius: 50px;">Back</a></center>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- js files -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        offset: 300, // offset (in px) from the original trigger point
+
+        duration: 2000,
+    });
+</script>
+</body>
+</html>
