@@ -145,4 +145,20 @@ public class HotelDetailController {
         return "redirect:/hotel-detail";
     }
 
+    @GetMapping("delete-hotel")
+    public String deleteHotel(@RequestParam("hotel_id") String hotel_id, Model model) {
+        List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
+        if (hotel.isEmpty()){
+            return "redirect:/hotel-detail";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!hotel.get(0).getOwnerUsername().equals(authentication.getName()) || hotel.get(0).getIsActive() != 0) {
+            return "redirect:/hotel-detail";
+        }
+
+        HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
+        hotelDetailsServices.delete(hotelDetails.getHotelID());
+        hotelServices.deleteByHotelId(hotel_id);
+        return "redirect:/hotel-detail";
+    }
 }

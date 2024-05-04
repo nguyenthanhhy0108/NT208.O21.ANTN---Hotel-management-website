@@ -103,4 +103,22 @@ public class RoomDetailsController {
         roomServices.saveRoom(room);
         return "redirect:/room-details?room_id=" + room.getRoomID();
     }
+
+    @GetMapping("/delete-room")
+    public String delete_room(@RequestParam("room_id") String room_id) {
+        Room room = roomServices.findByRoomID(room_id);
+        if (room == null) {
+            return "redirect:/first-page";
+        }
+
+        List<Hotel> hotel = hotelServices.findByHotelID(room.getHotelID());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!hotel.get(0).getOwnerUsername().equals(authentication.getName())){
+            return "redirect:/first-page";
+        }
+
+        roomServices.deleteRoomById(room_id);
+        return "redirect:/hotel_detail?hotel_id=" + hotel.get(0).getHotelID();
+    }
 }
