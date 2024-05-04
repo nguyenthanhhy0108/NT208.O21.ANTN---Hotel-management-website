@@ -1,6 +1,8 @@
 package com.example.hotel_management.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -10,15 +12,18 @@ import java.util.List;
 public class Room {
     @Id
     @Column(name = "room_id")
+    @Size(min = 1, max = 50, message = "Room ID must be between 1 and 50 characters")
     private String roomID;
 
     @Column(name = "hotel_id")
     private String hotelID;
 
     @Column(name = "num_people")
+    @Min(value = 0, message = "Maximum number of people must be greater than or equal to 0")
     private int numPeople;
 
     @Column(name = "price")
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     private float price;
 
     @Column(name = "booked_guests")

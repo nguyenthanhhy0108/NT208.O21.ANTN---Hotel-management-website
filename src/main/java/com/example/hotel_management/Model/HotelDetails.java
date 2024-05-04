@@ -1,6 +1,9 @@
 package com.example.hotel_management.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -11,30 +14,39 @@ public class HotelDetails {
     private String hotelID;
 
     @Column(name = "intro")
+    @Size(min = 0, max = 255, message = "Introduction size must be between 0 and 255 characters")
     private String intro;
 
     @Column(name = "name")
+    @Size(min = 1, max = 50, message = "Hotel name must be between 1 and 50 characters")
     private String name;
 
     @Column(name = "country")
+    @Size(min = 0, max = 50, message = "Country must be smaller than 50 characters")
     private String country;
 
     @Column(name = "province")
+    @Size(min = 0, max = 50, message = "Province must be smaller than 50 characters")
     private String province;
 
     @Column(name = "city")
+    @Size(min = 0, max = 50, message = "City must be smaller than 50 characters")
     private String city;
 
     @Column(name = "street")
+    @Size(min = 0, max = 50, message = "Street must be smaller than 50 characters")
     private String street;
 
     @Column(name = "house_number")
+    @Size(min = 0, max = 50, message = "House number must be smaller than 50 characters")
     private String houseNumber;
 
     @Column(name = "phone_number")
+    @Pattern(regexp = "^[0-9]{10}", message = "Invalid phone number")
     private String phoneNumber;
 
     @Column(name = "area")
+    @Min(value = 0, message = "Area must be greater than or equal to 0")
     private float area;
 
     @Column(name = "booking_count")
@@ -44,6 +56,7 @@ public class HotelDetails {
     private long totalCapacity;
 
     @Column(name = "price_per_person")
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     private long pricePerPerson;
 
     @OneToOne

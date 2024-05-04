@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>Add Room</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body class="box" style="background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -67,6 +72,9 @@
                             Room ID
                         </label>
                         <input name="name" type="text" id="roomId" th:field="${room.roomID}" required>
+                        <span th:if="${#fields.hasErrors('roomID')}"
+                              th:errors="*{roomID}" class="error"></span>
+
                     </div>
 
                     <div class="form-group ">
@@ -74,6 +82,8 @@
                             Number of people
                         </label>
                         <input name="name" type="text" id="numPeople" th:field="${room.numPeople}" required>
+                        <span th:if="${#fields.hasErrors('numPeople')}"
+                              th:errors="*{numPeople}" class="error"></span>
                     </div>
 
 
@@ -82,6 +92,8 @@
                             Price
                         </label>
                         <input name="name" type="text" id="price" th:field="${room.price}" required>
+                        <span th:if="${#fields.hasErrors('price')}"
+                              th:errors="*{price}" class="error"></span>
                     </div>
 
                 </div>

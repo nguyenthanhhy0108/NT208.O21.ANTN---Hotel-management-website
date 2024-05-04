@@ -4,12 +4,14 @@ import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -74,7 +76,7 @@ public class RoomDetailsController {
         room.setHotelID(hotelId);
         room.setBookedGuests(0);
         model.addAttribute("room", room);
-        return "add_room";
+        return "add_room_form";
     }
 
     @GetMapping("update-room")
@@ -94,14 +96,20 @@ public class RoomDetailsController {
         }
 
         model.addAttribute("room", room);
-        return "add_room";
+        return "add_room_form";
     }
 
 
     @PostMapping("/save_room")
-    public String save_room(@ModelAttribute("room") Room room) {
-        roomServices.saveRoom(room);
-        return "redirect:/room-details?room_id=" + room.getRoomID();
+    public String save_room(@Valid @ModelAttribute("room") Room room,
+                            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()){
+            return "add_room_form";
+        }
+        else {
+            roomServices.saveRoom(room);
+            return "redirect:/room-details?room_id=" + room.getRoomID();
+        }
     }
 
     @GetMapping("/delete-room")

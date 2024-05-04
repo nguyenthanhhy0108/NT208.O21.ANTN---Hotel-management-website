@@ -10,12 +10,14 @@ import com.example.hotel_management.Service.RoomServices;
 import com.example.hotel_management.Service.UserServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -115,12 +117,12 @@ public class HotelDetailController {
     }
 
     @GetMapping("/update-hotel")
-    public String updateHotel(@RequestParam("hotel_id") String hotel_id, Model model) {
+    public String updateHotel(@RequestParam("hotel_id") String hotel_id,
+                              Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.getName().equals("anonymousUser")){
             return "hotel-details";
         }
-
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty() || hotel.get(0).getOwnerUsername() != authentication.getName()) {
             return "redirect:/hotel-detail";
@@ -135,8 +137,14 @@ public class HotelDetailController {
 
 
     @PostMapping("/add-hotel")
-    public String addHotel(@ModelAttribute("hotel") Hotel hotel,
-                           @ModelAttribute("hotel_detail") HotelDetails hotelDetails){
+    public String addHotel(@Valid @ModelAttribute("hotel") Hotel hotel,
+                           @Valid @ModelAttribute("hotel_detail") HotelDetails hotelDetails,
+                           BindingResult bindingResult){
+
+
+        if (bindingResult.hasErrors()) {
+            return "create_hotel_form";
+        }
 
         hotelDetails.setHotelID(hotel.getHotelID());
         hotelServices.saveHotel(hotel);

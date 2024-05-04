@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>Regsiter Hotel</title>
+    <style>
+        .error {
+            color : red;
+        }
+    </style>
 </head>
 <body class="box" style="background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -69,6 +74,9 @@
                             Hotel name
                         </label>
                         <input name="name" type="text" id="hotelName" th:field="${hotel_detail.name}" required>
+                        <span th:if="${#fields.hasErrors('name')}"
+                              th:errors="${hotel_detail.name}" class="error"></span>
+
                     </div>
 
                     <div class="form-group ">
@@ -76,6 +84,8 @@
                             Country
                         </label>
                         <input name="name" type="text" id="country" th:field="${hotel_detail.country}" required>
+                        <span th:if="${#fields.hasErrors('country')}"
+                              th:errors="${hotel_detail.country}" class="error"></span>
                     </div>
 
 
@@ -84,6 +94,8 @@
                             Province
                         </label>
                         <input name="name" type="text" id="province" th:field="${hotel_detail.province}" required>
+                        <span th:if="${#fields.hasErrors('province')}"
+                              th:errors="${hotel_detail.province}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -91,6 +103,8 @@
                             City
                         </label>
                         <input name="name" type="text" id="city" th:field="${hotel_detail.city}" required>
+                        <span th:if="${#fields.hasErrors('city')}"
+                              th:errors="${hotel_detail.city}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -98,6 +112,8 @@
                             Street
                         </label>
                         <input name="name" type="text" id="street" th:field="${hotel_detail.street}" required>
+                        <span th:if="${#fields.hasErrors('street')}"
+                              th:errors="${hotel_detail.street}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -105,6 +121,8 @@
                             House number
                         </label>
                         <input name="name" type="text" id="houseNumber" th:field="${hotel_detail.houseNumber}" required>
+                        <span th:if="${#fields.hasErrors('houseNumber')}"
+                              th:errors="${hotel_detail.houseNumber}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -112,6 +130,8 @@
                             Phone number
                         </label>
                         <input name="name" type="text" id="phoneNumber" th:field="${hotel_detail.phoneNumber}" required>
+                        <span th:if="${#fields.hasErrors('phoneNumber')}"
+                              th:errors="${hotel_detail.phoneNumber}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -119,6 +139,8 @@
                             Area
                         </label>
                         <input name="name" type="text" id="area" th:field="${hotel_detail.area}" required>
+                        <span th:if="${#fields.hasErrors('area')}"
+                              th:errors="${hotel_detail.area}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -126,6 +148,8 @@
                             Price per person
                         </label>
                         <input name="name" type="text" id="pricePerPerson" th:field="${hotel_detail.pricePerPerson}" required>
+                        <span th:if="${#fields.hasErrors('pricePerPerson')}"
+                              th:errors="${hotel_detail.pricePerPerson}" class="error"></span>
                     </div>
 
                     <div class="form-group ">
@@ -134,6 +158,9 @@
                         </label>
                         <textarea class="form-control" cols="20" rows="10" id = "intro"
                                   placeholder="Introduction" th:field="${hotel_detail.intro}"></textarea>
+                        <span th:if="${#fields.hasErrors('intro')}"
+                              th:errors="${hotel_detail.intro}" class="error"></span>
+
                     </div>
                 </div>
                 <div class="form-btn">
