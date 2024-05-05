@@ -41,12 +41,12 @@
                         <div class="form-group">
                             <input type="hidden" th:field="*{requestId}">
                             <input type="hidden" th:field="*{username}">
-                            <textarea class="form-control" cols="10" rows="30" placeholder="Message (optional)" th:field="*{message}"></textarea>
+                            <input class="form-control" cols="10" rows="30" placeholder="Message (optional)" th:field="*{message}"></input>
                             <span class="form-label">Message</span>
                             <input type="hidden" th:field="*{isAccepted}">
                         </div>
                         <div class="form-btn">
-                            <button class="submit">Request</button>
+                            <button class="submit submit-btn">Request</button>
                         </div><br>
                         <center><a href="/profile" class="btn btn-lime text-white text-center mx-auto " style="background-color: lightblue;border-radius: 50px;">Back</a></center>
                     </form>
