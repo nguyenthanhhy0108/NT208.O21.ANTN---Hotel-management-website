@@ -51,4 +51,6 @@ public interface UserServices {
      */
     void updatePasswordByUsername(String username,
                                   String newPassword);
+
+    void addAuthority(Users users, String authority);
 }

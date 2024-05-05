@@ -21,4 +21,6 @@ public interface AuthoritiesServices {
      * The authorities which is saved
      */
     Authorities save(Authorities authorities);
+
+    void add(Authorities authorities);
 }

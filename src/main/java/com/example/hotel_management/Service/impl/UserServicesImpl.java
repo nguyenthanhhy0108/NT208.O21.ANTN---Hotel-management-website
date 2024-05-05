@@ -1,6 +1,7 @@
 package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Config.SecurityConfig;
+import com.example.hotel_management.Model.Authorities;
 import com.example.hotel_management.Model.Users;
 import com.example.hotel_management.Repository.AuthoritiesRepository;
 import com.example.hotel_management.Repository.UserRepository;
@@ -78,6 +79,11 @@ public class UserServicesImpl implements UserServices {
         if(enabled == 1){
             Users usersAfter = this.save(new Users(username, encodedPassword, enabled));
         }
+    }
+
+    @Override
+    public void addAuthority(Users users, String authority) {
+        AuthoritiesRepository.save(new Authorities(users.getUsername(), authority));
     }
 
     /**

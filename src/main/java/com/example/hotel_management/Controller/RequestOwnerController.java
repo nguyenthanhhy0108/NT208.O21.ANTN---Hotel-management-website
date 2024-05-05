@@ -86,17 +86,10 @@ public class RequestOwnerController {
         requestOwnerServices.save(request);
 
         // update user role
-        List<UserDetails> user = getUsername();
-        UserDetails userDetails = null;
-        if (user.isEmpty()) {
-            return "redirect:/login";
-        }
-        else {
-            userDetails = user.get(0);
-        }
-        String username = userDetails.getUsername();
+
+        String username = request.getUsername();
         Authorities newAuthority = new Authorities(username,"ROLE_OWNER");
-        authoritiesServices.save(newAuthority);
+        authoritiesServices.add(newAuthority);
         return "redirect:/owner-requests";
     }
 

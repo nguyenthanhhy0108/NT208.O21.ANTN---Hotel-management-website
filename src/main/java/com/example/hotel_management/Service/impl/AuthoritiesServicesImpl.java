@@ -3,8 +3,10 @@ package com.example.hotel_management.Service.impl;
 import com.example.hotel_management.Model.Authorities;
 import com.example.hotel_management.Repository.AuthoritiesRepository;
 import com.example.hotel_management.Service.AuthoritiesServices;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 //Implement defined interface
@@ -12,14 +14,17 @@ import java.util.List;
 public class AuthoritiesServicesImpl implements AuthoritiesServices {
     //Define some attribute
     private final AuthoritiesRepository AuthoritiesRepository;
+    private final EntityManager entityManager;
 
     /**
      * Dependency Injection
      * @param authoritiesRepository: AuthoritiesRepository object
      */
     @Autowired
-    public AuthoritiesServicesImpl(AuthoritiesRepository authoritiesRepository) {
+    public AuthoritiesServicesImpl(AuthoritiesRepository authoritiesRepository,
+                                   EntityManager entityManager) {
         AuthoritiesRepository = authoritiesRepository;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -48,5 +53,11 @@ public class AuthoritiesServicesImpl implements AuthoritiesServices {
         Call Repository layer and return  an authorities object
          */
         return AuthoritiesRepository.save(authorities);
+    }
+
+    @Transactional
+    @Override
+    public void add(Authorities authorities) {
+        this.entityManager.persist(authorities);
     }
 }
