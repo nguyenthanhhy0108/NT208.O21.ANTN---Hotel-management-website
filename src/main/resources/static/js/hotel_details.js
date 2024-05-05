@@ -168,6 +168,9 @@ async function printRooms() {
                 hide2.classList.add("btn-success");
                 // hide2.classList.add("mr-2");
                 hide2.textContent = "Book now";
+                hide2.onclick = function () {
+                    window.location.href = "/booking?id=" + room.roomID.toString();
+                }
                 // hide2.disabled = true;
                 // hide2.style.opacity = "0";
                 col5.appendChild(hide2);

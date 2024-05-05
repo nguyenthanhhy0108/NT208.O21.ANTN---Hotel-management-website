@@ -19,6 +19,8 @@
 	<link type="text/css" rel="stylesheet" th:href="@{/css/booknow.css}" />
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+	<script src="/js/book_now.js"></script>
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -28,7 +30,7 @@
 
 </head>
 
-<body style="background-image: url('/images/back.jpg');">
+<body onload="load()" style="background-image: url('/images/back.jpg');">
 	<div id="booking" class="section">
 		<div class="section-center">
 			<div class="container">
@@ -42,7 +44,7 @@
 							<h3 class="text-white fw-bold"  style="color: white;" th:text="'For ' + ${numPeople} + ' people'"></h3>
 						</div>
 
-						<form action="#" th:action="@{/booking}" method="POST">
+						<form th:action="@{/booking}" method="POST">
 							<input type="hidden" id="hotelID" name="hotelID" th:value="${hotelID}">
 							<input type="hidden" id="roomID" name="roomID" th:value="${roomID}">
 							<div class="row">
@@ -51,13 +53,13 @@
 								<div th:if="${invalidBooking}" class="msg form-bt", style="color: red; font-weight: bold;">Invalid booking request, please try again</div>
 								<div class="col-md-6  col-sm-11" >
 									<div class="form-group">
-										<input class="form-control" type="date" id="checkinDate" name="checkinDate" required>
+										<input class="form-control" type="date" id="check_in_date" name="checkinDate" readonly>
 										<span class="form-label">Check In</span>
 									</div>
 								</div>
 								<div class="col-md-6  col-sm-11">
 									<div class="form-group">
-										<input class="form-control" type="date" id="checkoutDate" name="checkoutDate" required>
+										<input class="form-control" type="date" id="check_out_date" name="checkoutDate" readonly>
 										<span class="form-label">Check out</span>
 									</div>
 								</div>
@@ -124,7 +126,7 @@
 <!--								</div>-->
 <!--							</div>-->
 							<div class="form-btn">
-								<button class="submit-btn" id="submitButton">Book Now</button>
+								<button class="submit-btn" id="submitButton" onclick="async function waitLoad() {await load();} ">Book Now</button>
 							</div><br>
 							<center><a href="first-page" class="btn btn-lime text-white text-center mx-auto " style="background-color: lightblue;border-radius: 50px;">Back</a></center>
 						</form>
