@@ -1,5 +1,6 @@
 package com.example.hotel_management.Model.DataDTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,8 +10,10 @@ public class BookingDTO {
 
     private int bookingId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date checkInDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date checkOutDate;
 
     private String customer;
