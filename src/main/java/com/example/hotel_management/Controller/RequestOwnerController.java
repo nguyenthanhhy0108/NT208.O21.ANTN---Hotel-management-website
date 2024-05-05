@@ -58,6 +58,10 @@ public class RequestOwnerController {
 
     @PostMapping("/add-request-owner")
     public String addRequestOwner(@ModelAttribute("requestOwner") RequestOwner requestOwner, Model model) {
+        List<RequestOwner> requestOwners = requestOwnerServices.findByUsername(requestOwner.getUsername());
+        if (!requestOwners.isEmpty()) {
+            requestOwnerServices.delete(requestOwners.get(0));
+        }
         requestOwnerServices.save(requestOwner);
         return "redirect:/profile";
     }
