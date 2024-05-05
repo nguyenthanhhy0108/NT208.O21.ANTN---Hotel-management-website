@@ -44,6 +44,11 @@ $(document).ready(function(){
 const urlParams = new URLSearchParams(window.location.search);
 let room_id = urlParams.get("room_id");
 
+let book_now = document.getElementById("book_now");
+book_now.onclick = function () {
+    window.location.href = "/booking?id=" + room_id.toString();
+}
+
 async function getRoomDetails() {
     try {
         const test = await $.ajax({

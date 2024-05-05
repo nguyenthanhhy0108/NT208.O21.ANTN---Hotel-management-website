@@ -560,26 +560,13 @@ async function printData() {
       }
 
       else if(data.receivedBookings[i].isAccepted === 1) {
-        // const currentTime = new Date();
-        // const checkoutDate  = new Date(receivedBookings[i].checkOutDate);
-        //
-        // console.log(currentTime)
-        // console.log(checkoutDate)
-        //
-        // if (checkoutDate.getTime() < currentTime.getTime()){
-        //   col8.appendChild(completeButton);
-        // }
-        // else{
-        //   let hide1 = document.createElement("span");
-        //   hide1.style.opacity = "0";
-        //   col8.appendChild(hide1);
-        // }
         col8.appendChild(completeButton);
       }
+
       else{
-        let hide1 = document.createElement("span");
-        hide1.style.opacity = "0";
-        col8.appendChild(hide1);
+          let hide1 = document.createElement("span");
+          hide1.style.opacity = "0";
+          col8.appendChild(hide1);
       }
 
       let col9 = document.createElement("td");
