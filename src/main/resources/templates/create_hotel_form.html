@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>Regsiter Hotel</title>
+</head>
+<body class="box" style="background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%)">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">HOME</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        SERVICES
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">CONTACT</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+<!--    <div class="container mb-5 " data-aos="zoom-in" style="">-->
+<div class="container mb-5 " style="">
+    <div class="row form mx-auto  shadow mt-5" style="filter: drop-shadow(0px 0px 4px black);border-radius: 10px;">
+
+        <div class="col-md-12 col-sm-12  ">
+            <h2 class="mb-5" style="font-weight: bold;">Hotel Register</h2>
+            <form class="p-5" action="#" th:action="@{/add-hotel}" th:object="${hotel}" th:method="POST">
+                <div class="form-group" th:object="${hotel_detail}">
+                    <input type="hidden" th:field="${hotel.ownerUsername}">
+
+                    <input type="hidden" th:field="${hotel.hotelID}">
+
+                    <input type="hidden" th:field="${hotel.isActive}">
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="hotelName" style="margin-right: 190px;">
+                            Hotel name
+                        </label>
+                        <input name="name" type="text" id="hotelName" th:field="${hotel_detail.name}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="country" style="margin-right: 190px;">
+                            Country
+                        </label>
+                        <input name="name" type="text" id="country" th:field="${hotel_detail.country}" required>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="province" style="margin-right: 190px;">
+                            Province
+                        </label>
+                        <input name="name" type="text" id="province" th:field="${hotel_detail.province}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="city" style="margin-right: 190px;">
+                            City
+                        </label>
+                        <input name="name" type="text" id="city" th:field="${hotel_detail.city}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="street" style="margin-right: 190px;">
+                            Street
+                        </label>
+                        <input name="name" type="text" id="street" th:field="${hotel_detail.street}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="houseNumber" style="margin-right: 190px;">
+                            House number
+                        </label>
+                        <input name="name" type="text" id="houseNumber" th:field="${hotel_detail.houseNumber}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="phoneNumber" style="margin-right: 190px;">
+                            Phone number
+                        </label>
+                        <input name="name" type="text" id="phoneNumber" th:field="${hotel_detail.phoneNumber}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="area" style="margin-right: 190px;">
+                            Area
+                        </label>
+                        <input name="name" type="text" id="area" th:field="${hotel_detail.area}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="pricePerPerson" style="margin-right: 190px;">
+                            Price per person
+                        </label>
+                        <input name="name" type="text" id="pricePerPerson" th:field="${hotel_detail.pricePerPerson}" required>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="text-secondary "  for="intro" style="margin-right: 190px;">
+                            Introduction
+                        </label>
+                        <textarea class="form-control" cols="20" rows="10" id = "intro"
+                                  placeholder="Introduction" th:field="${hotel_detail.intro}"></textarea>
+                    </div>
+                </div>
+                <div class="form-btn">
+                    <button class="submit btn">Save</button>
+                </div><br>
+                <center><a href="/hotel-detail" class="btn btn-lime text-white text-center mx-auto " style="background-color: lightblue;border-radius: 50px;">Back</a></center>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- js files -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        offset: 300, // offset (in px) from the original trigger point
+
+        duration: 2000,
+    });
+</script>
+</body>
+</html>

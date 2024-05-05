@@ -211,12 +211,21 @@
           </div>
 
           <br>
-<!--          <center>-->
-<!--            <a th:href="@{/booking(id=${hotel_detail.hotelID})}"-->
-<!--                    class="btn btn-info btn-sm">Book now</a>-->
-<!--          </center>-->
+          <!--          <center>-->
+          <!--            <a th:href="@{/booking(id=${hotel_detail.hotelID})}"-->
+          <!--                    class="btn btn-info btn-sm">Book now</a>-->
+          <!--          </center>-->
         </div>
       </div>
+
+    <center>
+      <a th:if="${isOwner}" class="btn btn-info"
+         th:href="@{/add-room(hotel_id=${hotel_detail.hotelID})}"> Add room</a>
+    </center>
+    <br>
+
+
+
     <div class="col-lg-8 mx-auto" id="parent">
       <div class="card mb-4 py-2" id="child1" style="background-color: #FFFFFF">
         <div class="card-body py-2" id="rooms" style="background-color: #FFFFFF">
