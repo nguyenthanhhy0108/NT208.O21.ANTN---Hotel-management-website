@@ -15,6 +15,17 @@ const addressInput = document.getElementById("addressInput");
 editButton.addEventListener("click", toggleEditMode);
 saveButton.addEventListener("click", saveChanges);
 
+function resizeTable(){
+  const cols = document.getElementsByClassName("col-sm-2");
+  const width = 12/cols.length;
+  const newClass = "col-sm-" + width.toString();
+
+  for (col in cols){
+    col.classList.remove("col-sm-2");
+    col.classList.add(newClass);
+  }
+}
+
 function toggleEditMode() {
   fullName.classList.toggle("d-none"); 
   fullNameInput.classList.toggle("d-none");
@@ -59,7 +70,6 @@ function formatDate(dateString) {
 }
 
 async function printData() {
-
   // alert("abc")
   data = await callAPI();
 

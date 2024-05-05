@@ -116,11 +116,20 @@
       <div class="card mb-4 py-2" style="background-color: #FFFFFF">
         <div class="card-body py-2" style="background-color: #FFFFFF;">
           <div class="row text-end mb-3 py-2">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
             </div>
-            <div class="col-sm-3" sec:authorize="not hasAuthority('ROLE_OWNER')" >
+            <div class="col-sm-2" sec:authorize="not hasAuthority('ROLE_OWNER')" >
               <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
+            </div>
+            <div class="col-sm-2" sec:authorize="hasAuthority('ROLE_OWNER')" >
+              <a type="button" class="btn btn-sm btn-outline-primary" href="/hotel-detail/your-hotels">Your Hotels</a>
+            </div>
+            <div class="col-sm-2" sec:authorize="hasAuthority('ROLE_ADMIN')" >
+              <a type="button" class="btn btn-sm btn-outline-primary" href="/owner-requests">Owner Requests</a>
+            </div>
+            <div class="col-sm-2" sec:authorize="hasAuthority('ROLE_ADMIN')" >
+              <a type="button" class="btn btn-sm btn-outline-primary" href="/hotel-requests">Hotel Requests</a>
             </div>
 
           </div>

@@ -81,5 +81,8 @@ public class HotelServicesImpl implements HotelServices {
         return this.hotelRepository.findByHotelID(hotelID);
     }
 
-
+    @Override
+    public List<Hotel> findByIsActive(int isActive){
+        return this.hotelRepository.findByIsActive(isActive);
+    }
 }

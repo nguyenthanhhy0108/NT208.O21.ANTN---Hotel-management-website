@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hotels Details</title>
+    <title>Your hotels</title>
     <link rel="stylesheet" type="text/css"href="hotels-details.component.css" media="screen">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" href="css/imagehover.min.css">
-    <link rel="stylesheet" href="css/monument.css">
-    <link rel="stylesheet" href="css/hotel.css">
+    <link rel="stylesheet" href="/css/monument.css">
+    <link rel="stylesheet" href="/css/hotel.css">
     <style>
         .scrolled {
             background-color: rgba(0, 0, 0, 0.3) !important;
@@ -117,40 +117,42 @@
 <!-- ~~~~~~~~~~~~~~~~header start ~~~~~~~~~~~~~~~~ -->
 <header class="container-fluid ">
     <div class="headtext">
-        <h1 class="text-white heading"> Owner Requests</h1>
+        <h1 class="text-white heading"> Your Hotels</h1>
         <p class="text-center" ></p>
-
     </div>
-
 </header>
 
 <!-- ~~~~~~~~~~~~~~~~header end ~~~~~~~~~~~~~~~~ -->
 
-
-<p th:if="${requestOwners.isEmpty()}"> No owner requests has been sent! </p>
-<table class="table table-bordered table-striped" th:if="not ${requestOwners.isEmpty()}">
+<br>
+<center>
+    <a th:href="@{/hotel-register}"
+       class="btn btn-info btn-sm">
+        Add Hotel
+    </a>
+</center>
+<br>
+<p th:if="${hotels.isEmpty()}"> You have no hotels. </p>
+<table class="table table-bordered table-striped" th:if="not ${hotels.isEmpty()}">
         <thead class="table-dark">
             <tr>
-                <th>Username</th>
-                <th>Message</th>
+                <th>Hotel Name</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
-        <tr th:each="request : ${requestOwners}">
+        <tr th:each="hotel : ${hotels}">
 
-            <td th:text="${request.username}" />
-            <td th:text="${request.message}" />
+            <td th:text="${hotel['hotel_name']}" />
+            <td th:text="${hotel['status']}" />
             <!--add update button link-->
             <td>
-                <a th:href="@{/owner-requests/accept(requestId=${request.getRequestId()})}"
-                   class="btn btn-success btn-sm">
-                    Accept
-                </a>
-                <a th:href="@{/owner-requests/reject(requestId=${request.getRequestId()})}"
-                   class="btn btn-danger btn-sm">
-                    Reject
+                <a th:href="@{/hotel-detail(hotel_id=${hotel['hotel_id']})}"
+                   class="btn btn-info btn-sm">
+                    View Hotel
+
                 </a>
             </td>
         </tr>

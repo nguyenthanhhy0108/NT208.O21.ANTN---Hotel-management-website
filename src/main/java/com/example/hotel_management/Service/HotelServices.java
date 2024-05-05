@@ -41,4 +41,12 @@ public interface HotelServices {
      * A list Hotel object
      */
     List<Hotel> findByHotelID(String hotelID);
+
+
+    /**
+     * Get a list Hotel object with provided isActive
+     * @param isActive : int (-1:rejected, 0:waiting, 1:accepted)
+     * @return A list Hotel object
+     */
+    List<Hotel> findByIsActive(int isActive);
 }

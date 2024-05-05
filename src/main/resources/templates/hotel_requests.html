@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hotels Details</title>
+    <title>Hotel Requests</title>
     <link rel="stylesheet" type="text/css"href="hotels-details.component.css" media="screen">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" href="css/imagehover.min.css">
-    <link rel="stylesheet" href="css/monument.css">
-    <link rel="stylesheet" href="css/hotel.css">
+    <link rel="stylesheet" href="/css/monument.css">
+    <link rel="stylesheet" href="/css/hotel.css">
     <style>
         .scrolled {
             background-color: rgba(0, 0, 0, 0.3) !important;
@@ -59,9 +59,9 @@
                     <a class="nav-link" href="/first-page">Home</a>
                 </li>
 
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="hotel.html">Hotel</a>-->
-<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="hotel.html">Hotel</a>-->
+                <!--                </li>-->
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -117,73 +117,73 @@
 <!-- ~~~~~~~~~~~~~~~~header start ~~~~~~~~~~~~~~~~ -->
 <header class="container-fluid ">
     <div class="headtext">
-        <h1 class="text-white heading"> Owner Requests</h1>
+        <h1 class="text-white heading"> Hotel Requests</h1>
         <p class="text-center" ></p>
-
     </div>
-
 </header>
 
 <!-- ~~~~~~~~~~~~~~~~header end ~~~~~~~~~~~~~~~~ -->
 
 
-<p th:if="${requestOwners.isEmpty()}"> No owner requests has been sent! </p>
-<table class="table table-bordered table-striped" th:if="not ${requestOwners.isEmpty()}">
-        <thead class="table-dark">
-            <tr>
-                <th>Username</th>
-                <th>Message</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+<p th:if="${hotels.isEmpty()}"> There are no hotel requests. </p>
+<table class="table table-bordered table-striped" th:if="not ${hotels.isEmpty()}">
+    <thead class="table-dark">
+    <tr>
+        <th>Hotel ID</th>
+        <th>Hotel Name</th>
+        <th>Owner Email</th>
+        <th>Action</th>
+    </tr>
+    </thead>
 
-        <tbody>
-        <tr th:each="request : ${requestOwners}">
+    <tbody>
+    <tr th:each="hotel : ${hotels}">
 
-            <td th:text="${request.username}" />
-            <td th:text="${request.message}" />
-            <!--add update button link-->
-            <td>
-                <a th:href="@{/owner-requests/accept(requestId=${request.getRequestId()})}"
-                   class="btn btn-success btn-sm">
-                    Accept
-                </a>
-                <a th:href="@{/owner-requests/reject(requestId=${request.getRequestId()})}"
-                   class="btn btn-danger btn-sm">
-                    Reject
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <td th:text="${hotel['hotel_id']}" />
+        <td th:text="${hotel['hotel_name']}" />
+        <td th:text="${hotel['owner_name']}" />
+        <!--add update button link-->
+        <td>
+            <a th:href="@{/accept-hotel(hotel_id=${hotel.hotelID})(isAccepted=${1})}"
+               class="btn btn-success btn-sm">
+                Accept
+            </a>
+            <a th:href="@{/accept-hotel(hotel_id=${hotel.hotelID})(isAccepted=${-1})}"
+               class="btn btn-danger btn-sm">
+                Reject
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <footer class="footer text-white mt-2 p-1 pt-3">
-        <div style="display: flex; justify-content: center;">
-            <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fa fa-facebook text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-            <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fa fa-instagram text-danger fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-            <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fa fa-twitter text-info fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-            <a href="https://in.linkedin.com" target="_blank" class="social-icon"><i class="fa fa-linkedin text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
-        </div>
-    </footer>
-    <!-- ...........footer end........... -->
-    <!-- js files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        $(window).scroll(function () {
-            $('nav').toggleClass('scrolled', $(this).scrollTop() > 400);
-        });
-        AOS.init({
-            offset: 300, // offset (in px) from the original trigger point
+<footer class="footer text-white mt-2 p-1 pt-3">
+    <div style="display: flex; justify-content: center;">
+        <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fa fa-facebook text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fa fa-instagram text-danger fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fa fa-twitter text-info fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+        <a href="https://in.linkedin.com" target="_blank" class="social-icon"><i class="fa fa-linkedin text-primary fa-2x" style="padding-left: 10%; margin: 0 25px"></i></a>
+    </div>
+</footer>
+<!-- ...........footer end........... -->
+<!-- js files -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    $(window).scroll(function () {
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > 400);
+    });
+    AOS.init({
+        offset: 300, // offset (in px) from the original trigger point
 
-            duration: 2000,
-        });
-    </script>
+        duration: 2000,
+    });
+</script>
 
-    <script src="src/app/secured/services/hotels/hotels-details/hotels-details.component.html"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="src/app/secured/services/hotels/hotels-details/hotels-details.component.html"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

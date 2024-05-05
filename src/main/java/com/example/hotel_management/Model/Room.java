@@ -30,7 +30,7 @@ public class Room {
     private int bookedGuests;
 
     @Column(name = "star_rating")
-    private String starRating;
+    private float starRating;
 
     @ManyToOne(cascade = {
             CascadeType.DETACH,
@@ -47,7 +47,7 @@ public class Room {
     private List<Booking> bookings;
 
 
-    public Room(String roomID, String hotelID, int numPeople, float price, int bookedGuests, String starRating, Hotel hotel) {
+    public Room(String roomID, String hotelID, int numPeople, float price, int bookedGuests, float starRating, Hotel hotel) {
         this.roomID = roomID;
         this.hotelID = hotelID;
         this.numPeople = numPeople;
@@ -57,5 +57,8 @@ public class Room {
         this.hotel = hotel;
     }
 
-    public Room(){this.bookedGuests = 0;};
+    public Room(){
+        this.bookedGuests = 0;
+        this.starRating=0;
+    }
 }
