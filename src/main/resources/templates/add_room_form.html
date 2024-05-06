@@ -66,16 +66,18 @@
                     <input type="hidden" th:field="${room.hotelID}">
                     <input type="hidden" th:field="${room.bookedGuests}">
                     <input type="hidden" th:field="${room.starRating}">
+                    <input type="hidden" th:field="${room.roomID}">
 
-                    <div class="form-group ">
-                        <label class="text-secondary "  for="roomId" style="margin-right: 190px;">
-                            Room ID
-                        </label>
-                        <input name="name" type="text" id="roomId" th:field="${room.roomID}" required>
-                        <span th:if="${#fields.hasErrors('roomID')}"
-                              th:errors="*{roomID}" class="error"></span>
 
-                    </div>
+<!--                    <div class="form-group ">-->
+<!--                        <label class="text-secondary "  for="roomId" style="margin-right: 190px;">-->
+<!--                            Room ID-->
+<!--                        </label>-->
+<!--                        <input name="name" type="text" id="roomId" th:field="${room.roomID}" required>-->
+<!--                        <span th:if="${#fields.hasErrors('roomID')}"-->
+<!--                              th:errors="*{roomID}" class="error"></span>-->
+
+<!--                    </div>-->
 
                     <div class="form-group ">
                         <label class="text-secondary "  for="numPeople" style="margin-right: 190px;">

@@ -73,7 +73,9 @@ public class RoomDetailsController {
         }
 
         Room room = new Room();
+
         room.setHotelID(hotelId);
+        room.setRoomID(hotelId + '.' + room.getRoomID());
         room.setBookedGuests(0);
         model.addAttribute("room", room);
         return "add_room_form";
