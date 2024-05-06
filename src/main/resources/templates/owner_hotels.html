@@ -10,6 +10,7 @@
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <script src="/js/first_page.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -55,13 +56,10 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/first-page">Home</a>
-                </li>
 
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="hotel.html">Hotel</a>-->
-<!--                </li>-->
+                <!--          <li class="nav-item">-->
+                <!--            <a class="nav-link" href="/home">Home</a>-->
+                <!--          </li>-->
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -79,15 +77,12 @@
                     <a class="nav-link" href="">NEWS</a>
                 </li>
 
-                <!--          <li class="nav-item">-->
-                <!--            <a class="nav-link" href=team.html>Team</a>-->
-                <!--          </li>-->
-
                 <li class="nav-item">
-                    <a class="nav-link" href="/first-page#cont">Contact</a>
+                    <a class="nav-link" href="#cont">Contact</a>
                 </li>
+
                 <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
-                    <a type="button" class="btn btn-primary px-4 btncmn"  href="/login">Sign In</a><br>
+                    <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
 
                     <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
                 </div>
@@ -95,7 +90,7 @@
                 <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <span style="color: lawngreen" th:text="${session.name}"></span>
+                        <span style="color: lawngreen" id="sign-in-name" th:text="${session.name}"></span>
                     </a>
                     <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/profile">Information</a>
@@ -111,6 +106,7 @@
 
         </div>
     </div>
+
 
 </nav>
 <!-- ~~~~~~~~~~~~~navbar end~~~~~~~~~~~~~~~~~ -->

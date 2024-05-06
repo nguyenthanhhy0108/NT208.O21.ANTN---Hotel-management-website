@@ -196,7 +196,6 @@ public class HotelDetailController {
 
     @GetMapping("/accept-hotel")
     public String acceptHotel(@RequestParam("hotel_id") String hotel_id,
-                              @RequestParam("isAccepted") int isAccepted,
                               HttpServletRequest request,
                               Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -212,7 +211,29 @@ public class HotelDetailController {
         if (hotel.isEmpty()){
             return "redirect:/hotel-detail";
         }
-        hotel.get(0).setIsActive(isAccepted);
+        hotel.get(0).setIsActive(1);
+        hotelServices.saveHotel(hotel.get(0));
+        return "redirect:/hotel-detail";
+    }
+
+    @GetMapping("/reject-hotel")
+    public String rejectHotel(@RequestParam("hotel_id") String hotel_id,
+                              HttpServletRequest request,
+                              Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser")){
+            return "redirect:/login";
+        }
+
+        if (!request.isUserInRole("ROLE_ADMIN")){
+            return "redirect:/hotel-detail";
+        }
+
+        List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
+        if (hotel.isEmpty()){
+            return "redirect:/hotel-detail";
+        }
+        hotel.get(0).setIsActive(-1);
         hotelServices.saveHotel(hotel.get(0));
         return "redirect:/hotel-detail";
     }
