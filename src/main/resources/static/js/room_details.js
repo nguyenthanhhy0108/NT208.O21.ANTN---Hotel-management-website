@@ -1,8 +1,8 @@
 $(document).ready(function(){
     var additionalImages = [
+        "/images/1.jpg",
         "/images/2.jpg",
         "/images/3.jpg",
-        "/images/back.jpg",
     ];
 
     var expandedImage = null;
@@ -10,7 +10,6 @@ $(document).ready(function(){
 
     function addExpandFunctionality(selector) {
         $(selector).find('img').click(function() {
-            // Kiểm tra trạng thái của ảnh
             if (expandedImage !== null) {
                 if (expandedImage.is($(this)) && isExpanded) {
                     $(this).removeClass('expanded');
