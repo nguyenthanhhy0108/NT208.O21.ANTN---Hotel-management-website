@@ -145,11 +145,11 @@
         <td th:text="${hotel['owner_name']}" />
         <!--add update button link-->
         <td>
-            <a th:href="@{/accept-hotel(hotel_id=${hotel.hotelID})(isAccepted=${1})}"
+            <a id="accept" th:href="@{/accept-hotel(hotel_id=${hotel['hotel_id']})}"
                class="btn btn-success btn-sm">
                 Accept
             </a>
-            <a th:href="@{/accept-hotel(hotel_id=${hotel.hotelID})(isAccepted=${-1})}"
+            <a id="reject" th:href="@{/reject-hotel(hotel_id=${hotel['hotel_id']})}"
                class="btn btn-danger btn-sm">
                 Reject
             </a>

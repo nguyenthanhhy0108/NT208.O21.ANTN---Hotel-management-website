@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Entity(name = "HOTEL")
 public class Hotel {
-    public static int countHotel = 0;
+    public static int countHotel = 1000;
     @Id
     @Column(name = "hotel_id")
     private String hotelID;
