@@ -45,6 +45,10 @@ let room_id = urlParams.get("room_id");
 
 let book_now = document.getElementById("book_now");
 book_now.onclick = function () {
+    if(localStorage.getItem("checkInDate") === null) {
+        window.location.href = "/";
+        return;
+    }
     window.location.href = "/booking?id=" + room_id.toString();
 }
 

@@ -169,6 +169,10 @@ async function printRooms() {
                 // hide2.classList.add("mr-2");
                 hide2.textContent = "Book now";
                 hide2.onclick = function () {
+                    if(localStorage.getItem("checkInDate") === null) {
+                        window.location.href = "/";
+                        return;
+                    }
                     window.location.href = "/booking?id=" + room.roomID.toString();
                 }
                 // hide2.disabled = true;
