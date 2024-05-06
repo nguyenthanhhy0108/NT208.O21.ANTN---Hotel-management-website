@@ -60,6 +60,27 @@ public class UserDetailController {
         return "user_profile";
     }
 
+    @GetMapping("/profile/edit")
+    public String editProfile(Model model) {
+        List<UserDetails> result = getUsername();
+        UserDetails userDetails = null;
+        if (result.isEmpty()) {
+            return "redirect:/login";
+        }
+        else {
+            userDetails = result.get(0);
+        }
+        model.addAttribute("userDetails", userDetails);
+        return "edit_profile";
+    }
+
+    @PostMapping("/profile/save")
+    public String saveProfile(@ModelAttribute("userDetails") UserDetails userDetails,
+                              Model model) {
+        userDetailsServices.save(userDetails);
+        return "redirect:/profile";
+    }
+
     @ResponseBody
     @GetMapping("/loading-user-page")
         public WaitingRequest loadingUserPage(Authentication authentication) {
