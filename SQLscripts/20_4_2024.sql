@@ -95,12 +95,16 @@ BEGIN
     DECLARE @hotel_capacity INT;
     DECLARE @new_capacity INT;
     DECLARE @new_price BIGINT;
+    DECLARE @num_people INT;
 
 SELECT @hotel_capacity = total_capacity
 FROM hotel_detail
 WHERE hotel_id = (SELECT hotel_id FROM deleted);
 
-SET @new_capacity = @hotel_capacity - (SELECT num_people FROM deleted);
+SET @num_people = (SELECT num_people FROM deleted);
+
+SET @new_capacity = @hotel_capacity - @num_people;
+
 SET @new_price = (SELECT MIN(price / num_people) FROM ROOM WHERE hotel_id = (SELECT hotel_id FROM deleted));
 
 UPDATE hotel_detail
