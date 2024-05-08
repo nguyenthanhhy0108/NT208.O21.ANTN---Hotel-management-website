@@ -1,7 +1,9 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.Booking;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
+import com.example.hotel_management.Service.BookingServices;
 import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.validation.Valid;
@@ -14,22 +16,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 public class RoomDetailsController {
 
     private final RoomServices roomServices;
     private final HotelServices hotelServices;
+    private final BookingServices bookingServices;
 
     @Autowired
     public RoomDetailsController(RoomServices roomServices,
-                                 HotelServices hotelServices) {
+                                 HotelServices hotelServices,
+                                 BookingServices bookingServices) {
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
+        this.bookingServices = bookingServices;
     }
 
     /**
@@ -114,6 +116,7 @@ public class RoomDetailsController {
         }
     }
 
+
     @GetMapping("/delete-room")
     public String delete_room(@RequestParam("room_id") String room_id) {
         Room room = roomServices.findByRoomID(room_id);
@@ -128,7 +131,25 @@ public class RoomDetailsController {
             return "redirect:/first-page";
         }
 
-        roomServices.deleteRoomById(room_id);
-        return "redirect:/hotel_detail?hotel_id=" + hotel.get(0).getHotelID();
+        List<Booking> bookings = bookingServices.findByRoomId(room_id);
+        if (bookings.isEmpty()){
+            bookings = new ArrayList<Booking>();
+        }
+
+
+        boolean isFinish = bookings.stream().allMatch(t -> (t.getIsAccepted() == 2 || t.getIsAccepted() == 3));
+
+        if (isFinish) {
+            for (Booking booking : bookings) {
+                bookingServices.deleteByID(String.valueOf(booking.getBookingId()));
+            }
+            roomServices.deleteRoomById(room_id);
+            return "redirect:/hotel-detail?hotel_id=" + hotel.get(0).getHotelID();
+        }
+
+        else {
+            return "redirect:/room-detail?room_id=" + room.getRoomID();
+        }
+
     }
 }

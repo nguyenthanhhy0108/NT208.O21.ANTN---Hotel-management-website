@@ -223,6 +223,7 @@
       <a th:if="${isOwner}" class="btn btn-info"
          th:href="@{/add-room(hotel_id=${hotel_detail.hotelID})}"> Add room</a>
     </center>
+    <p hidden th:text="${isOwner}" id="isOwner" ></p>
     <br>
 
 

@@ -25,6 +25,10 @@ async function printRooms() {
     // let rooms = await getListRoom();
     let data = await getListRoom();
 
+    var isOwner = document.getElementById("isOwner").textContent;
+    console.log(isOwner);
+
+
     console.log(data);
     // alert(data)
 
@@ -87,11 +91,23 @@ async function printRooms() {
             hide2.textContent = "Action";
             col5.appendChild(hide2);
 
+            let col6 = document.createElement("td");
+            col6.style.position = "absolute"
+            col6.style.marginLeft = "3%";
+            col6.style.marginTop = "-1%";
+            let hide3 = document.createElement("button");
+            hide3.style.display = "none";
+            hide3.disabled = true;
+            hide3.style.opacity = "0";
+            col6.appendChild(hide3);
+
             row.appendChild(col1);
             row.appendChild(col2);
             row.appendChild(col3);
             row.appendChild(col4);
             row.appendChild(col5);
+            row.appendChild(col6);
+
             table.appendChild(row);
 
             let horizon = document.createElement("hr");
@@ -179,11 +195,34 @@ async function printRooms() {
                 // hide2.style.opacity = "0";
                 col5.appendChild(hide2);
 
+                let col6 = document.createElement("td");
+                col6.style.position = "absolute";
+                // col5.style.paddingLeft = "17%";
+                col6.style.marginLeft = "3%";
+                col6.style.marginTop = "-1%";
+                col6.style.paddingTop = "20px";
+                let hide3 = document.createElement("button");
+                hide3.type = "button";
+                hide3.classList.add("btn");
+                hide3.classList.add("btn-danger");
+                hide3.textContent = "Delete";
+                hide3.onclick = function () {
+                    if(localStorage.getItem("checkInDate") === null) {
+                        window.location.href = "/";
+                        return;
+                    }
+                    window.location.href = "/delete-room?room_id=" + room.roomID.toString();
+                }
+                if (isOwner === "true"){
+                    col6.appendChild(hide3);
+                }
                 row.appendChild(col1);
                 row.appendChild(col2);
                 row.appendChild(col3);
                 row.appendChild(col4);
                 row.appendChild(col5);
+                row.appendChild(col6);
+
                 table.appendChild(row);
 
                 let horizon = document.createElement("hr");
