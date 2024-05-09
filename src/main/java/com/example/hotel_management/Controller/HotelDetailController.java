@@ -123,12 +123,14 @@ public class HotelDetailController {
             return "hotel-details";
         }
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
-        if (hotel.isEmpty() || hotel.get(0).getOwnerUsername() != authentication.getName()) {
+        System.out.println(hotel.get(0).getOwnerUsername());
+        System.out.println(authentication.getName());
+        if (hotel.isEmpty() || !Objects.equals(hotel.get(0).getOwnerUsername(), authentication.getName())) {
             return "redirect:/hotel-detail";
         }
         HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
 
-        model.addAttribute("hotel", hotel);
+        model.addAttribute("hotel", hotel.get(0));
         model.addAttribute("hotel_detail", hotelDetails);
 
         return "create_hotel_form";
@@ -149,7 +151,7 @@ public class HotelDetailController {
         hotelServices.saveHotel(hotel);
         hotelDetailsServices.save(hotelDetails);
 
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-detail?hotel_id=" + hotel.getHotelID();
     }
 
     @GetMapping("delete-hotel")
