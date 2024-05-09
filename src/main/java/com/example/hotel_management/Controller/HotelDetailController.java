@@ -4,10 +4,7 @@ import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.HotelDetails;
 import com.example.hotel_management.Model.Room;
-import com.example.hotel_management.Service.HotelDetailsServices;
-import com.example.hotel_management.Service.HotelServices;
-import com.example.hotel_management.Service.RoomServices;
-import com.example.hotel_management.Service.UserServices;
+import com.example.hotel_management.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -123,10 +120,8 @@ public class HotelDetailController {
             return "hotel-details";
         }
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
-        System.out.println(hotel.get(0).getOwnerUsername());
-        System.out.println(authentication.getName());
         if (hotel.isEmpty() || !Objects.equals(hotel.get(0).getOwnerUsername(), authentication.getName())) {
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-detail/your-hotel";
         }
         HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
 
@@ -158,17 +153,19 @@ public class HotelDetailController {
     public String deleteHotel(@RequestParam("hotel_id") String hotel_id, Model model) {
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-detail/your-hotels";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!hotel.get(0).getOwnerUsername().equals(authentication.getName()) || hotel.get(0).getIsActive() != 0) {
             return "redirect:/hotel-detail";
         }
 
-        HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
-        hotelDetailsServices.delete(hotelDetails.getHotelID());
-        hotelServices.deleteByHotelId(hotel_id);
-        return "redirect:/hotel-detail";
+        if (hotel.get(0).getIsActive() == 0) {
+            HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
+            hotelDetailsServices.delete(hotelDetails.getHotelID());
+            hotelServices.deleteByHotelId(hotel_id);
+        }
+        return "redirect:/hotel-detail/your-hotels";
     }
 
     @GetMapping("/hotel-detail/your-hotels")
@@ -212,11 +209,11 @@ public class HotelDetailController {
 
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-requests";
         }
         hotel.get(0).setIsActive(1);
         hotelServices.saveHotel(hotel.get(0));
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-requests";
     }
 
     @GetMapping("/reject-hotel")
@@ -234,11 +231,11 @@ public class HotelDetailController {
 
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-requests";
         }
         hotel.get(0).setIsActive(-1);
         hotelServices.saveHotel(hotel.get(0));
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-requests";
     }
 
     @GetMapping("hotel-requests")

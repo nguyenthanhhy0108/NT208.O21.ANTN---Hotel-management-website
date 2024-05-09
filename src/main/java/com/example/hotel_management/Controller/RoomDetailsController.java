@@ -62,7 +62,7 @@ public class RoomDetailsController {
     @GetMapping("add-room")
     public String addRoom(@RequestParam("hotel_id") String hotelId, Model model) {
         List<Hotel> hotel = hotelServices.findByHotelID(hotelId);
-        if (hotel.isEmpty()) {
+        if (hotel.isEmpty() || hotel.get(0).getIsActive() == 0) {
             return "redirect:/first-page";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
