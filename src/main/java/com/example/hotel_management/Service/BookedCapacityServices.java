@@ -24,4 +24,6 @@ public interface BookedCapacityServices {
      * A names list
      */
     List<Object> getSatisfiedHotelNames(int checkInIndex, int checkOutIndex, int numberOfPeople, String country, int option);
+
+    void delete(BookedCapacity bookedCapacity);
 }
