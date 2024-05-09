@@ -148,7 +148,7 @@ public class RoomDetailsController {
         }
 
         else {
-            return "redirect:/room-detail?room_id=" + room.getRoomID();
+            return "redirect:/room-details?room_id=" + room.getRoomID();
         }
 
     }
