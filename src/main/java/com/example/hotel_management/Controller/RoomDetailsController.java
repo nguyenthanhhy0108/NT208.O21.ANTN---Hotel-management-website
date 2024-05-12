@@ -1,11 +1,17 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.Booking;
+import com.example.hotel_management.Model.DataDTO.RoomImageDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
+import com.example.hotel_management.Model.RoomImageRecord;
 import com.example.hotel_management.Service.HotelServices;
+import com.example.hotel_management.Service.RoomImageRecordServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,23 +19,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.net.URI;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Controller
 public class RoomDetailsController {
 
     private final RoomServices roomServices;
     private final HotelServices hotelServices;
+    private final RoomImageRecordServices roomImageRecordServices;
 
     @Autowired
     public RoomDetailsController(RoomServices roomServices,
-                                 HotelServices hotelServices) {
+                                 HotelServices hotelServices,
+                                 RoomImageRecordServices roomImageRecordServices) {
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
+        this.roomImageRecordServices = roomImageRecordServices;
     }
 
     /**
@@ -130,5 +139,53 @@ public class RoomDetailsController {
 
         roomServices.deleteRoomById(room_id);
         return "redirect:/hotel_detail?hotel_id=" + hotel.get(0).getHotelID();
+    }
+
+    @GetMapping("/room-image")
+    public String postRoomImageForm(@RequestParam("id") String roomID, Model model){
+        model.addAttribute("roomID", roomID);
+        return "add_image_form";
+    }
+
+    @PostMapping("/room-image")
+    public String postRoomImages(@RequestParam("roomID") String roomID, @RequestPart("files") MultipartFile[] files){
+
+        for (MultipartFile roomImage : files){
+            roomImageRecordServices.uploadRoomImageUpdateDB(roomImage, roomID);
+        }
+
+        return "redirect:/room-details?room_id="+roomID;
+    }
+
+    @ResponseBody
+    @GetMapping("/load-room-image")
+    public RoomImageDTO getRoomImage(Authentication authentication, @RequestParam("id") String roomID){
+        String userName = authentication.getName();
+
+        RoomImageDTO roomImageDTO = roomImageRecordServices.getDTOByRoomID(roomID);
+        roomImageDTO.setRoomId(roomID);
+
+        if(userName.equals(this.roomServices.findUserNameByRoomID(roomID))){
+            roomImageDTO.setIsOwner(true);
+        }
+
+        return roomImageDTO;
+    }
+
+    @DeleteMapping("/delete-room-image")
+    public ResponseEntity<String> deleteBooking(@RequestParam("url") String publicURL){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        RoomImageRecord deleteRecord  = roomImageRecordServices.findByURL(publicURL);
+        String roomID = deleteRecord.getRoomID();
+
+        if(!user.getName().equals(roomServices.findUserNameByRoomID(roomID))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.TEXT_PLAIN).body("You are not the owner of this room");
+        }
+        if(deleteRecord == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.TEXT_PLAIN).body("Can not found");
+        }
+        roomImageRecordServices.deleteRoomImageUpdateDB(publicURL);
+        return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Successfully deleted the image!");
     }
 }

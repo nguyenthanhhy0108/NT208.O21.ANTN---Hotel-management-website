@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "ROOM")
 public class Room {
     public static int count = 50;
 
@@ -48,6 +48,8 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Booking> bookings;
 
+    @OneToMany(mappedBy = "room", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<RoomImageRecord> roomImageRecords;
 
     public Room(String hotelID, int numPeople, float price, int bookedGuests, float starRating, Hotel hotel) {
         this.hotelID = hotelID;

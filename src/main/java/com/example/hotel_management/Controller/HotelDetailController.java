@@ -4,10 +4,7 @@ import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.HotelDetails;
 import com.example.hotel_management.Model.Room;
-import com.example.hotel_management.Service.HotelDetailsServices;
-import com.example.hotel_management.Service.HotelServices;
-import com.example.hotel_management.Service.RoomServices;
-import com.example.hotel_management.Service.UserServices;
+import com.example.hotel_management.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -29,16 +27,18 @@ public class HotelDetailController {
     private final UserServices userServices;
     private final RoomServices roomServices;
     private final HotelServices hotelServices;
-
+    private final HotelImageRecordServices hotelImageRecordServices;
     @Autowired
     HotelDetailController(HotelDetailsServices hotelDetailsServices,
                           UserServices userServices,
                           RoomServices roomServices,
-                          HotelServices hotelServices) {
+                          HotelServices hotelServices,
+                          HotelImageRecordServices hotelImageRecordServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.userServices = userServices;
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
+        this.hotelImageRecordServices = hotelImageRecordServices;
     }
 
     @GetMapping("/hotel-detail")
@@ -261,5 +261,21 @@ public class HotelDetailController {
         }
         model.addAttribute("hotels", hotels);
         return "hotel_requests";
+    }
+
+    @GetMapping("/hotel-image")
+    public String postRoomImageForm(@RequestParam("id") String hotelID, Model model){
+        model.addAttribute("hotelID", hotelID);
+        return "add_image_form";
+    }
+
+    @PostMapping("/hotel-image")
+    public String postRoomImages(@RequestParam("hotelID") String hotelID, @RequestPart("files") MultipartFile[] files){
+
+        for (MultipartFile hotelImage : files){
+            hotelImageRecordServices.uploadHotelImageUpdateDB(hotelImage, hotelID);
+        }
+
+        return "redirect:/hotel-detail/your-hotels";
     }
 }

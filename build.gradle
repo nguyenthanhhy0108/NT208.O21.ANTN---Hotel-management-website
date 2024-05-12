@@ -52,6 +52,7 @@ dependencies {
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6', version: '3.1.2.RELEASE'
 
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.3.0'
+    implementation group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.33.0'
 
     implementation 'org.mindrot:jbcrypt:0.4'
 

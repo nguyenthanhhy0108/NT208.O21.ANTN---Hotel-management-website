@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Image Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+
+    #preview {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .preview-image {
+      margin: 5px;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 th:if="${roomID}">Upload room's images</h1>
+  <h1 th:if="${hotelID}">Upload hotel's images</h1>
+
+  <form th:if="${roomID}" action="/room-image" method="post" enctype="multipart/form-data">
+    <input type="hidden" name = "roomID" th:value="${roomID}">
+    <input type="file" name="files" id="files" multiple onchange="previewImages()">
+    <div id="preview"></div>
+    <button type="submit">Upload</button>
+  </form>
+
+  <form th:if="${hotelID}" action="/hotel-image" method="post" enctype="multipart/form-data">
+    <input type="hidden" name = "hotelID" th:value="${hotelID}">
+    <input type="file" name="files" id="files" multiple onchange="previewImages()">
+    <div id="preview"></div>
+    <button type="submit">Upload</button>
+    </form>
+</div>
+
+<script>
+  function previewImages() {
+    var preview = document.getElementById("preview");
+    preview.innerHTML = "";
+    var files = document.getElementById("files").files;
+
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var img = document.createElement("img");
+        img.src = e.target.result;
+        img.className = "preview-image";
+        preview.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script>
+
+</body>
+</html>

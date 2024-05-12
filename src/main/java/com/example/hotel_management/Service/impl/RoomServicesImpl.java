@@ -1,8 +1,10 @@
 package com.example.hotel_management.Service.impl;
 
 import com.example.hotel_management.Model.DataDTO.RoomDTO;
+import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Repository.RoomRepository;
+import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,11 @@ import java.util.*;
 @Service
 public class RoomServicesImpl implements RoomServices {
     private final RoomRepository roomRepository;
-
-    @Autowired RoomServicesImpl(RoomRepository roomRepository){
+    private final HotelServices hotelServices;
+    @Autowired
+    RoomServicesImpl(RoomRepository roomRepository, HotelServices hotelServices){
         this.roomRepository = roomRepository;
+        this.hotelServices = hotelServices;
     }
 
     @Override
@@ -94,5 +98,13 @@ public class RoomServicesImpl implements RoomServices {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String findUserNameByRoomID(String roomID){
+        Room room = this.roomRepository.findByRoomID(roomID);
+        String hotelID = room.getHotelID();
+        Hotel hotel = hotelServices.findByHotelID(hotelID).get(0);
+        return hotel.getOwnerUsername();
     }
 }

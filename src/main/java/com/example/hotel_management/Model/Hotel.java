@@ -57,6 +57,9 @@ public class Hotel {
             CascadeType.REFRESH
     })
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "hotel", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<HotelImageRecord> hotelImageRecords;
     /**
      * Constructor
      * @param ownerUsername: String

@@ -25,4 +25,5 @@ public interface RoomServices{
      * Room object
      */
     Room findByRoomID(String roomID);
+    String findUserNameByRoomID(String roomID);
 }
