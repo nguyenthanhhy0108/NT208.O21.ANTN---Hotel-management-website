@@ -33,8 +33,6 @@ public class ChatUserController {
     @MessageMapping("/app/user.addUser")
     @SendTo("/topic/public")
     public ChatUser addUser(@Payload ChatUser user) {
-        System.out.println("abc");
-        System.out.println(user);
         this.chatUserServices.saveUser(user);
         return user;
     }
