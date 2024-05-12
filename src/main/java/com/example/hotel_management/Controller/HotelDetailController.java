@@ -1,5 +1,7 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.Chat.ChatRoom;
+import com.example.hotel_management.Model.Chat.ChatUser;
 import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.HotelDetails;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,16 +30,25 @@ public class HotelDetailController {
     private final UserServices userServices;
     private final RoomServices roomServices;
     private final HotelServices hotelServices;
+    private final UserDetailsServices userDetailsServices;
+    private final ChatRoomServices chatRoomServices;
+    private final ChatUserServices chatUserServices;
 
     @Autowired
     HotelDetailController(HotelDetailsServices hotelDetailsServices,
                           UserServices userServices,
                           RoomServices roomServices,
-                          HotelServices hotelServices) {
+                          HotelServices hotelServices,
+                          ChatRoomServices chatRoomServices,
+                          ChatUserServices chatUserServices,
+                          UserDetailsServices userDetailsServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.userServices = userServices;
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
+        this.chatRoomServices = chatRoomServices;
+        this.chatUserServices = chatUserServices;
+        this.userDetailsServices = userDetailsServices;
     }
 
     @GetMapping("/hotel-detail")
@@ -261,5 +273,44 @@ public class HotelDetailController {
         }
         model.addAttribute("hotels", hotels);
         return "hotel_requests";
+    }
+
+    @PostMapping("create-chat-room")
+    public ResponseEntity<Map<String, Object>> createChatRoom(@RequestParam("hotelID") String hotelID) {
+        Map<String, Object> response = new HashMap<>();
+
+        String hotelOwner = this.hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername();
+
+        ChatUser chatUser = this.chatUserServices.findByNickname(hotelOwner);
+        if (chatUser == null){
+            chatUser = new ChatUser();
+            chatUser.setNickName(hotelOwner);
+            chatUser.setFullName(this.userDetailsServices.findByUsername(hotelOwner).get(0).getName());
+            chatUser.setStatus(0);
+            this.chatUserServices.saveUser(chatUser);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        List<ChatRoom> listChatRoom1 = this.chatRoomServices.findBySenderId(authentication.getName());
+        if (listChatRoom1.isEmpty()){
+            ChatRoom chatRoom1 = new ChatRoom();
+            chatRoom1.setChatId(String.format("%s_%s", authentication.getName(), hotelOwner));
+            chatRoom1.setSenderId(authentication.getName());
+            chatRoom1.setRecipientId(hotelOwner);
+            chatRoomServices.save(chatRoom1);
+        }
+
+        List<ChatRoom> listChatRoom2 = this.chatRoomServices.findBySenderId(hotelOwner);
+        if (listChatRoom2.isEmpty()){
+            ChatRoom chatRoom2 = new ChatRoom();
+            chatRoom2.setChatId(String.format("%s_%s", hotelOwner, authentication.getName()));
+            chatRoom2.setSenderId(hotelOwner);
+            chatRoom2.setRecipientId(authentication.getName());
+            chatRoomServices.save(chatRoom2);
+        }
+
+        response.put("status", true);
+        return ResponseEntity.ok(response);
     }
 }

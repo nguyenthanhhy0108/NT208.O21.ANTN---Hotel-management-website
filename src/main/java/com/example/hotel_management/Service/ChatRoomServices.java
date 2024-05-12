@@ -13,4 +13,6 @@ public interface ChatRoomServices {
     );
 
     List<ChatRoom> findBySenderId(String senderId);
+
+    ChatRoom save(ChatRoom chatRoom);
 }

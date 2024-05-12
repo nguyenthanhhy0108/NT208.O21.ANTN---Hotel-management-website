@@ -663,6 +663,10 @@ function popupDialog(title, content) {
   });
 }
 
+function redirectChatPage() {
+  window.location.href = '/chat';
+}
+
 // // Define a function to check for successBooking and notify the user
 // function checkSuccessBooking() {
 //   alert("abc");

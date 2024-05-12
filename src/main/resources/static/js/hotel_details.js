@@ -255,3 +255,26 @@ async function printRooms() {
             roomsList.appendChild(fullDataCard);
     }
 }
+
+async function clickContact() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let hotelID = urlParams.get('hotel_id');
+
+    let status = await createChatRoom(hotelID);
+    window.location.href = '/chat';
+}
+
+async function createChatRoom(hotelID) {
+
+    $.ajax({
+        url: '/create-chat-room?hotelID=' + hotelID.toString(),
+        type: 'POST',
+        dataType: 'json',
+        success: function(response) {
+            return response.status;
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}

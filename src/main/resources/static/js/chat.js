@@ -7,7 +7,6 @@ const messageForm = document.querySelector('#messageForm');
 const messageInput = document.querySelector('#message');
 const connectingElement = document.querySelector('.connecting');
 const chatArea = document.querySelector('#chat-messages');
-const logout = document.querySelector('#logout');
 
 let stompClient = null;
 let nickname = null;
@@ -194,14 +193,6 @@ async function onMessageReceived(payload) {
     }
 }
 
-function onLogout() {
-    stompClient.send("/app/user.disconnectUser",
-        {},
-        JSON.stringify({nickName: nickname, fullName: fullname, status: 'OFFLINE'})
-    );
-    window.location.reload();
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     connect().then(() => {
         // Handle success
@@ -210,5 +201,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 messageForm.addEventListener('submit', sendMessage, true);
-logout.addEventListener('click', onLogout, true);
-window.onbeforeunload = () => onLogout();

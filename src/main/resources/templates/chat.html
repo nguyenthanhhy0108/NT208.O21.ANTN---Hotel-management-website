@@ -4,11 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/chat.css">
-    <title>Chat Application</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <script src="/js/first_page.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/imagehover.min.css}">
+    <link rel="stylesheet" th:href="@{/css/hotel.css}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>Chat</title>
 </head>
-<body>
+<body style="background-image: url('/images/back.jpg');">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
 
-<h2>Hotel Management Chat</h2>
+                <li class="nav-item">
+                    <a class="nav-link" href="/first-page">Home</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#cont">Contact</a>
+                </li>
+
+                <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+                    <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
+
+                    <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+                </div>
+
+                <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span style="color: lawngreen" th:text="${session.name}"></span>
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile">Information</a>
+                        <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
+                        <form id="myForm" th:action="@{/logout}" method="post">
+                            <input type="hidden">
+                        </form>
+
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+<h2 style="color: #FFFFFF; font-size: 300%">Hotel Management Chat</h2>
 
 <div class="chat-container hidden" id="chat-page">
     <div class="users-list">
@@ -16,10 +88,6 @@
             <h2>Recently Conversations</h2>
             <ul id="connectedUsers">
             </ul>
-        </div>
-        <div>
-            <p id="connected-user-fullname"></p>
-            <a class="logout" href="javascript:void(0)" id="logout">Logout</a>
         </div>
     </div>
 
@@ -39,6 +107,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="/js/chat.js"></script>
 </body>
 </html>
