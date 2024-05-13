@@ -171,12 +171,21 @@ public class RoomDetailsController {
 
     @GetMapping("/room-image")
     public String postRoomImageForm(@RequestParam("id") String roomID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if(!user.getName().equals(roomServices.findUserNameByRoomID(roomID))){
+            return "redirect:/room-details?room_id="+roomID;
+        }
+
         model.addAttribute("roomID", roomID);
         return "add_image_form";
     }
 
     @PostMapping("/room-image")
     public String postRoomImages(@RequestParam("roomID") String roomID, @RequestPart("files") MultipartFile[] files){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if(!user.getName().equals(roomServices.findUserNameByRoomID(roomID))){
+            return "redirect:/room-details?room_id="+roomID;
+        }
 
         for (MultipartFile roomImage : files){
             roomImageRecordServices.uploadRoomImageUpdateDB(roomImage, roomID);
