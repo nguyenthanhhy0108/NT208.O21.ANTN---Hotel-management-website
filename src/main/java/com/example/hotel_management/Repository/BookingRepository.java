@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,String> {
     /**
-     * Find all hotel by provided customer
+     * Find all booking by provided customer
      * @param customer: String
      * @return
      * A list booking objects
@@ -22,10 +22,17 @@ public interface BookingRepository extends JpaRepository<Booking,String> {
     List<Booking> findByCustomer(String customer);
 
     /**
-     * Find hotel by provided hotel ID
+     * Find booking by provided hotel ID
      * @param hotelId: String
      * @return
      * A List of booking objects
      */
     List<Booking> findByHotelId(String hotelId);
+
+    /**
+     * Find booking by provided room id
+     * @param roomId
+     * @return A list booking objects
+     */
+    List<Booking> findByRoomId(String roomId);
 }

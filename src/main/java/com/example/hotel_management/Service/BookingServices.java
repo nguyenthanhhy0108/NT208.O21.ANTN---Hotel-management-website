@@ -24,6 +24,13 @@ public interface BookingServices {
     Booking findById(String id);
 
     /**
+     * Find the booking by room id
+     * @param roomId
+     * @return List of Booking object with given room id
+     */
+    List<Booking> findByRoomId(String roomId);
+
+    /**
      * Save the chosen BookingDTO
      * @param booking (BookingDTO)
      * @return the saved BookingDTO

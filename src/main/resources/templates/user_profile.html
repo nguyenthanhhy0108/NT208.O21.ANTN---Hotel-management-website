@@ -105,7 +105,7 @@
           <img src="/images/avt.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; margin-left: 27%">
           <h5 class="my-3"><span th:text="${userDetails.getName()}"/></span></h5>
           <div class="d-flex justify-content-center mb-2">
-            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+            <button type="button" class="btn btn-outline-primary ms-1" onclick="redirectChatPage()">Chat</button>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
         <div class="card-body py-2" style="background-color: #FFFFFF;">
           <div class="row text-end mb-3 py-2">
             <div class="col-sm-2">
-              <button type="button" class="btn btn-sm btn-outline-primary" id="editButton">Edit Information</button>
+              <a type="button" class="btn btn-sm btn-outline-primary" th:href="@{/profile/edit}">Edit Information</a>
             </div>
             <div class="col-sm-2" sec:authorize="not hasAuthority('ROLE_OWNER')" >
               <a type="button" class="btn btn-sm btn-outline-primary" href="/request-owner">Request Owner</a>
@@ -183,12 +183,18 @@
                 <input type="text" class="form-control d-none" >
             </div>
           </div>
-          <hr>
-          <div class="row py-2">
-            <div class="col-12 text-center">
-              <button type="button" class="btn btn-primary"  disabled>Save Changes</button>
-            </div>
-          </div>
+<!--          <hr>-->
+<!--          <div class="row py-2">-->
+<!--            <div class="col-12 text-center">-->
+<!--              <a type="button" class="btn btn-primary"-->
+<!--                      th:if="${isEditing}" th:href="">Cancel</a>-->
+<!--            </div>-->
+
+<!--            <div class="col-12 text-center">-->
+<!--              <a type="button" class="btn btn-primary"-->
+<!--                      th:if="${isEditing}" th:href="">Save Changes</a>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
 

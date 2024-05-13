@@ -1,10 +1,14 @@
 package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Model.Booking;
+
 import com.example.hotel_management.Model.DataDTO.RoomImageDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Model.RoomImageRecord;
+
+import com.example.hotel_management.Service.BookingServices;
+
 import com.example.hotel_management.Service.HotelServices;
 import com.example.hotel_management.Service.RoomImageRecordServices;
 import com.example.hotel_management.Service.RoomServices;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.nio.file.Paths;
+
 import java.util.*;
 
 @Controller
@@ -32,13 +37,17 @@ public class RoomDetailsController {
     private final HotelServices hotelServices;
     private final RoomImageRecordServices roomImageRecordServices;
 
+    private final BookingServices bookingServices;
+
     @Autowired
     public RoomDetailsController(RoomServices roomServices,
                                  HotelServices hotelServices,
-                                 RoomImageRecordServices roomImageRecordServices) {
+                                 RoomImageRecordServices roomImageRecordServices,
+                                 BookingServices bookingServices) {
+        this.roomImageRecordServices = roomImageRecordServices;
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
-        this.roomImageRecordServices = roomImageRecordServices;
+        this.bookingServices = bookingServices;
     }
 
     /**
@@ -69,7 +78,7 @@ public class RoomDetailsController {
     @GetMapping("add-room")
     public String addRoom(@RequestParam("hotel_id") String hotelId, Model model) {
         List<Hotel> hotel = hotelServices.findByHotelID(hotelId);
-        if (hotel.isEmpty()) {
+        if (hotel.isEmpty() || hotel.get(0).getIsActive() == 0) {
             return "redirect:/first-page";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -123,6 +132,7 @@ public class RoomDetailsController {
         }
     }
 
+
     @GetMapping("/delete-room")
     public String delete_room(@RequestParam("room_id") String room_id) {
         Room room = roomServices.findByRoomID(room_id);
@@ -137,8 +147,26 @@ public class RoomDetailsController {
             return "redirect:/first-page";
         }
 
-        roomServices.deleteRoomById(room_id);
-        return "redirect:/hotel_detail?hotel_id=" + hotel.get(0).getHotelID();
+        List<Booking> bookings = bookingServices.findByRoomId(room_id);
+        if (bookings.isEmpty()){
+            bookings = new ArrayList<Booking>();
+        }
+
+
+        boolean isFinish = bookings.stream().allMatch(t -> (t.getIsAccepted() == 2 || t.getIsAccepted() == 3));
+
+        if (isFinish) {
+            for (Booking booking : bookings) {
+                bookingServices.deleteByID(String.valueOf(booking.getBookingId()));
+            }
+            roomServices.deleteRoomById(room_id);
+            return "redirect:/hotel-detail?hotel_id=" + hotel.get(0).getHotelID();
+        }
+
+        else {
+            return "redirect:/room-details?room_id=" + room.getRoomID();
+        }
+
     }
 
     @GetMapping("/room-image")

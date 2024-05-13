@@ -12,14 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 public class UserDetailController {
@@ -40,15 +38,16 @@ public class UserDetailController {
         this.hotelDetailsServices = hotelDetailsServices;
     }
 
-    public List<UserDetails> getUsername(){
+    public List<UserDetails> getUserDetails(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return userDetailsServices.findByUsername(username);
     }
 
+
     @GetMapping("/profile")
     public String profile(Model model) {
-        List<UserDetails> result = getUsername();
+        List<UserDetails> result = getUserDetails();
         UserDetails userDetails = null;
         if (result.isEmpty()) {
             return "redirect:/login";
@@ -58,6 +57,27 @@ public class UserDetailController {
         }
         model.addAttribute("userDetails", userDetails);
         return "user_profile";
+    }
+
+    @GetMapping("/profile/edit")
+    public String editProfile(Model model) {
+        List<UserDetails> result = getUserDetails();
+        UserDetails userDetails = null;
+        if (result.isEmpty()) {
+            return "redirect:/login";
+        }
+        else {
+            userDetails = result.get(0);
+        }
+        model.addAttribute("userDetails", userDetails);
+        return "edit_profile";
+    }
+
+    @PostMapping("/profile/save")
+    public String saveProfile(@ModelAttribute("userDetails") UserDetails userDetails,
+                              Model model) {
+        userDetailsServices.save(userDetails);
+        return "redirect:/profile";
     }
 
     @ResponseBody

@@ -1,5 +1,7 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.Chat.ChatRoom;
+import com.example.hotel_management.Model.Chat.ChatUser;
 import com.example.hotel_management.Model.DataDTO.RoomDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.HotelDetails;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,17 +32,28 @@ public class HotelDetailController {
     private final RoomServices roomServices;
     private final HotelServices hotelServices;
     private final HotelImageRecordServices hotelImageRecordServices;
+    private final UserDetailsServices userDetailsServices;
+    private final ChatRoomServices chatRoomServices;
+    private final ChatUserServices chatUserServices;
+
+
     @Autowired
     HotelDetailController(HotelDetailsServices hotelDetailsServices,
                           UserServices userServices,
                           RoomServices roomServices,
                           HotelServices hotelServices,
-                          HotelImageRecordServices hotelImageRecordServices) {
+                          HotelImageRecordServices hotelImageRecordServices,
+                          ChatRoomServices chatRoomServices,
+                          ChatUserServices chatUserServices,
+                          UserDetailsServices userDetailsServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.userServices = userServices;
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
         this.hotelImageRecordServices = hotelImageRecordServices;
+        this.chatRoomServices = chatRoomServices;
+        this.chatUserServices = chatUserServices;
+        this.userDetailsServices = userDetailsServices;
     }
 
     @GetMapping("/hotel-detail")
@@ -122,12 +137,12 @@ public class HotelDetailController {
             return "hotel-details";
         }
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
-        if (hotel.isEmpty() || hotel.get(0).getOwnerUsername() != authentication.getName()) {
-            return "redirect:/hotel-detail";
+        if (hotel.isEmpty() || !Objects.equals(hotel.get(0).getOwnerUsername(), authentication.getName())) {
+            return "redirect:/hotel-detail/your-hotel";
         }
         HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
 
-        model.addAttribute("hotel", hotel);
+        model.addAttribute("hotel", hotel.get(0));
         model.addAttribute("hotel_detail", hotelDetails);
 
         return "create_hotel_form";
@@ -148,24 +163,26 @@ public class HotelDetailController {
         hotelServices.saveHotel(hotel);
         hotelDetailsServices.save(hotelDetails);
 
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-detail?hotel_id=" + hotel.getHotelID();
     }
 
     @GetMapping("delete-hotel")
     public String deleteHotel(@RequestParam("hotel_id") String hotel_id, Model model) {
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-detail/your-hotels";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!hotel.get(0).getOwnerUsername().equals(authentication.getName()) || hotel.get(0).getIsActive() != 0) {
             return "redirect:/hotel-detail";
         }
 
-        HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
-        hotelDetailsServices.delete(hotelDetails.getHotelID());
-        hotelServices.deleteByHotelId(hotel_id);
-        return "redirect:/hotel-detail";
+        if (hotel.get(0).getIsActive() == 0) {
+            HotelDetails hotelDetails = hotelDetailsServices.findById(hotel_id);
+            hotelDetailsServices.delete(hotelDetails.getHotelID());
+            hotelServices.deleteByHotelId(hotel_id);
+        }
+        return "redirect:/hotel-detail/your-hotels";
     }
 
     @GetMapping("/hotel-detail/your-hotels")
@@ -209,11 +226,11 @@ public class HotelDetailController {
 
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-requests";
         }
         hotel.get(0).setIsActive(1);
         hotelServices.saveHotel(hotel.get(0));
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-requests";
     }
 
     @GetMapping("/reject-hotel")
@@ -231,11 +248,11 @@ public class HotelDetailController {
 
         List<Hotel> hotel = hotelServices.findByHotelID(hotel_id);
         if (hotel.isEmpty()){
-            return "redirect:/hotel-detail";
+            return "redirect:/hotel-requests";
         }
         hotel.get(0).setIsActive(-1);
         hotelServices.saveHotel(hotel.get(0));
-        return "redirect:/hotel-detail";
+        return "redirect:/hotel-requests";
     }
 
     @GetMapping("hotel-requests")
@@ -263,19 +280,43 @@ public class HotelDetailController {
         return "hotel_requests";
     }
 
-    @GetMapping("/hotel-image")
-    public String postRoomImageForm(@RequestParam("id") String hotelID, Model model){
-        model.addAttribute("hotelID", hotelID);
-        return "add_image_form";
-    }
 
-    @PostMapping("/hotel-image")
-    public String postRoomImages(@RequestParam("hotelID") String hotelID, @RequestPart("files") MultipartFile[] files){
+    @PostMapping("create-chat-room")
+    public ResponseEntity<Map<String, Object>> createChatRoom(@RequestParam("hotelID") String hotelID) {
+        Map<String, Object> response = new HashMap<>();
 
-        for (MultipartFile hotelImage : files){
-            hotelImageRecordServices.uploadHotelImageUpdateDB(hotelImage, hotelID);
+        String hotelOwner = this.hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername();
+
+        ChatUser chatUser = this.chatUserServices.findByNickname(hotelOwner);
+        if (chatUser == null){
+            chatUser = new ChatUser();
+            chatUser.setNickName(hotelOwner);
+            chatUser.setFullName(this.userDetailsServices.findByUsername(hotelOwner).get(0).getName());
+            chatUser.setStatus(0);
+            this.chatUserServices.saveUser(chatUser);
         }
 
-        return "redirect:/hotel-detail/your-hotels";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        List<ChatRoom> listChatRoom1 = this.chatRoomServices.findBySenderId(authentication.getName());
+        if (listChatRoom1.isEmpty()){
+            ChatRoom chatRoom1 = new ChatRoom();
+            chatRoom1.setChatId(String.format("%s_%s", authentication.getName(), hotelOwner));
+            chatRoom1.setSenderId(authentication.getName());
+            chatRoom1.setRecipientId(hotelOwner);
+            chatRoomServices.save(chatRoom1);
+        }
+
+        List<ChatRoom> listChatRoom2 = this.chatRoomServices.findBySenderId(hotelOwner);
+        if (listChatRoom2.isEmpty()){
+            ChatRoom chatRoom2 = new ChatRoom();
+            chatRoom2.setChatId(String.format("%s_%s", hotelOwner, authentication.getName()));
+            chatRoom2.setSenderId(hotelOwner);
+            chatRoom2.setRecipientId(authentication.getName());
+            chatRoomServices.save(chatRoom2);
+        }
+
+        response.put("status", true);
+        return ResponseEntity.ok(response);
     }
 }

@@ -62,7 +62,14 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp
+    implementation("org.springframework.boot:spring-boot-starter-amqp:3.2.5")
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-reactor-netty
+    implementation("org.springframework.boot:spring-boot-starter-reactor-netty:3.2.5")
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-websocket
+    implementation("org.springframework:spring-websocket:6.1.6")
 }
 
 tasks.named('test') {

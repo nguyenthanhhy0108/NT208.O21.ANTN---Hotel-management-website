@@ -148,7 +148,10 @@
                 <a th:href="@{/hotel-detail(hotel_id=${hotel['hotel_id']})}"
                    class="btn btn-info btn-sm">
                     View Hotel
-
+                </a>
+                <a th:href="@{/delete-hotel(hotel_id=${hotel['hotel_id']})}" th:if="${hotel['status']}!='Accepted'"
+                   class="btn btn-danger btn-sm">
+                    Delete Hotel
                 </a>
             </td>
         </tr>

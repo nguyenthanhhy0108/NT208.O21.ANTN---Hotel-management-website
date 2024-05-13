@@ -51,6 +51,11 @@ public class BookingServicesImpl implements BookingServices {
     }
 
     @Override
+    public List<Booking> findByRoomId(String roomID){
+        return bookingRepository.findByRoomId(roomID);
+    }
+
+    @Override
     public List<Booking> findAll() {
         return bookingRepository.findAll();
     }

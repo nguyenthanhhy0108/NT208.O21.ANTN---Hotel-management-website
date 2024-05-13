@@ -83,4 +83,12 @@ public class BookedCapacityServicesImpl implements BookedCapacityServices {
         allHotelDetailsName.removeAll(toRemove);
         return allHotelDetailsName;
     }
+
+    /**
+     * delete booked capacity
+     * @param bookedCapacity
+     */
+    public void delete(BookedCapacity bookedCapacity){
+        bookedCapacityRepository.delete(bookedCapacity);
+    }
 }

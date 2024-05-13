@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <title>Profile</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  <script src="/js/first_page.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/imagehover.min.css}">
+    <link rel="stylesheet" th:href="@{/css/hotel.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        .scrolled {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+
+        }
+
+        nav {
+            transition: 0.45s ease-in all !important;
+        }
+    </style>
+</head>
+
+<body onload="printData()">
+<dialog id="dialog">
+    <h2 id="dialogTitle"></h2>
+    <p id="dialogContent"></p>
+</dialog>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/first-page">HOTEL BOOKING</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/first-page">Home</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Services
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="">Restaurant</a>
+                        <a class="dropdown-item" href="">Taxi</a>
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="">NEWS</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#cont">Contact</a>
+                </li>
+
+                <div class="d-flex" th:if="${!#authorization.expression('isAuthenticated()')}">
+                    <a type="button" class="btn btn-primary px-4 btncmn" href="/login">Sign In</a><br>
+
+                    <a type="button" class="btn signup btn-success px-4 btncmn " href="/register">Sign Up</a>
+                </div>
+
+                <li class="nav-item dropdown" style="color: lawngreen" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span style="color: lawngreen" th:text="${session.name}"></span>
+                    </a>
+                    <div class="dropdown-menu bg-primary text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile">Information</a>
+                        <a class="dropdown-item" href="/logout" onclick="submitLogoutForm()">Sign Out</a>
+                        <form id="myForm" th:action="@{/logout}" method="post">
+                            <input type="hidden">
+                        </form>
+
+                        <!--              <a class="dropdown-item" href=""></a>-->
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+</nav>
+
+<section style="background-image: url('/images/back.jpg'); background-repeat: no-repeat; background-size: cover; display: flex; flex-direction: column;">
+    <div class="container py-5 my-3">
+
+        <div class="col-lg-4 mx-auto">
+            <div class="card mb-4" style="background-color: #FFFFFF">
+                <div class="card-body text-center" style="background-color: #FFFFFF">
+                    <img src="/images/avt.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; margin-left: 27%">
+                    <h5 class="my-3"><span th:text="${userDetails.getName()}"/></span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 mx-auto">
+            <div class="card mb-4 py-2" style="background-color: #FFFFFF">
+                <div class="card-body py-2" style="background-color: #FFFFFF;">
+
+                    <form class="p-5" action="#" th:action="@{/profile/save}" th:object="${userDetails}" th:method="POST">
+                        <input type="hidden" th:field="${userDetails.username}">
+
+                        <label class="text-secondary "  for="name" style="margin-right: 190px;">
+                            Full name:
+                        </label>
+                        <input name="name" type="text" id="name" th:field="${userDetails.name}">
+
+
+                        <label class="text-secondary "  for="phone" style="margin-right: 190px;">
+                            Phone:
+                        </label>
+                        <input name="name" type="text" id="phone" th:field="${userDetails.phoneNumber}">
+
+                        <label class="text-secondary "  for="nationality" style="margin-right: 190px;">
+                            Nationality:
+                        </label>
+                        <input name="name" type="text" id="nationality" th:field="${userDetails.nationality}">
+
+                        <label class="text-secondary "  for="address" style="margin-right: 190px;">
+                            Address:
+                        </label>
+                        <input name="name" type="text" id="address" th:field="${userDetails.address}">
+
+                        <div class="row py-2">
+                            <div class="col-6 text-center">
+                                <a type="button" class="btn btn-primary" th:href="@{/profile}">Cancel</a>
+                            </div>
+
+
+                            <div class="form-btn">
+                                <button class="submit btn" th:href="@{/profile}">Save</button>
+                            </div><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+<!--        <div class="col-lg-8 mx-auto">-->
+<!--            <div class="card mb-4 py-2" style="background-color: #FFFFFF">-->
+<!--                <div class="card-body py-2" id="my-requests" style="background-color: #FFFFFF">-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--        <div class="col-lg-8 mx-auto" id="owner">-->
+<!--            <div class="card mb-4 py-2" id="child1" style="background-color: #FFFFFF">-->
+<!--                <div class="card-body py-2" id="my-received-requests" style="background-color: #FFFFFF">-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+
+    </div>
+</section>
+<!--<script type="text/javascript" th:src="@{/js/user_profile.js}" defer></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<!--  <script type="text/javascript" th:src="@{/js/all.js}" defer></script>-->
+<script>
+    $(window).scroll(function () {
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > 600);
+    });
+
+</script>
+</body>
+</html>
