@@ -7,6 +7,7 @@
   <title>Hotels Details</title>
   <script type="text/javascript" th:src="@{/js/room_details.js}" defer></script>
 
+
   <link rel="stylesheet" type="text/css"href="hotels-details.component.css" media="screen">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -26,8 +27,8 @@
   <link rel="stylesheet" href="/css/monument.css">
   <link rel="stylesheet" href="/css/hotel.css">
   <link rel="stylesheet" href="/css/room.css">
+    <link rel="stylesheet" href="/css/tmp.css">
 
-  <link rel="stylesheet" href="/css/tmp.css">
   <style>
     .scrolled {
       background-color: rgba(0, 0, 0, 0.3) !important;
@@ -49,11 +50,6 @@
       height: 98vh;
       z-index: -99;
     }
-
-    .checkedStar {
-      color: orange;
-    }
-
   </style>
 </head>
 
@@ -75,9 +71,9 @@
           <a class="nav-link" href="/first-page">Home</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" id="hotel">Hotel</a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link" id="hotel">Hotel</a>
+          </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -205,97 +201,69 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <section class="content-item" id="comments">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-8">
-        <form>
-          <h3 class="pull-left">New Comment</h3>
-          <button type="submit" class="btn btn-normal pull-right">Submit</button>
-          <fieldset>
-            <div class="row">
-              <div class="col-sm-3 col-lg-2 hidden-xs">
-                <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-              </div>
-              <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
-              </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <form>
+                    <h3 class="pull-left">New Comment</h3>
+                    <button type="submit" class="btn btn-normal pull-right">Submit</button>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-3 col-lg-2 hidden-xs">
+                                <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <h3>4 Comments</h3>
+
+                <!-- COMMENT 1 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <!-- COMMENT 1 - END -->
+
+                <!-- COMMENT 2 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <!-- COMMENT 2 - END -->
+
+                <!-- COMMENT 3 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <!-- COMMENT 3 - END -->
+
+                <!-- COMMENT 4 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <!-- COMMENT 4 - END -->
+
             </div>
-          </fieldset>
-        </form>
-
-        <h3>4 Comments</h3>
-
-        <!-- COMMENT 1 - START -->
-        <div class="media">
-          <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
-          <div class="media-body">
-            <h4 class="media-heading">
-              John Doe
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-            </h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
         </div>
-        <!-- COMMENT 1 - END -->
-
-        <!-- COMMENT 2 - START -->
-        <div class="media">
-          <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
-          <div class="media-body">
-            <h4 class="media-heading">
-              John Doe
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-            </h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- COMMENT 2 - END -->
-
-        <!-- COMMENT 3 - START -->
-        <div class="media">
-          <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></a>
-          <div class="media-body">
-            <h4 class="media-heading">
-              John Doe
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-            </h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- COMMENT 3 - END -->
-
-        <!-- COMMENT 4 - START -->
-        <div class="media">
-          <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt=""></a>
-          <div class="media-body">
-            <h4 class="media-heading">
-              John Doe
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-              <span class="fa fa-star" style="color: orange"></span>
-            </h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <!-- COMMENT 4 - END -->
-
-      </div>
     </div>
-  </div>
 </section>
 
 
