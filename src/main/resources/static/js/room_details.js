@@ -108,6 +108,15 @@ function printImages() {
                 }
                 carouselInner.appendChild(imgDiv);
             }
+
+            let addButton = document.getElementById("imageButton");
+            if(data.isOwner.toString() === 'false'){
+                addButton.remove();
+            }
+            else{
+                addButton.onclick=addImages;
+            }
+
         })
         .catch(error => {
             console.error('Error fetching images:', error);
@@ -199,5 +208,10 @@ function popupDialog(title, content) {
                 , false);
         }
     });
+}
+
+
+function addImages(){
+    window.location.href = '/room-image?id=' + room_id;
 }
 
