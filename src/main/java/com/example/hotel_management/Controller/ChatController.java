@@ -81,9 +81,6 @@ public class ChatController {
 
             this.chatUserServices.saveUser(chatUser);
         }
-
-        chatUser.setStatus(1);
-        this.chatUserServices.saveUser(chatUser);
         return "chat";
     }
 

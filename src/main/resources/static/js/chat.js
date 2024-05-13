@@ -55,10 +55,10 @@ function onConnected() {
     stompClient.subscribe(`/topic/public`, onMessageReceived);
 
     // register the connected user
-    stompClient.send("/app/user.addUser",
-        {},
-        JSON.stringify({nickName: nickname, fullName: fullname, status: 1})
-    );
+    // stompClient.send("/app/user.addUser",
+    //     {},
+    //     JSON.stringify({nickName: nickname, fullName: fullname, status: 1})
+    // );
     findAndDisplayConnectedUsers().then();
 }
 
