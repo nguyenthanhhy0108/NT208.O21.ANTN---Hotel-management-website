@@ -153,7 +153,7 @@ async function printRooms() {
 
                 let col4 = document.createElement("td");
                 col4.style.position = "absolute"
-                col4.style.marginLeft = "-35%";
+                col4.style.marginLeft = "-41%";
                 col4.style.marginTop = "-1%";
                 col4.style.paddingTop = "20px";
                 let hide1 = document.createElement("button");
@@ -174,7 +174,7 @@ async function printRooms() {
                 let col5 = document.createElement("td");
                 col5.style.position = "absolute";
                 // col5.style.paddingLeft = "17%";
-                col5.style.marginLeft = "-12%";
+                col5.style.marginLeft = "-20.8%";
                 col5.style.marginTop = "-1%";
                 col5.style.paddingTop = "20px";
                 let hide2 = document.createElement("button");
@@ -198,7 +198,7 @@ async function printRooms() {
                 let col6 = document.createElement("td");
                 col6.style.position = "absolute";
                 // col5.style.paddingLeft = "17%";
-                col6.style.marginLeft = "3%";
+                col6.style.marginLeft = "-8%";
                 col6.style.marginTop = "-1%";
                 col6.style.paddingTop = "20px";
                 let hide3 = document.createElement("button");
