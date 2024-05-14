@@ -1,17 +1,20 @@
 package com.example.hotel_management.Controller;
 
+import com.example.hotel_management.Model.*;
 import com.example.hotel_management.Model.Chat.ChatRoom;
 import com.example.hotel_management.Model.Chat.ChatUser;
+import com.example.hotel_management.Model.DataDTO.HotelImageDTO;
 import com.example.hotel_management.Model.DataDTO.RoomDTO;
-import com.example.hotel_management.Model.Hotel;
-import com.example.hotel_management.Model.HotelDetails;
-import com.example.hotel_management.Model.Room;
+import com.example.hotel_management.Model.DataDTO.RoomImageDTO;
 import com.example.hotel_management.Service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -318,5 +321,72 @@ public class HotelDetailController {
 
         response.put("status", true);
         return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/hotel-image")
+    public String postHotelImageForm(@RequestParam("id") String hotelID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if(!user.getName().equals(hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername())){
+            return "redirect:/hotel-detail?hotel_id="+hotelID;
+        }
+
+        model.addAttribute("hotelID", hotelID);
+        return "add_image_form";
+    }
+
+    @PostMapping("/hotel-image")
+    public String postHotelImages(@RequestParam("hotelID") String hotelID, @RequestPart("files") MultipartFile[] files){
+
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if(!user.getName().equals(hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername())){
+            return "redirect:/hotel-detail?hotel_id="+hotelID;
+        }
+
+        for (MultipartFile hotelImage : files){
+            hotelImageRecordServices.uploadHotelImageUpdateDB(hotelImage, hotelID);
+        }
+
+        return "redirect:/hotel-detail?hotel_id="+hotelID;
+    }
+
+
+    @ResponseBody
+    @GetMapping("/load-hotel-image")
+    public HotelImageDTO getHotelImage(@RequestParam("id") String hotelID){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        String userName = user.getName();
+
+        HotelImageDTO hotelImageDTO = hotelImageRecordServices.getDTOByHotelID(hotelID);
+        hotelImageDTO.setHotelId(hotelID);
+
+//        if (user == null || !user.isAuthenticated() || user.getPrincipal().equals("anonymousUser")) {
+//            return hotelImageDTO; // or throw an exception, return null, etc.
+//        }
+
+        if(userName.equals(this.hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername())){
+            hotelImageDTO.setIsOwner(true);
+        }
+
+        return hotelImageDTO;
+    }
+
+    @DeleteMapping("/delete-hotel-image")
+    public ResponseEntity<String> deleteHotelImage(@RequestParam("url") String publicURL){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        HotelImageRecord deleteRecord  = hotelImageRecordServices.findByURL(publicURL);
+        String hotelID = deleteRecord.getHotelID();
+
+        if(!user.getName().equals(hotelServices.findByHotelID(hotelID).get(0).getOwnerUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.TEXT_PLAIN).body("You are not the owner of this hotel");
+        }
+
+        if(deleteRecord == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.TEXT_PLAIN).body("Can not found");
+        }
+
+        hotelImageRecordServices.deleteHotelImageUpdateDB(publicURL);
+        return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Successfully deleted the image!");
     }
 }
