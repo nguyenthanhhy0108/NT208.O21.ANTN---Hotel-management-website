@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface HotelImageRecordRepository extends JpaRepository<HotelImageRecord, String> {
-    List<HotelImageRecord> findHotelImageRecordByHotelID(String roomID);
+    List<HotelImageRecord> findHotelImageRecordByHotelID(String hotelID);
+    HotelImageRecord findByURL(String URL);
 }
