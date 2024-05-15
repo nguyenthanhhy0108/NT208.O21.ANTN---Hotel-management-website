@@ -42,6 +42,8 @@ public class Booking {
     @Column(name="is_accepted")
     private int isAccepted;
 
+    @Column(name = "is_payed")
+    private int isPayed;
 
     /**
      * Constructor
@@ -82,7 +84,10 @@ public class Booking {
             updatable = false)
     private Room room;
 
-    public Booking() {this.isAccepted = 0;}
+    public Booking() {
+        this.isAccepted = 0;
+        this.isPayed = 0;
+    }
 
     public BookingDTO toDTO() {
         return new BookingDTO(
@@ -93,6 +98,7 @@ public class Booking {
                 this.hotelId,
                 this.roomId,
                 this.totalPrice,
-                this.isAccepted);
+                this.isAccepted,
+                this.isPayed);
     }
 }

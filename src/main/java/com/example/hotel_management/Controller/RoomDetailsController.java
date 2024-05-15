@@ -210,7 +210,7 @@ public class RoomDetailsController {
     }
 
     @DeleteMapping("/delete-room-image")
-    public ResponseEntity<String> deleteBooking(@RequestParam("url") String publicURL){
+    public ResponseEntity<String> deleteRoomImage(@RequestParam("url") String publicURL){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         RoomImageRecord deleteRecord  = roomImageRecordServices.findByURL(publicURL);

@@ -2,6 +2,7 @@ package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Service.BookedCapacityServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
+import com.example.hotel_management.Service.HotelImageRecordServices;
 import com.example.hotel_management.Service.HotelServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -23,7 +24,7 @@ public class SearchController {
 
     private final HotelDetailsServices hotelDetailsServices;
     private final BookedCapacityServices bookedCapacityServices;
-
+    private final HotelImageRecordServices hotelImageRecordServices;
     private long checkInIndex;
     private long checkOutIndex;
     private int numberOfPeople;
@@ -37,9 +38,11 @@ public class SearchController {
     @Autowired
     public SearchController(HotelDetailsServices hotelDetailsServices,
                             HotelServices hotelServices,
-                            BookedCapacityServices bookedCapacityServices) {
+                            BookedCapacityServices bookedCapacityServices,
+                            HotelImageRecordServices hotelImageRecordServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.bookedCapacityServices = bookedCapacityServices;
+        this.hotelImageRecordServices = hotelImageRecordServices;
     }
 
     /**
@@ -197,11 +200,20 @@ public class SearchController {
             idsString.add((String) id);
         }
 
+        List<String> imageURL = new ArrayList<>();
+
+        for(String hotelID : idsString){
+            String publicURL = hotelImageRecordServices.findAvatarByHotelID(hotelID);
+            imageURL.add(publicURL);
+        }
+
+
         map.put("names", names);
         map.put("prices", pricesString);
         map.put("addresses", addressesString);
         map.put("numberOfPeople", numberOfPeopleToFE);
         map.put("ids", idsString);
+        map.put("images", imageURL);
 
         return ResponseEntity.ok(map);
     }

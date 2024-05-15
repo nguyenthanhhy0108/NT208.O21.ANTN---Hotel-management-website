@@ -8,6 +8,11 @@ let hotel_id = urlParams.get("hotel_id");
 
 localStorage.setItem("hotel_id", hotel_id);
 
+window.onload = function (){
+    printRooms();
+    printImages();
+}
+
 async function getListRoom() {
     try {
         const test = await $.ajax({
@@ -278,3 +283,118 @@ async function createChatRoom(hotelID) {
         }
     });
 }
+
+
+function printImages() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let hotel_id = urlParams.get("hotel_id");
+
+    fetch('/load-hotel-image?id=' + hotel_id)
+        .then(response => response.json())
+        .then(data => {
+
+            // Get the carousel inner container
+            var carouselInner = document.querySelector('.carousel-inner');
+
+            // Clear any existing images
+            carouselInner.innerHTML = '';
+            // Iterate over the image URLs and create corresponding <img> tags
+            for (let index = 0; index < data.imageURL.length; index++){
+                var imgDiv = document.createElement('div');
+                imgDiv.classList.add('carousel-item');
+                if (index === 0) {
+                    imgDiv.classList.add('active');
+                }
+
+                var img = document.createElement('img');
+                img.src = data.imageURL[index];
+                img.alt = 'Image ' + (index + 1);
+                img.classList.add('d-block', 'w-50', 'img-fluid'); // Make the image responsive
+                img.style.height = 'auto'; // Maintain aspect ratio
+
+                var button = document.createElement('button');
+                button.innerText = 'Delete this image'; // Set button text
+                button.classList.add('btn', 'btn-primary', 'mt-2', 'mx-auto', 'd-block'); // Add Bootstrap button classes
+                button.setAttribute('type', 'button'); // Set button type attribute
+
+                button.addEventListener("click", function() {
+                    fetch(`/delete-hotel-image?url=${data.imageURL[index]}`, {
+                        method: "DELETE"
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                popupDialog("Success", "Successfully deleted the images!");
+                                setTimeout(function () {
+                                    console.log("Waiting for 5 seconds");
+                                    window.location.reload();
+                                }, 500);
+                            } else {
+                                // Access the response text by chaining another .then() block
+                                response.text().then(errorMessage => {
+                                    // Alert the error message
+                                    popupDialog("Error", errorMessage);
+                                    setTimeout(function () {
+                                        console.log("Waiting for 5 seconds");
+                                        window.location.reload();
+                                    }, 500);
+                                });
+                            }
+                        });
+                });
+
+                imgDiv.appendChild(img);
+                if(data.isOwner === true){
+                    imgDiv.appendChild(button);
+                }
+                carouselInner.appendChild(imgDiv);
+            }
+
+            let addButton = document.getElementById("imageButton");
+            if(data.isOwner === true){
+                addButton.onclick=addImages;
+            }
+            else{
+                addButton.remove();
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching images:', error);
+        });
+}
+
+function addImages(){
+    window.location.href = '/hotel-image?id=' + hotel_id;
+}
+
+function popupDialog(title, content) {
+    var dialog = document.getElementById('dialog');
+    var titleElement = document.getElementById('dialogTitle');
+    var contentElement = document.getElementById('dialogContent');
+
+    titleElement.textContent = title;
+    contentElement.textContent = content;
+
+    if (title === 'Error') {
+        titleElement.style.background = 'rgb(243 49 49)';
+    } else if (title === 'Success') {
+        titleElement.style.background = '#57c463';
+    }
+
+    dialog.showModal()
+    dialog.classList.add('show')
+
+    dialog.addEventListener('click', function (event) {
+        if (event.target == dialog) {
+            dialog.classList.add('hide');
+            dialog.addEventListener('webkitAnimationEnd', function () {
+                    dialog.classList.remove('hide');
+                    dialog.close();
+                    dialog.removeEventListener('webkitAnimationEnd', arguments.callee, false);
+                }
+                , false);
+        }
+    });
+}
+
+
+

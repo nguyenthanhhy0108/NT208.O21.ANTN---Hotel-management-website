@@ -3,7 +3,7 @@ function submitLogoutForm() {
     document.getElementById("myForm").submit();
 }
 
-function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddresses, numberOfPeople, ids) {
+function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddresses, numberOfPeople, ids, images) {
     var startIndex = (page - 1) * hotelsPerPage;
     var endIndex = Math.min(startIndex + hotelsPerPage, hotelNames.length);
 
@@ -40,7 +40,7 @@ function displayHotels(page, hotelsPerPage, hotelNames, hotelPrices, hotelAddres
         cardDiv.style.height = "30rem";
 
         var img = document.createElement("img");
-        img.src = "/images/room3.jpg";
+        img.src = images[i];
         img.classList.add("card-img-top");
         img.onclick = function (event) {
             window.location.href = "/hotel-detail?hotel_id=" + ids[index].toString();
@@ -190,6 +190,7 @@ function callAPI(country, page, numofpeople, option){
             var hotelsPrices = data.prices;
             var numberOfPeople = data.numberOfPeople;
             var ids = data.ids;
+            var images = data.images;
 
             // alert(hotelsAddresses)
             // alert(hotelsPrices[0])
@@ -197,7 +198,7 @@ function callAPI(country, page, numofpeople, option){
             var hotelsPerPage = 6;
             var totalPages = Math.ceil(hotelsName.length / hotelsPerPage);
 
-            displayHotels(page, hotelsPerPage, hotelsName, hotelsPrices, hotelsAddresses, numberOfPeople, ids);
+            displayHotels(page, hotelsPerPage, hotelsName, hotelsPrices, hotelsAddresses, numberOfPeople, ids, images);
             displayPagination(totalPages, hotelsPerPage, hotelsName);
         },
         error: function(xhr, status, error) {

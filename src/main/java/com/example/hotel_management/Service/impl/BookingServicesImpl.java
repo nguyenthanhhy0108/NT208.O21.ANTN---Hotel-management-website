@@ -248,7 +248,8 @@ public class BookingServicesImpl implements BookingServices {
                     booking.getHotelId(),
                     booking.getRoomId(),
                     booking.getTotalPrice(),
-                    booking.getIsAccepted());
+                    booking.getIsAccepted(),
+                    booking.getIsPayed());
 
             result.add(bookingDTO);
         }
