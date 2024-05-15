@@ -70,6 +70,13 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-websocket
     implementation("org.springframework:spring-websocket:6.1.6")
+
+    // https://mvnrepository.com/artifact/com.paypal.sdk/paypal-core
+    implementation group: 'com.paypal.sdk', name: 'paypal-core', version: '1.7.2'
+
+    // https://mvnrepository.com/artifact/com.paypal.sdk/paypal-core
+    implementation group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
+
 }
 
 tasks.named('test') {

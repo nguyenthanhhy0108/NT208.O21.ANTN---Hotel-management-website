@@ -180,7 +180,7 @@ async function printData() {
   table.appendChild(row);
 
   let horizon = document.createElement("hr");
-  horizon.style.width = "575%";
+  horizon.style.width = "720%";
   table.appendChild(horizon);
 
   for(let i = 0; i < data.sentHotelNames.length; i++) {
@@ -260,6 +260,29 @@ async function printData() {
     cancelButton.classList.add("btn-danger");
     cancelButton.textContent = "Cancel";
 
+    let col10 = document.createElement("td");
+    col10.style.paddingLeft = "2%";
+    let paymentButton = document.createElement("span");
+    paymentButton.type = "button";
+    paymentButton.classList.add("btn");
+    paymentButton.classList.add("btn-success");
+    paymentButton.textContent = "Pay";
+    if(data.sentBookings[i].isAccepted != 1) {
+      paymentButton.style.opacity = "0";
+      paymentButton.style.cursor = "not-allowed";
+      paymentButton.style.pointerEvents = "none";
+    }
+    if (data.sentBookings[i].isAccepted == 1 && data.sentBookings[i].isPayed == 1)
+    {
+      paymentButton.textContent = "Paid";
+      paymentButton.style.cursor = "not-allowed";
+      paymentButton.style.pointerEvents = "none";
+    }
+
+    paymentButton.onclick = function () {
+      window.location.href = "/pay?booking_id=" + data.sentBookings[i].bookingId + "&price=" + data.sentBookings[i].totalPrice;
+    }
+
     if(data.sentBookings[i].isAccepted === 1 || data.sentBookings[i].isAccepted === 2) {
       cancelButton.style.opacity = "0";
     }
@@ -294,7 +317,7 @@ async function printData() {
       col9.appendChild(hide2);
     }
 
-    // col9.appendChild(cancelButton);
+    col10.appendChild(paymentButton);
 
     row.appendChild(col1);
     row.appendChild(col2);
@@ -305,9 +328,10 @@ async function printData() {
     row.appendChild(col7);
     row.appendChild(col8);
     row.appendChild(col9);
+    row.appendChild(col10);
 
     let horizon = document.createElement("hr");
-    horizon.style.width = "575%";
+    horizon.style.width = "720%";
 
     table.appendChild(row);
     table.appendChild(horizon);
@@ -399,6 +423,11 @@ async function printData() {
     col71.textContent = "Status";
 
     let col81 = document.createElement("td");
+    col81.style.padding = "10px";
+    col81.style.overflowWrap = "break-word"
+    col81.textContent = "Payment Status";
+
+    let col91 = document.createElement("td");
     let hide11 = document.createElement("span");
     // hide1.style.display = "none";
     // hide1.type = "button";
@@ -408,9 +437,9 @@ async function printData() {
     // hide1.textContent = "Confirm";
     hide11.disabled = true;
     hide11.style.opacity = "0";
-    col81.appendChild(hide11);
+    col91.appendChild(hide11);
 
-    let col91 = document.createElement("td");
+    let col101 = document.createElement("td");
     let hide21 = document.createElement("span");
     // hide2.style.display = "none";
     // hide2.type = "button";
@@ -420,7 +449,7 @@ async function printData() {
     // hide2.textContent = "Confirm";
     hide21.disabled = true;
     hide21.style.opacity = "0";
-    col91.appendChild(hide21);
+    col101.appendChild(hide21);
 
     row1.appendChild(col11);
     row1.appendChild(col21);
@@ -431,11 +460,12 @@ async function printData() {
     row1.appendChild(col71);
     row1.appendChild(col81);
     row1.appendChild(col91);
+    row1.appendChild(col101);
 
     table1.appendChild(row1);
 
     let horizon1 = document.createElement("hr");
-    horizon1.style.width = "575%";
+    horizon1.style.width = "650%";
     table1.appendChild(horizon1);
 
     for(let i = 0; i < data.receivedHotelNames.length; i++) {
@@ -499,6 +529,19 @@ async function printData() {
       }
 
       let col8 = document.createElement("td");
+      // col6.style.borderRight = "1px solid black";
+      col8.style.padding = "10px";
+      col8.style.overflowWrap = "break-word";
+      if(data.receivedBookings[i].isPayed == 0) {
+        col8.textContent = "Not paid yet";
+        col8.style.color = "red";
+      }
+      if(data.receivedBookings[i].isPayed == 1) {
+        col8.textContent = "Already Paid";
+        col8.style.color = "Green";
+      }
+
+      let col9 = document.createElement("td");
       let confirmButton = document.createElement("button");
       confirmButton.type = "button";
       confirmButton.classList.add("btn");
@@ -556,20 +599,20 @@ async function printData() {
       });
 
       if(data.receivedBookings[i].isAccepted === 0) {
-        col8.appendChild(confirmButton);
+        col9.appendChild(confirmButton);
       }
 
       else if(data.receivedBookings[i].isAccepted === 1) {
-        col8.appendChild(completeButton);
+        col9.appendChild(completeButton);
       }
 
       else{
           let hide1 = document.createElement("span");
           hide1.style.opacity = "0";
-          col8.appendChild(hide1);
+          col9.appendChild(hide1);
       }
 
-      let col9 = document.createElement("td");
+      let col10 = document.createElement("td");
       let cancelButton = document.createElement("button");
       cancelButton.type = "button";
       cancelButton.classList.add("btn");
@@ -604,12 +647,12 @@ async function printData() {
       });
 
       if(data.receivedBookings[i].isAccepted === 0) {
-        col9.appendChild(cancelButton);
+        col10.appendChild(cancelButton);
       }
       else {
         let hide2 = document.createElement("span");
         hide2.style.opacity = "0";
-        col9.appendChild(hide2);
+        col10.appendChild(hide2);
       }
 
       row.appendChild(col1);
@@ -621,9 +664,10 @@ async function printData() {
       row.appendChild(col7);
       row.appendChild(col8);
       row.appendChild(col9);
+      row.appendChild(col10);
 
       let horizon = document.createElement("hr");
-      horizon.style.width = "575%";
+      horizon.style.width = "650%";
 
       table1.appendChild(row);
       table1.appendChild(horizon);
