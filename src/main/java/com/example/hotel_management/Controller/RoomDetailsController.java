@@ -225,4 +225,9 @@ public class RoomDetailsController {
         roomImageRecordServices.deleteRoomImageUpdateDB(publicURL);
         return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("Successfully deleted the image!");
     }
+
+    @GetMapping("/star-rating")
+    public String starRating (){
+        return "star_rating";
+    }
 }
