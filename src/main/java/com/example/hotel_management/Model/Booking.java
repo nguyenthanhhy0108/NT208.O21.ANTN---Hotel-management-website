@@ -42,8 +42,8 @@ public class Booking {
     @Column(name="is_accepted")
     private int isAccepted;
 
-    @Column(name = "is_payed")
-    private int isPayed;
+    @Column(name = "is_paid")
+    private int isPaid;
 
     /**
      * Constructor
@@ -86,7 +86,7 @@ public class Booking {
 
     public Booking() {
         this.isAccepted = 0;
-        this.isPayed = 0;
+        this.isPaid = 0;
     }
 
     public BookingDTO toDTO() {
@@ -99,6 +99,6 @@ public class Booking {
                 this.roomId,
                 this.totalPrice,
                 this.isAccepted,
-                this.isPayed);
+                this.isPaid);
     }
 }

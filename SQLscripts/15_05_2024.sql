@@ -1,3 +1,3 @@
-alter table BOOKING add is_payed int
+alter table BOOKING add is_paid int
 
-update BOOKING set is_payed = 0
+update BOOKING set is_paid = 0

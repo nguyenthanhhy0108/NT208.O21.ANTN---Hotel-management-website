@@ -272,7 +272,7 @@ async function printData() {
       paymentButton.style.cursor = "not-allowed";
       paymentButton.style.pointerEvents = "none";
     }
-    if (data.sentBookings[i].isAccepted == 1 && data.sentBookings[i].isPayed == 1)
+    if (data.sentBookings[i].isAccepted == 1 && data.sentBookings[i].isPaid == 1)
     {
       paymentButton.textContent = "Paid";
       paymentButton.style.cursor = "not-allowed";
@@ -532,11 +532,11 @@ async function printData() {
       // col6.style.borderRight = "1px solid black";
       col8.style.padding = "10px";
       col8.style.overflowWrap = "break-word";
-      if(data.receivedBookings[i].isPayed == 0) {
+      if(data.receivedBookings[i].isPaid == 0) {
         col8.textContent = "Not paid yet";
         col8.style.color = "red";
       }
-      if(data.receivedBookings[i].isPayed == 1) {
+      if(data.receivedBookings[i].isPaid == 1) {
         col8.textContent = "Already Paid";
         col8.style.color = "Green";
       }

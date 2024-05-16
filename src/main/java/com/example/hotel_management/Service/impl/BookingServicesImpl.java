@@ -249,7 +249,7 @@ public class BookingServicesImpl implements BookingServices {
                     booking.getRoomId(),
                     booking.getTotalPrice(),
                     booking.getIsAccepted(),
-                    booking.getIsPayed());
+                    booking.getIsPaid());
 
             result.add(bookingDTO);
         }
