@@ -229,3 +229,10 @@ SET country = 'South Korea' where country = 'Seoul'
 
 UPDATE HOTEL
 SET is_active = 1
+
+
+insert into BOOKING(book_date, check_in_date, check_out_date, customer, hotel_id, room_id, total_price, is_accepted, is_rated, is_paid) VALUES
+    ('2023-05-01', '2023-06-01', '2023-06-05', 'qn@1', '1', '1.1', 1200, 3, 0, 1)
+
+insert into BOOKING(book_date, check_in_date, check_out_date, customer, hotel_id, room_id, total_price, is_accepted, is_rated, is_paid) VALUES
+    ('2023-05-01', '2023-11-02', '2023-12-05', 'qn@1', '1', '1.1', 1200, 3, 0, 1)

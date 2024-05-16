@@ -260,6 +260,7 @@ async function printData() {
     cancelButton.classList.add("btn-danger");
     cancelButton.textContent = "Cancel";
 
+
     let col10 = document.createElement("td");
     col10.style.paddingLeft = "2%";
     let paymentButton = document.createElement("span");

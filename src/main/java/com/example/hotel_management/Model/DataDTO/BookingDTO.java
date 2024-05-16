@@ -28,6 +28,8 @@ public class BookingDTO {
 
     private int isPaid;
 
+    private int isRated;
+
     public BookingDTO(int bookingId,
                       Date checkInDate,
                       Date checkOutDate,
@@ -36,7 +38,8 @@ public class BookingDTO {
                       String roomId,
                       double totalPrice,
                       int isAccepted,
-                      int isPaid) {
+                      int isPaid,
+                      int isRated) {
         this.bookingId = bookingId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
@@ -46,5 +49,6 @@ public class BookingDTO {
         this.totalPrice = totalPrice;
         this.isAccepted = isAccepted;
         this.isPaid = isPaid;
+        this.isRated = isRated;
     }
 }

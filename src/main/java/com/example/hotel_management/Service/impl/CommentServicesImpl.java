@@ -53,4 +53,17 @@ public class CommentServicesImpl implements CommentServices {
     public List<Comment> findByRoomID(String roomID){
         return this.commentRepository.findByRoomID(roomID);
     }
+
+    @Override
+    public CommentDTO getDTOByRoomID(String roomID){
+        List<Comment> commentList = this.findByRoomID(roomID);
+
+        CommentDTO commentDTO = new CommentDTO();
+
+        for(Comment cm : commentList){
+            commentDTO.getCommentList().add(cm);
+        }
+
+        return commentDTO;
+    }
 }

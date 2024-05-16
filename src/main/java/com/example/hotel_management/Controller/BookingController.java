@@ -96,7 +96,7 @@ public class BookingController {
         theBooking.setHotelId(hotelID);
 
         if (bookingServices.save(theBooking) != null){
-            return "redirect:/profile";
+            return "redirect:redirect:/profile";
         }
         else{
             HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
@@ -183,41 +183,46 @@ public class BookingController {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         Booking theBooking = bookingServices.findById(bookingID);
+        System.out.println("Call");
 
         if (theBooking.getIsAccepted() != 3){
-            return "user_profile";
+            return "redirect:/profile";
         }
 
         if (theBooking.getIsRated() == 1){
-            return "user_profile";
+            return "redirect:/profile";
         }
 
         if (!theBooking.getCustomer().equals(user.getName())){
-            return "user_profile";
+            return "redirect:/profile";
         }
 
         if (theBooking == null){
-            return "user_profile";
+            return "redirect:/profile";
         }
 
         model.addAttribute("bookingID", theBooking.getBookingId());
-        model.addAttribute("roomID", theBooking.getRoomId());
 
-        return "comment_form";
+        return "star_rating";
     }
 
+
     @PostMapping("/comment")
-    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("comment") String text ,@RequestParam("star") int starRate, @RequestParam("roomID") String roomID, Model model){
+    public String writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("comment") String text ,@RequestParam("rating") int starRate){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         Booking theBooking = bookingServices.findById(bookingID);
+        System.out.println("Call2");
+        if (theBooking.getIsAccepted() != 3){
+            return "redirect:/profile";
+        }
 
         if (!theBooking.getCustomer().equals(user.getName())){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Permission denied!");
+            return "redirect:/profile";
         }
 
         if (theBooking == null){
-            return "user_profile";
+            return "redirect:/profile";
         }
 
 
@@ -225,9 +230,9 @@ public class BookingController {
         comment.setComment(text);
         comment.setStar(starRate);
         comment.setUsername(user.getName());
-        comment.setRoomID(roomID);
+        comment.setRoomID(theBooking.getRoomId());
 
         commentServices.saveAndUpdateBooking(comment, bookingID);
-        return ResponseEntity.status(HttpStatus.OK).body("Comment successfully!");
+        return "redirect:/profile";
     }
 }

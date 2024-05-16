@@ -103,6 +103,7 @@ public class Booking {
                 this.roomId,
                 this.totalPrice,
                 this.isAccepted,
-                this.isPaid);
+                this.isPaid,
+                this.isRated);
     }
 }

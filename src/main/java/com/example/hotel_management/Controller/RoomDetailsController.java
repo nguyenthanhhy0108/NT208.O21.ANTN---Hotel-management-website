@@ -2,16 +2,14 @@ package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Model.Booking;
 
+import com.example.hotel_management.Model.DataDTO.CommentDTO;
 import com.example.hotel_management.Model.DataDTO.RoomImageDTO;
 import com.example.hotel_management.Model.Hotel;
 import com.example.hotel_management.Model.Room;
 import com.example.hotel_management.Model.RoomImageRecord;
 
-import com.example.hotel_management.Service.BookingServices;
+import com.example.hotel_management.Service.*;
 
-import com.example.hotel_management.Service.HotelServices;
-import com.example.hotel_management.Service.RoomImageRecordServices;
-import com.example.hotel_management.Service.RoomServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,16 +36,19 @@ public class RoomDetailsController {
     private final RoomImageRecordServices roomImageRecordServices;
 
     private final BookingServices bookingServices;
+    private final CommentServices commentServices;
 
     @Autowired
     public RoomDetailsController(RoomServices roomServices,
                                  HotelServices hotelServices,
                                  RoomImageRecordServices roomImageRecordServices,
-                                 BookingServices bookingServices) {
+                                 BookingServices bookingServices,
+                                 CommentServices commentServices) {
         this.roomImageRecordServices = roomImageRecordServices;
         this.roomServices = roomServices;
         this.hotelServices = hotelServices;
         this.bookingServices = bookingServices;
+        this.commentServices = commentServices;
     }
 
     /**
@@ -229,5 +230,11 @@ public class RoomDetailsController {
     @GetMapping("/star-rating")
     public String starRating (){
         return "star_rating";
+    }
+
+    @ResponseBody
+    @GetMapping("/load-comment")
+    public CommentDTO loadComment(@RequestParam("id") String roomID){
+        return commentServices.getDTOByRoomID(roomID);
     }
 }

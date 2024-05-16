@@ -36,10 +36,10 @@
 <div class="card container mb-5 d-flex justify-content-center">
     <div class="feedback-form align-items-center">
         <h2>Feedback Form</h2>
-        <form id="feedbackForm">
+        <form action= "/comment" method="POST" id="feedbackForm">
             <div class="rating">
                 <!-- Notice that the stars are in reverse order -->
-
+                <input type="hidden" id="bookingID" name="bookingID" th:value="${bookingID}">
                 <input type="radio" id="star5" name="rating" value="5">
                 <label for="star5">&#9733;</label>
                 <input type="radio" id="star4" name="rating" value="4">
@@ -62,24 +62,24 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-    $('.form-control').each(function () {
-        floatedLabel($(this));
-    });
+<!--<script>-->
+<!--    $('.form-control').each(function () {-->
+<!--        floatedLabel($(this));-->
+<!--    });-->
 
-    $('.form-control').on('input', function () {
-        floatedLabel($(this));
-    });
+<!--    $('.form-control').on('input', function () {-->
+<!--        floatedLabel($(this));-->
+<!--    });-->
 
-    function floatedLabel(input) {
-        var $field = input.closest('.form-group');
-        if (input.val()) {
-            $field.addClass('input-not-empty');
-        } else {
-            $field.removeClass('input-not-empty');
-        }
-    }
-</script>
+<!--    function floatedLabel(input) {-->
+<!--        var $field = input.closest('.form-group');-->
+<!--        if (input.val()) {-->
+<!--            $field.addClass('input-not-empty');-->
+<!--        } else {-->
+<!--            $field.removeClass('input-not-empty');-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 <script>
     AOS.init({
         offset: 300, // offset (in px) from the original trigger point

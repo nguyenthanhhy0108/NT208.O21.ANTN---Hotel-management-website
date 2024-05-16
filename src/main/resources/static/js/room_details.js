@@ -43,6 +43,7 @@
 window.onload = function() {
     receiveData();
     printImages();
+    printComments();
 };
 
 function printImages() {
@@ -126,6 +127,99 @@ function printImages() {
 
 const urlParams = new URLSearchParams(window.location.search);
 let room_id = urlParams.get("room_id");
+
+
+function createCommentElement(comment) {
+    // Create the outer media div
+    const mediaDiv = document.createElement('div');
+    mediaDiv.className = 'media text-center';
+
+    // Create the link and image elements
+    const link = document.createElement('a');
+    link.className = 'pull-left';
+    link.href = '#';
+
+    const img = document.createElement('img');
+    img.className = 'media-object';
+    img.src = '/images/user_icon.jpg'; // You may need to adjust the image source
+    img.alt = '';
+    img.style.width = '50px';
+    img.style.height = '50px';
+
+    link.appendChild(img);
+    mediaDiv.appendChild(link);
+
+    // Create the media body div
+    const mediaBody = document.createElement('div');
+    mediaBody.className = 'media-body';
+
+    // Create the heading element
+    const heading = document.createElement('h4');
+    heading.className = 'media-heading';
+    heading.textContent = comment.username;
+
+    // Append the star ratings
+    for (let i = 0; i < 5; i++) {
+        const star = document.createElement('span');
+        star.className = 'fa fa-star';
+        if (i < comment.star) {
+            star.style.color = 'orange';
+        }
+        heading.appendChild(star);
+    }
+
+    mediaBody.appendChild(heading);
+
+    // Create the comment text
+    const commentText = document.createElement('p');
+    commentText.textContent = comment.comment;
+
+    mediaBody.appendChild(commentText);
+    mediaDiv.appendChild(mediaBody);
+
+    return mediaDiv;
+}
+
+function printComments() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let room_id = urlParams.get("room_id");
+
+    fetch('/load-comment?id=' + room_id)
+        .then(response => response.json())
+        .then(data => {
+            const commentsContainer = document.getElementById('comments-container');
+
+            // display average star
+            if (data.commentList.length > 0){
+                let average = 0;
+                for (let ij = 0; ij < data.commentList.length; ij++){
+                    average += data.commentList[ij].star;
+                }
+                average /= data.commentList.length;
+                average = average.toFixed(2);
+
+                const average_ele = document.createElement('h4');
+                alert("Average star: " + average.toString());
+                average_ele.textContent = "Average star: " + average.toString();
+                commentsContainer.appendChild(average_ele);
+
+                commentsContainer.appendChild(document.createElement("br"));
+            }
+
+            const num_comments = document.createElement('h4');
+            num_comments.textContent = data.commentList.length.toString() + " comments";
+            commentsContainer.appendChild(num_comments);
+
+            // Iterate over the comments data and create HTML elements for each comment
+            data.commentList.forEach(comment => {
+                const commentElement = createCommentElement(comment);
+                commentsContainer.appendChild(commentElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching images:', error);
+        });
+}
 
 
 let bookButton = document.getElementById("bookButton");
