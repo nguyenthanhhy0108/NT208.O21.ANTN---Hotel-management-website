@@ -167,6 +167,11 @@ async function printData() {
   hide2.style.opacity = "0";
   col9.appendChild(hide2);
 
+  let col10 = document.createElement("td");
+  col10.style.padding = "10px";
+  col10.style.overflowWrap = "break-word"
+  col10.textContent = "Payment Status";
+
   let col11 = document.createElement("td");
   col11.style.padding = "10px";
   col11.style.overflowWrap = "break-word";
@@ -181,7 +186,7 @@ async function printData() {
   row.appendChild(col7);
   row.appendChild(col8);
   row.appendChild(col9);
-
+  row.appendChild(col10);
   row.appendChild(col11);
 
   table.appendChild(row);
