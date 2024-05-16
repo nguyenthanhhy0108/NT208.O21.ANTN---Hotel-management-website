@@ -68,7 +68,7 @@ public class PaypalController {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
                 Booking booking = bookingServices.findById(this.bookingID);
-                booking.setIsPayed(1);
+                booking.setIsPaid(1);
 
                 bookingServices.save(booking);
                 return "paymentSuccess";
