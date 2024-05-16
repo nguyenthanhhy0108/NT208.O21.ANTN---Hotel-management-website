@@ -167,6 +167,11 @@ async function printData() {
   hide2.style.opacity = "0";
   col9.appendChild(hide2);
 
+  let col11 = document.createElement("td");
+  col11.style.padding = "10px";
+  col11.style.overflowWrap = "break-word";
+  col11.textContent = "Comment";
+
   row.appendChild(col1);
   row.appendChild(col2);
   row.appendChild(col3);
@@ -176,6 +181,8 @@ async function printData() {
   row.appendChild(col7);
   row.appendChild(col8);
   row.appendChild(col9);
+
+  row.appendChild(col11);
 
   table.appendChild(row);
 
@@ -320,6 +327,24 @@ async function printData() {
 
     col10.appendChild(paymentButton);
 
+    let col11 = document.createElement("td");
+    let commentButton = document.createElement("span");
+    commentButton.type = "button";
+    commentButton.classList.add("btn");
+    commentButton.classList.add("btn-success");
+    commentButton.textContent = "Comment";
+
+    if (data.sentBookings[i].isAccepted === 3 && data.sentBookings[i].isRated === 0){
+      commentButton.addEventListener("click", function (){window.location.href = "/comment?bookingID=" + data.sentBookings[i].bookingId;})
+      col11.appendChild(commentButton);
+    }
+    else{
+      commentButton.style.backgroundColor = "lightgrey"; // Change background color to light grey
+      commentButton.style.cursor = "not-allowed"; // Change cursor style to 'not-allowed'
+      commentButton.disabled = true;
+      col11.appendChild(commentButton);
+    }
+
     row.appendChild(col1);
     row.appendChild(col2);
     row.appendChild(col3);
@@ -330,6 +355,7 @@ async function printData() {
     row.appendChild(col8);
     row.appendChild(col9);
     row.appendChild(col10);
+    row.appendChild(col11)
 
     let horizon = document.createElement("hr");
     horizon.style.width = "720%";
