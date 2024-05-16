@@ -2,6 +2,7 @@ package com.example.hotel_management.Controller;
 
 import com.example.hotel_management.Model.*;
 import com.example.hotel_management.Service.BookingServices;
+import com.example.hotel_management.Service.CommentServices;
 import com.example.hotel_management.Service.HotelDetailsServices;
 import com.example.hotel_management.Service.RoomServices;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,15 +31,18 @@ public class BookingController {
     private final HotelDetailsServices hotelDetailsServices;
     private final RoomServices roomServices;
     private final BookingServices bookingServices;
+    private final CommentServices commentServices;
+
     /**
      * Dependency Injection
      * @param hotelDetailsServices: HotelDetailsServices object
      */
     @Autowired
-    public BookingController(HotelDetailsServices hotelDetailsServices, RoomServices roomServices, BookingServices bookingServices) {
+    public BookingController(HotelDetailsServices hotelDetailsServices, RoomServices roomServices, BookingServices bookingServices, CommentServices commentServices) {
         this.hotelDetailsServices = hotelDetailsServices;
         this.roomServices = roomServices;
         this.bookingServices = bookingServices;
+        this.commentServices = commentServices;
     }
 
 
@@ -203,8 +207,27 @@ public class BookingController {
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("star") int starRate, @RequestParam("roomID") String roomID, Model model){
+    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("comment") String text ,@RequestParam("star") int starRate, @RequestParam("roomID") String roomID, Model model){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
+        Booking theBooking = bookingServices.findById(bookingID);
+
+        if (!theBooking.getCustomer().equals(user.getName())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Permission denied!");
+        }
+
+        if (theBooking == null){
+            return "user_profile";
+        }
+
+
+        Comment comment = new Comment();
+        comment.setComment(text);
+        comment.setStar(starRate);
+        comment.setUsername(user.getName());
+        comment.setRoomID(roomID);
+
+        commentServices.saveAndUpdateBooking(comment, bookingID);
+        return ResponseEntity.status(HttpStatus.OK).body("Comment successfully!");
     }
 }
