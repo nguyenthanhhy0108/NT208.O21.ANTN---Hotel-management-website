@@ -202,27 +202,9 @@ public class BookingController {
         return "comment_form";
     }
 
-    @GetMapping("/comment")
-    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("start") int starRate, @RequestParam("roomID") String roomID, Model model){
+    @PostMapping("/comment")
+    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("star") int starRate, @RequestParam("roomID") String roomID, Model model){
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
-        Booking theBooking = bookingServices.findById(bookingID);
-
-        if (theBooking.getIsAccepted() != 3){
-            return "user_profile";
-        }
-
-        if (theBooking == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
-        }
-
-        if (!theBooking.getCustomer().equals(user.getName())){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Permission denied");
-        }
-
-        model.addAttribute("bookingID", theBooking.getBookingId());
-
-
-        return "comment_form";
     }
 }
