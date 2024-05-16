@@ -173,4 +173,56 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Can not complete the booking");
         }
     }
+
+    @GetMapping("/comment")
+    public String commentForm(@RequestParam("bookingID") String bookingID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking theBooking = bookingServices.findById(bookingID);
+
+        if (theBooking.getIsAccepted() != 3){
+            return "user_profile";
+        }
+
+        if (theBooking.getIsRated() == 1){
+            return "user_profile";
+        }
+
+        if (!theBooking.getCustomer().equals(user.getName())){
+            return "user_profile";
+        }
+
+        if (theBooking == null){
+            return "user_profile";
+        }
+
+        model.addAttribute("bookingID", theBooking.getBookingId());
+        model.addAttribute("roomID", theBooking.getRoomId());
+
+        return "comment_form";
+    }
+
+    @GetMapping("/comment")
+    public ResponseEntity<String> writeComment(@RequestParam("bookingID") String bookingID, @RequestParam("start") int starRate, @RequestParam("roomID") String roomID, Model model){
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        Booking theBooking = bookingServices.findById(bookingID);
+
+        if (theBooking.getIsAccepted() != 3){
+            return "user_profile";
+        }
+
+        if (theBooking == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+        }
+
+        if (!theBooking.getCustomer().equals(user.getName())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Permission denied");
+        }
+
+        model.addAttribute("bookingID", theBooking.getBookingId());
+
+
+        return "comment_form";
+    }
 }

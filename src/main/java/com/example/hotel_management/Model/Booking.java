@@ -45,6 +45,9 @@ public class Booking {
     @Column(name = "is_payed")
     private int isPayed;
 
+    @Column(name= "is_rated")
+    private int isRated;
+
     /**
      * Constructor
      * @param bookingId booking id (Integer)
@@ -87,6 +90,7 @@ public class Booking {
     public Booking() {
         this.isAccepted = 0;
         this.isPayed = 0;
+        this.isRated = 0;
     }
 
     public BookingDTO toDTO() {

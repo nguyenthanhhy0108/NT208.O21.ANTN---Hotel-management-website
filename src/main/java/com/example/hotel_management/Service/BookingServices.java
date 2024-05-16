@@ -87,4 +87,5 @@ public interface BookingServices {
      * List booking DTO objects
      */
     List<BookingDTO> convertToDTO(List<Booking> bookings);
+    Booking onlySave(Booking booking);
 }

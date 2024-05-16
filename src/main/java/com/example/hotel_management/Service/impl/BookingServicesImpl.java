@@ -352,4 +352,9 @@ public class BookingServicesImpl implements BookingServices {
             }
         }
     }
+
+    @Override
+    public Booking onlySave(Booking booking){
+        return this.bookingRepository.save(booking);
+    }
 }
