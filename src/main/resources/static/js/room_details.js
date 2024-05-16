@@ -199,7 +199,7 @@ function printComments() {
                 average = average.toFixed(2);
 
                 const average_ele = document.createElement('h4');
-                alert("Average star: " + average.toString());
+                // alert("Average star: " + average.toString());
                 average_ele.textContent = "Average star: " + average.toString();
                 commentsContainer.appendChild(average_ele);
 
