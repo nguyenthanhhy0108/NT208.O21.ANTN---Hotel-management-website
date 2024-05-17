@@ -96,7 +96,7 @@ public class BookingController {
         theBooking.setHotelId(hotelID);
 
         if (bookingServices.save(theBooking) != null){
-            return "redirect:redirect:/profile";
+            return "redirect:/profile";
         }
         else{
             HotelDetails hotelDetails = hotelDetailsServices.findById(hotelID);
