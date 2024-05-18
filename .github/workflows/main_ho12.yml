@@ -17,22 +17,18 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Java version
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v1
         with:
-          distribution: 'temurin'
           java-version: '17'
 
-      - name: Grant execute permission for Gradle wrapper
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build -x test
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: build/libs/*.jar
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,7 +37,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write #This is required for requesting the JWT
   
     steps:
       - name: Download artifact from build job
@@ -52,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_2D1C539855A94FE7A8DC27DB693C289F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_19979D93033D4D24940187C81E052168 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6FDB6970FBFC48C9AE36CCB7AC81951B }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -63,3 +59,4 @@ jobs:
           app-name: 'HO12'
           slot-name: 'Production'
           package: '*.jar'
+          
