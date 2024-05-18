@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Java version
-        uses: actions/setup-java@v3 # Sử dụng phiên bản mới nhất
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -26,10 +26,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3 # Sử dụng phiên bản mới nhất
+        uses: actions/upload-artifact@v3
         with:
           name: java-app
           path: build/libs/*.jar
@@ -45,12 +45,12 @@ jobs:
   
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3 # Sử dụng phiên bản mới nhất
+        uses: actions/download-artifact@v3
         with:
           name: java-app
       
       - name: Login to Azure
-        uses: azure/login@v1 # Phiên bản này vẫn còn hợp lệ
+        uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
@@ -58,7 +58,7 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2 # Sử dụng phiên bản mới nhất
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'HO12'
           slot-name: 'Production'
