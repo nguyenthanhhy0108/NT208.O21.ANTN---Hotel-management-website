@@ -19,16 +19,20 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
+          distribution: 'temurin'
           java-version: '17'
 
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
       - name: Build with Gradle
-        run: gradlew bootRun
+        run: ./gradlew build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: build/libs/*.jar
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,9 +52,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_893D451A236B48AC99236C675FA376F9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_62D19004EEA844C493181BB3EA5DAC9C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B3AA24B781BB4918910566C44B8B21FA }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -59,4 +63,3 @@ jobs:
           app-name: 'HO12'
           slot-name: 'Production'
           package: '*.jar'
-          
