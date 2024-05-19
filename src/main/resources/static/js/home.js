@@ -228,7 +228,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     const numberofpeople = urlParams.get('numberOfPeople')
     const option = urlParams.get('option');
-    // alert(numberofpeople)
+    alert(numberofpeople);
+    alert(option);
     var page = parseInt(urlParams.get("page"))
 
     var sort = document.getElementById("sort_by");
