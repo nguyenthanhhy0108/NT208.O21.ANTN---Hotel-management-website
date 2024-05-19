@@ -36,8 +36,8 @@ public class PaypalController {
     public RedirectView createPayment(HttpServletRequest request) {
         try {
             String baseUrl = String.format("%s://%s", request.getScheme(), request.getServerName());
-            String cancelUrl = "20.2.218.245/payment/cancel";
-            String successUrl = "20.2.218.245/payment/success";
+            String cancelUrl = "http://20.2.218.245/payment/cancel";
+            String successUrl = "http://20.2.218.245/payment/success";
             Payment payment = paypalService.createPayment(
                     Double.parseDouble(request.getParameter("amount")),
                     "USD",
