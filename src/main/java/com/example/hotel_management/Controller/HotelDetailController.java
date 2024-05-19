@@ -301,8 +301,9 @@ public class HotelDetailController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        List<ChatRoom> listChatRoom1 = this.chatRoomServices.findBySenderId(authentication.getName());
-        if (listChatRoom1.isEmpty()){
+        Optional<ChatRoom> foundChatRoom1 = this.chatRoomServices.findBySenderIdAndRecipientId(authentication.getName(), hotelOwner);
+//        System.out.println(listChatRoom1);
+        if (foundChatRoom1.isEmpty()){
             ChatRoom chatRoom1 = new ChatRoom();
             chatRoom1.setChatId(String.format("%s_%s", authentication.getName(), hotelOwner));
             chatRoom1.setSenderId(authentication.getName());
@@ -310,8 +311,8 @@ public class HotelDetailController {
             chatRoomServices.save(chatRoom1);
         }
 
-        List<ChatRoom> listChatRoom2 = this.chatRoomServices.findBySenderId(hotelOwner);
-        if (listChatRoom2.isEmpty()){
+        Optional<ChatRoom> foundChatRoom2 = this.chatRoomServices.findBySenderIdAndRecipientId(hotelOwner, authentication.getName());
+        if (foundChatRoom2.isEmpty()){
             ChatRoom chatRoom2 = new ChatRoom();
             chatRoom2.setChatId(String.format("%s_%s", hotelOwner, authentication.getName()));
             chatRoom2.setSenderId(hotelOwner);

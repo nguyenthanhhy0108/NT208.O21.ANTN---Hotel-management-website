@@ -15,4 +15,6 @@ public interface ChatRoomServices {
     List<ChatRoom> findBySenderId(String senderId);
 
     ChatRoom save(ChatRoom chatRoom);
+
+    Optional<ChatRoom> findBySenderIdAndRecipientId(String senderId, String recipientId);
 }

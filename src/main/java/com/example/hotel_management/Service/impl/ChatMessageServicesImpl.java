@@ -44,7 +44,7 @@ public class ChatMessageServicesImpl implements ChatMessageServices {
     }
 
     @Override
-    public List<ChatMessage> findConversation(String senderID) {
-        return this.chatMessageRepository.findConversation(senderID);
+    public List<ChatMessage> findConversation(String senderID, String recipientID) {
+        return this.chatMessageRepository.findConversation(senderID, recipientID);
     }
 }

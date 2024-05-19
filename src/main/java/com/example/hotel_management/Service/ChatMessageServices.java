@@ -12,5 +12,5 @@ public interface ChatMessageServices {
             String recipientId
     );
 
-    List<ChatMessage> findConversation(String senderID);
+    List<ChatMessage> findConversation(String senderID, String recipientID);
 }

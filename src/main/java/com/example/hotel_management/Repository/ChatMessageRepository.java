@@ -11,6 +11,6 @@ import java.util.List;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, String> {
     List<ChatMessage> findByChatId(String chatId);
 
-    @Query("SELECT C FROM CHAT_MESSAGE AS C WHERE C.senderId = :senderID OR C.recipientId = :senderID")
-    List<ChatMessage> findConversation(String senderID);
+    @Query("SELECT C FROM CHAT_MESSAGE AS C WHERE C.senderId IN (:senderID, :recipientID) AND C.recipientId IN (:senderID, :recipientID)")
+    List<ChatMessage> findConversation(String senderID, String recipientID);
 }

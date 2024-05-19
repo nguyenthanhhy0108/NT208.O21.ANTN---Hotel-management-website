@@ -44,6 +44,11 @@ public class ChatRoomServicesImpl implements ChatRoomServices {
         return this.chatRoomRepository.save(chatRoom);
     }
 
+    @Override
+    public Optional<ChatRoom> findBySenderIdAndRecipientId(String senderId, String recipientId) {
+        return this.chatRoomRepository.findBySenderIdAndRecipientId(senderId, recipientId);
+    }
+
     private String createChat(String senderId, String recipientId) {
         var chatId = String.format("%s_%s", senderId, recipientId);
         ChatRoom senderRecipient = new ChatRoom(chatId, senderId, recipientId);
