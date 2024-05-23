@@ -53,20 +53,20 @@ If you do not know how to clone and run a spring boot project on Intellij, watch
 ## Technologies and Functions
 
 1. **Technology:**
-- Front-end: 
-          * HTML
-          * CSS
-          * Boostrap 4.5
-          * Basic JavaScripts
-          * Jquery
-          * Thymeleaf
-- Back-end:
-          * Java SpringBoot
-          * Java Spring Sercurity
-          * Java Spring Data JPA
-          * Java Spring Hibernate
-          * MSSQL
-          * Cloudinary
+- `Front-end:` 
+          - HTML
+          - CSS
+          - Boostrap 4.5
+          - Basic JavaScripts
+          - Jquery
+          - Thymeleaf
+- `Back-end:`
+          - Java SpringBoot
+          - Java Spring Sercurity
+          - Java Spring Data JPA
+          - Java Spring Hibernate
+          - MSSQL
+          - Cloudinary
 
 
 2. **Fuctions:**
