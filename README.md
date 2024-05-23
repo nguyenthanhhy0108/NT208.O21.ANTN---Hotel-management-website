@@ -49,7 +49,7 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
 If you do not know how to clone and run a spring boot project on Intellij, watch this [tutorial video](https://www.youtube.com/watch?v=ZqxVJ9gEKo0&t=161s)
 
 
-## Technologies and Frameworks Used
+## Technologies and Functions
 
 1. **Technology:**
 - Front-end: 
