@@ -87,8 +87,8 @@ If you would like to contribute to the project, please create a pull request or 
 ## Author
 
 The Hotel Booking application is developed by Team 9.
-- Nguyễn Thanh Hỷ: 22520593
-- Phạm Quang Nhựt: 22521061
-- Nguyễn Trần Duy Thiên: 22521392
+- `Nguyễn Thanh Hỷ: 22520593`
+- `Phạm Quang Nhựt: 22521061`
+- `Nguyễn Trần Duy Thiên: 22521392`
 
   
