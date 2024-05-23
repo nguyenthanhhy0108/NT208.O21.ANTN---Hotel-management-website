@@ -1,4 +1,4 @@
-# Hotel Booking - Spring Boot Web Application
+# Hotel Booking - Web Application
 
 ## Introduction
 
