@@ -51,10 +51,30 @@ If you do not know how to clone and run a spring boot project on Intellij, watch
 
 ## Technologies and Frameworks Used
 
-- Java Spring Boot: Java framework for building web applications.
-- Bootstrap: CSS framework for designing beautiful and users-friendly users interfaces.
-- jQuery: JavaScript library for easy and powerful interaction with HTML elements.
-- Thymeleaf: HTML template engine for creating and displaying users interfaces.
+1. **Technology:**
+- Front-end: 
+          + HTML
+          + CSS
+          + Boostrap 4.5
+          +Basic JavaScripts
+          +Jquery
+          +Thymeleaf
+- Back-end:
+          + Java SpringBoot
+          + Java Spring Sercurity
+          + Java Spring Data JPA
+          + Java Spring Hibernate
+          + MSSQL
+          + Cloudinary
+
+
+2. **Fuctions:**
+- All CRUD
+- Chat by Web Socket
+- Pay With Paypal
+- Save and retrieve images with Cloudinary
+- Use SMTP to send email
+- Deploy by Azure SQL and Azure Server
 
 ## Contributions
 
