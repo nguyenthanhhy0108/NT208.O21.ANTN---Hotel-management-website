@@ -28,7 +28,7 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
     ```
     git clone https://github.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website.git
     ```
-3. **Build all dependency in **build.gradle****
+3. **Build all dependency in `build.gradle`**
 
 4. **Run the Application**: Navigate to the cloned directory and run the application using Gradle:
 
