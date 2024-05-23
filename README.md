@@ -16,6 +16,9 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
 
 5. **Account Management**: Users can manage personal information, change passwords, and log out of the system.
 
+## Demo on Youtube
+1. **Link to Youtube video**: [Demo video](https://www.youtube.com/watch?v=HkZits2oE8g)
+
 ## Installation and Running the Application
 
 1. **System Requirements**: Ensure that your computer has Java JDK, Gradle, and Git installed.
@@ -60,5 +63,8 @@ If you would like to contribute to the project, please create a pull request or 
 ## Author
 
 The Hotel Booking application is developed by Team 9.
+- Nguyễn Thanh Hỷ: 22520593
+- Phạm Quang Nhựt: 22521061
+- Nguyễn Trần Duy Thiên: 22521392
 
   
