@@ -19,7 +19,7 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
 ## Demo
 1. **Web Appearance**
    ![Web Appearance](https://raw.githubusercontent.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website/main/Github_Image/img.png)
-2. **Link to Youtube video**: [Demo video](https://www.youtube.com/watch?v=HkZits2oE8g)
+2. **Link to Youtube video**: [Demo video](https://www.youtube.com/watch?v=HkZits2oE8g) `This video includes my website domain and how does this project work`
 
 ## Installation and Running the Application
 
@@ -92,9 +92,21 @@ If you do not know how to clone and run a spring boot project on Intellij, watch
 - Use SMTP to send email
 - Deploy by Azure SQL and Azure Server
 
+## Website evaluation
+
+1. **Google Page Speed**: 98 (At ideal level)
+
+2. **SEO score**: 82 (At good level)
+
+![Web Appearance](https://raw.githubusercontent.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website/main/Github_Image/img.png)
+
 ## Contributions
 
 If you would like to contribute to the project, please create a pull request or open a new issue. We welcome contributions from the community.
+
+## Seminar Spring Boot:
+
+If you donot know anything about Spring Boot and Spring Framework, we provide a general seminar video for you on [Youtube](https://www.youtube.com/watch?v=sgzULK-oOxU)
 
 ## Author
 
