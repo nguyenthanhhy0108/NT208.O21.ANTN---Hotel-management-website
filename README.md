@@ -86,7 +86,7 @@ If you do not know how to clone and run a spring boot project on Intellij, watch
     + Cloudinary
 
 
-2. **Fuctions:**
+2. **Functions:**
 - All CRUD
 - Chat by Web Socket
 - Pay With Paypal
