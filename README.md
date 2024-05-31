@@ -94,9 +94,9 @@ If you do not know how to clone and run a spring boot project on Intellij, watch
 
 ## Website evaluation
 
-1. **Google Page Speed**: 98 (At ideal level)
+1. **Google Page Speed**: `98` (At ideal level)
 
-2. **SEO score**: 82 (At good level)
+2. **SEO score**: `82` (At good level)
 
 ![Web Appearance](https://github.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website/blob/main/Github_Image/GoogleEvaluation.png?raw=true)
 
