@@ -23,16 +23,26 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
 
 ## Installation and Running the Application
 
+`Notice`: This application must be run on Linux.
+
 1. **System Requirements**: Ensure that your computer has Java JDK, Gradle, and Git installed.
 
-2. **Clone the Repository**: Use Git to clone the repository to your computer:
+2. **Install Java JDK**: If you donot have Java, please follow this instruction:
+   ```
+   sudo apt update
+   ```
+   ```
+   sudo apt install openjdk-17-jdk
+   ```
+
+4. **Clone the Repository**: Use Git to clone the repository to your computer:
 
     ```
     git clone https://github.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website.git
     ```
-3. **Build all dependency in `build.gradle`**
+5. **Build all dependency in `build.gradle`**
 
-4. **Run the Application**: Navigate to the cloned directory and run the application using Gradle:
+6. **Run the Application**: Navigate to the cloned directory and run the application using Gradle:
 
     ```
     cd NT208.O21.ANTN---Hotel-management-website
@@ -45,11 +55,13 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
     gradlew bootRun
     ```
 
-5. **Access the Application**: Open a web browser and go to `http://localhost:8080` to use the Hotel Booking application.
+7. **Access the Application**: Open a web browser and go to `http://localhost:8080` to use the Hotel Booking application.
 
 ## We advise you to run our project on IntelliJ for a better experience.
 
 If you do not know how to clone and run a spring boot project on Intellij, watch this [tutorial video](https://www.youtube.com/watch?v=ZqxVJ9gEKo0&t=161s)
+
+8. **Test our deployed domain**: Open a web browser and go to `http://ho12.site` to use our Hotel Booking application.
 
 
 ## Technologies and Functions
