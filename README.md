@@ -16,6 +16,10 @@ The Hotel Booking application is a web application built with Java Spring Boot, 
 
 5. **Account Management**: Users can manage personal information, change passwords, and log out of the system.
 
+6. **Chat with hotel owner**: Customer and hotel owner can have conversation together.
+
+7. **Image upload**: Hotel Owner can upload image.
+
 ## Demo
 1. **Web Appearance (On Desktop)**
    ![Web Appearance](https://raw.githubusercontent.com/nguyenthanhhy0108/NT208.O21.ANTN---Hotel-management-website/main/Github_Image/img.png)
